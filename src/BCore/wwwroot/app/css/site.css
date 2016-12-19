@@ -1,0 +1,63 @@
+﻿body {
+    padding-top: 100px;
+}
+
+textarea {
+    overflow:hidden;    
+    -ms-overflow-style: none;
+}
+
+.margin-top {
+    margin-top: 20px;
+}
+
+.wrap {
+    word-wrap: break-word;
+}
+
+.text-error {
+    color: red;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 100%;
+  min-height: 100%;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+
+.preview-well {
+    background-color: #fafafa;
+}
+
+div.center-cropped {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    border: 0;
+
+}
+
+div.center-cropped img {
+    height: auto!important;
+    /*min-width: 100%;*/
+    max-width: 100%;
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+}

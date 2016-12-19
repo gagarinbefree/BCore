@@ -1,0 +1,75 @@
+﻿@model BCore.Models.ViewModels.WhatsNewViewModel
+
+@foreach (var page in Model.Feeds)
+{
+    <div>
+        <hr />
+        
+        @{
+            await Html.RenderPartialAsync("_StatusLine", page);
+        }
+
+        @*<div class="row">*@
+            @*<div class="span8">*@
+                
+                
+            @*</div>*@
+        @*</div>*@
+
+
+        <input asp-for="@page.Id" type="hidden" />
+        @for (var ii = 0; ii < page.Parts.Count(); ii++)
+        {           
+            <div class="margin-top">
+                @*@if (ii == 0)
+                {
+                    <h4><strong>@page.Parts[ii].Text</strong></h4>
+                }
+                else if (ii == 2)
+                {
+                    <div>@page.Parts[ii].Text</div>
+                }*@
+
+                @if (!String.IsNullOrWhiteSpace(page.Parts[ii].Text))
+                {
+                    <div class="wrap">
+                        @if (ii == 0)
+                        {
+                            <h4>@page.Parts[ii].Text</h4>
+                        }
+                        else
+                        {
+                            <div>@page.Parts[ii].Text</div>
+                        }
+                    </div>
+                }
+
+                @if (!String.IsNullOrWhiteSpace(page.Parts[ii].ImageUrl))
+                {
+                    <div class="embed-responsive embed-responsive-16by9">
+                        @*<div class="center-cropped">*@
+                            @*<img class="center-cropped" src="@page.Parts[ii].ImageUrl" />*@
+                        <img class="embed-responsive-item" src="@page.Parts[ii].ImageUrl" />
+                        @*</div>*@
+                    </div>
+                }
+
+            </div>
+
+            <input asp-for="@page.Parts[ii].Id" type="hidden" />
+        }
+        
+        <div class="margin-top">
+            <a class="btn btn-default" href="/Post?id=@page.Id" role="button">Read more</a>
+            <div class="btn-group pull-right">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="/Blog/DeletePost?id=@page.Id">delete</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}

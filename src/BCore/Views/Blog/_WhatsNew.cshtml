@@ -1,0 +1,36 @@
+﻿@model BCore.Models.ViewModels.WhatsNewViewModel
+
+<form id="whatsNewForm" asp-action="Submit" asp-controller="Blog" method="post">
+    <div class="form-group">           
+        <textarea id="whatsNewInput" asp-for="Part.Text" class="form-control" rows="1">@Model.Part.Text</textarea>
+    </div>    
+    <input id="whatsNewImageUrl" asp-for="Part.ImageUrl" type="hidden" value="@Model.Part.ImageUrl"/>
+
+    <button id="whatsNewSubmitButton" class="btn btn-success">
+        <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> submit
+    </button>
+
+    <div class="btn-group pull-right">
+        @*<button id="whatsNewPostButton" class="btn btn-primary" type="submit">
+            <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+        </button>*@
+
+        <button id="whatsNewPostButton" type="submit" class="btn btn-primary">
+            <span class="glyphicon glyphicon-paperclip" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><button class="btn btn-link btn-primary" role="link" type="button" data-toggle="modal" data-target="#imageModalForm">image</button></li>            
+        </ul>
+    </div>
+
+    @*----------Parts----------*@
+    <div class="margin-top">        
+            <div id="whatsNewPost">
+            </div>        
+    </div>
+</form>
+

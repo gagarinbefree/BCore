@@ -1,0 +1,33 @@
+﻿@model BCore.Models.ViewModels.WhatsNewViewModel
+
+@for (var ii = 0; ii < Model.Parts.Count(); ii++)
+{
+    <div class="margin-top">   
+        
+        @if (!String.IsNullOrWhiteSpace(Model.Parts[ii].Text))
+        {
+            <div class="wrap">
+                @if (ii == 0)
+                {
+                    <h4>@Model.Parts[ii].Text</h4>
+                }
+                else
+                {
+                    <div>@Model.Parts[ii].Text</div>
+                }
+            </div>
+        }
+        
+        @if (!String.IsNullOrWhiteSpace(Model.Parts[ii].ImageUrl))
+        {
+            <div class="embed-responsive embed-responsive-16by9">
+                <div class="center-cropped">
+                    <img class="center-cropped" src="@Model.Parts[ii].ImageUrl" />
+                </div>
+            </div>
+        }
+            
+        <input asp-for="@Model.Parts[ii].Text" type="hidden" />
+        <input asp-for="@Model.Parts[ii].ImageUrl" type="hidden" />
+    </div>
+}
