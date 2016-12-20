@@ -28,7 +28,7 @@ namespace BCore.Controllers
         [HttpGet]
         [ActionName("Profile")]
         public async Task<IActionResult> ProfileAsync(string returnUrl = null)
-        {
+        {            
             User user = await _userManager.GetUserAsync(HttpContext.User);
 
             return View(new ProfileViewModel { ReturnUrl = returnUrl, Email = user.Email });

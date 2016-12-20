@@ -7,13 +7,19 @@
 @inject UserManager<User> UserManager
 
 <p>
-    <i class="glyphicon glyphicon-user"></i> by <a href="#"> @UserManager.FindByIdAsync(Model.UserId).Result.UserName</a>
-    &nbsp;&nbsp;<i class="glyphicon glyphicon-calendar"></i> @Model.DateTime.ToString("dd.MM.yyyy hh:mm")
-    &nbsp;&nbsp;<i class="glyphicon glyphicon-comment"></i> <a href="#">3 Comments</a>
-    &nbsp;&nbsp;<i class="glyphicon glyphicon-heart"></i> <a href="#">39 Stars</a>
-    &nbsp;&nbsp;<i class="glyphicon glyphicon-tags"></i> Tags:
-    <a href="#"><span class="label label-info">#snipp</span></a>
-    <a href="#"><span class="label label-info">#bootstrap</span></a>
-    <a href="#"><span class="label label-info">#ui</span></a>
-    <a href="#"><span class="label label-info">#growth</span></a>
+    <div class="media">
+        <div class="media-left media-middle">
+            <span class="media-object" gravatar-email="@UserManager.FindByIdAsync(Model.UserId).Result.Email" image-size="64" width="64"></span>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading"><strong>@UserManager.GetUserName(User)</strong></h4>
+            @*&nbsp;&nbsp;*@@*<i class="glyphicon glyphicon-calendar"></i>*@ @Model.DateTime.ToString("dd.MM.yyyy hh:mm")            
+            &nbsp;&nbsp;<i class="glyphicon glyphicon-heart"></i> <a href="#">39</a>
+            &nbsp;&nbsp;@*<i class="glyphicon glyphicon-tags"></i>*@ Tags:
+            <a href="#"><span class="label label-info">#snipp</span></a>
+            <a href="#"><span class="label label-info">#bootstrap</span></a>
+            <a href="#"><span class="label label-info">#ui</span></a>
+            <a href="#"><span class="label label-info">#growth</span></a>
+        </div>        
+    </div>          
 </p>
