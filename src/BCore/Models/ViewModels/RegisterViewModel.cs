@@ -22,5 +22,11 @@ namespace BCore.Models.ViewModels
         [DataType(DataType.Password)]
         [Display(Name = "Password confirm")]
         public string PasswordConfirm { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "E-mail adress")]
+        public string EmailAdress { get; set; }
+
     }
 }

@@ -1,0 +1,44 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using BCore.Dal.Ef;
+
+@model BCore.Models.ViewModels.ProfileViewModel
+@{
+    ViewBag.Title = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<div class="row">
+    <div class="hidden-xs col-sm-2 col-md-3"></div>
+
+    <div class="col-xs-12 col-sm-8 col-md-6">        
+        <div class="media">            
+            <div class="media-left media-middle">                
+                <span class="media-object" gravatar-email="@Model.Email" image-size="64" width="64"></span>
+            </div> 
+            <div class="media-body">
+                <h1 class="media-heading">@UserManager.GetUserName(User)</h1>      
+            </div>            
+        </div>                
+        
+        <div class="margin-top">
+            <form method="post" asp-controller="Profile" asp-action="Profile"
+                  asp-route-returnUrl="@Model.ReturnUrl">
+                <div class="text-error" asp-validation-summary="ModelOnly"></div>            
+                <div class="form-group">
+                    <label asp-for="@Model.Email"></label><br />
+                    <input class="form-control" asp-for="@Model.Email" type="email"/>
+                    <span class="text-error" asp-validation-for="@Model.Email"></span>
+                </div>   
+
+                <div class="margin-top">
+                    <input class="btn btn-success" type="submit" value="Save changes" />
+                </div>
+            </form>
+        </div>
+
+
+    <div class="hidden-xs col-sm-2 col-md-3"></div>
+</div>

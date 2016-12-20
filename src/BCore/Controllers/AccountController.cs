@@ -35,7 +35,7 @@ namespace BCore.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { UserName = model.UserName };
+                User user = new User { UserName = model.UserName, Email = model.EmailAdress };
                 // добавляем пользователя
                 var resultCreateUser = await _userManager.CreateAsync(user, model.Password);
                 if (resultCreateUser.Succeeded)
