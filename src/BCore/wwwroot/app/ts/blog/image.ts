@@ -1,8 +1,8 @@
 ﻿/// <reference path="../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../typings/jquery.fileupload/jquery.fileupload.d.ts" />
 /// <reference path="../../typings/nprogress/nprogress.d.ts" />
-/// <reference path="../../typings/imagefill.js/imagefill.js.d.ts" />
 /// <reference path="../../typings/bootstrap/bootstrap.d.ts" />
+///// <reference path="../../typings/respify/respify.d.ts" />
 
 module Blog {
     export class Image {
@@ -51,7 +51,7 @@ module Blog {
             this.elButtonUpload.on('click', (e: JQueryEventObject) => this.submit(e));
 
             this.elInput.on('change', (e: JQueryEventObject) => this.inputChange(e));            
-            this.reader.onload = (e: ProgressEvent) => this.onLoad(e);            
+            this.reader.onload = (e: ProgressEvent) => this.onLoad(e);                        
         }
 
         private browse(e: JQueryEventObject): void {
@@ -74,6 +74,12 @@ module Blog {
         private onLoad(e: ProgressEvent): void {
             this.elPreview.attr("src", this.reader.result);                      
             this.elButtonUpload.prop("disabled", false);
+
+            debugger;
+
+            //this.elPreview.respify({
+            //    background: true
+            //});
         }
 
         private startUpload(): void {

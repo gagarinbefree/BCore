@@ -1,5 +1,6 @@
 /// <reference path="../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../typings/autosize/autosize.d.ts" />
+/// <reference path="../../typings/respify/respify.d.ts" />
 var Blog;
 (function (Blog) {
     var WhatsNew = (function () {
@@ -13,7 +14,7 @@ var Blog;
             this.elHiddenUrl = $("#whatsNewImageUrl");
             this.elPostButton.on("click", function (e) { return _this.post(e); });
             this.el16x9 = $(".embed-responsive-16by9");
-            this.el16x9.imagefill({});
+            this.el16x9.respify({});
             this.init();
         }
         WhatsNew.prototype.init = function () {
@@ -40,7 +41,7 @@ var Blog;
         WhatsNew.prototype.htmLoadSuccess = function (htmlString) {
             this.elPost.html(htmlString);
             debugger;
-            $(".post-image-container").imagefill({});
+            //$(".post-image-container").imagefill({});            
             this.init();
         };
         return WhatsNew;

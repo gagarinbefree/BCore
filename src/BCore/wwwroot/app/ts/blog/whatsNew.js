@@ -1,5 +1,6 @@
 /// <reference path="../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../typings/autosize/autosize.d.ts" />
+/// <reference path="../../typings/respify/respify.d.ts" />
 var Blog;
 (function (Blog) {
     var WhatsNew = (function () {
@@ -12,6 +13,8 @@ var Blog;
             this.elPost = $("#whatsNewPost");
             this.elHiddenUrl = $("#whatsNewImageUrl");
             this.elPostButton.on("click", function (e) { return _this.post(e); });
+            this.el16x9 = $(".embed-responsive-16by9");
+            this.el16x9.respify({});
             this.init();
         }
         WhatsNew.prototype.init = function () {
@@ -25,7 +28,21 @@ var Blog;
         WhatsNew.prototype.post = function (e) {
             var _this = this;
             e.preventDefault();
-            this.elPost.load("/Blog/Post", this.elSubmitForm.serializeArray(), function () { return _this.init(); });
+            $.ajax({
+                type: "POST",
+                url: "/Blog/Post",
+                data: this.elSubmitForm.serializeArray(),
+                success: function (htmlString) { return _this.htmLoadSuccess(htmlString); }
+            });
+            //this.elPost.load("/Blog/Post"
+            //    , this.elSubmitForm.serializeArray()
+            //    , () => this.init());
+        };
+        WhatsNew.prototype.htmLoadSuccess = function (htmlString) {
+            this.elPost.html(htmlString);
+            debugger;
+            //$(".post-image-container").imagefill({});            
+            this.init();
         };
         return WhatsNew;
     }());

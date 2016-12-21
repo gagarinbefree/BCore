@@ -1,5 +1,6 @@
 ﻿/// <reference path="../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../typings/autosize/autosize.d.ts" />
+/// <reference path="../../typings/respify/respify.d.ts" />
 
 module Blog {
     export class WhatsNew {
@@ -25,7 +26,7 @@ module Blog {
             this.elPostButton.on("click", (e) => this.post(e));                     
            
             this.el16x9 = $(".embed-responsive-16by9");
-            this.el16x9.imagefill({});
+            this.el16x9.respify({});
 
             this.init();
         }
@@ -61,7 +62,7 @@ module Blog {
 
             debugger;
 
-            $(".post-image-container").imagefill({});            
+            //$(".post-image-container").imagefill({});            
 
             this.init();
         }             

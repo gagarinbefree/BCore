@@ -32,7 +32,7 @@
         "Backload.AspNetCore": "2.2.7",
         "jquery.fileupload.TypeScript.DefinitelyTyped": "0.0.8",
         "nprogress.TypeScript.DefinitelyTyped": "0.0.7",
-        "bootstrap.TypeScript.DefinitelyTyped": "0.9.2"
+        "bootstrap.TypeScript.DefinitelyTyped": "0.9.2"        
     },
 
     "tools": {
