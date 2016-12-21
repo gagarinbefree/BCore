@@ -19,18 +19,10 @@
         }
         
         @if (!String.IsNullOrWhiteSpace(Model.Parts[ii].ImageUrl))
-        {
-            @*<div class="embed-responsive embed-responsive-16by9">
-                <div class="center-cropped">
-                    <img class="center-cropped" src="@Model.Parts[ii].ImageUrl" />
-                </div>
-            </div>*@
-
-            <div class="embed-responsive embed-responsive-16by9">
-                <img class="embed-responsive-item" src="@Model.Parts[ii].ImageUrl" />
+        {          
+            <div class="post-image-container embed-responsive embed-responsive-16by9">
+                <img src="@Model.Parts[ii].ImageUrl" onload="$('.post-image-container').imagefill();"/>
             </div>
-
-
         }
             
         <input asp-for="@Model.Parts[ii].Text" type="hidden" />

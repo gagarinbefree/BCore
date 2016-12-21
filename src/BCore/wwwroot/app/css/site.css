@@ -62,7 +62,6 @@ div.center-cropped img {
     transform: translateX(-50%);
 }
 
-
 img, .embed-responsive {
   /*margin-bottom: 30px;*/
     max-height: 100%;

@@ -7,7 +7,7 @@
 module Blog {
     export class Image {
         private owner: WhatsNew;
-
+        
         private elPreview: JQuery = $("#imageUploadPreview");
         private elBrowseButton: JQuery = $("#imageBrowseBtnUpload");
         private elInput: JQuery = $("#imageInputUpload");
@@ -51,7 +51,7 @@ module Blog {
             this.elButtonUpload.on('click', (e: JQueryEventObject) => this.submit(e));
 
             this.elInput.on('change', (e: JQueryEventObject) => this.inputChange(e));            
-            this.reader.onload = (e: ProgressEvent) => this.onLoad(e);
+            this.reader.onload = (e: ProgressEvent) => this.onLoad(e);            
         }
 
         private browse(e: JQueryEventObject): void {
@@ -72,9 +72,7 @@ module Blog {
         }
 
         private onLoad(e: ProgressEvent): void {
-            this.elPreview.attr("src", this.reader.result);
-            this.elPreview.imagefill(null);
-
+            this.elPreview.attr("src", this.reader.result);                      
             this.elButtonUpload.prop("disabled", false);
         }
 

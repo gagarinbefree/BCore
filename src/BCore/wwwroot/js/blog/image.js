@@ -57,7 +57,6 @@ var Blog;
         };
         Image.prototype.onLoad = function (e) {
             this.elPreview.attr("src", this.reader.result);
-            this.elPreview.imagefill(null);
             this.elButtonUpload.prop("disabled", false);
         };
         Image.prototype.startUpload = function () {

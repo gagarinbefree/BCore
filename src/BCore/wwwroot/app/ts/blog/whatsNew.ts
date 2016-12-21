@@ -10,6 +10,8 @@ module Blog {
         private elInput: JQuery;
         private elPostButton: JQuery;
         private elPost: JQuery;
+        
+        private el16x9: JQuery;
      
         constructor(userId: string) {
             this.userId = userId;
@@ -18,9 +20,12 @@ module Blog {
             this.elInput = $("#whatsNewInput");
             this.elPostButton = $("#whatsNewPostButton");
             this.elPost = $("#whatsNewPost");
-            this.elHiddenUrl = $("#whatsNewImageUrl");
+            this.elHiddenUrl = $("#whatsNewImageUrl");                                    
 
-            this.elPostButton.on("click", (e) => this.post(e));         
+            this.elPostButton.on("click", (e) => this.post(e));                     
+           
+            this.el16x9 = $(".embed-responsive-16by9");
+            this.el16x9.imagefill({});
 
             this.init();
         }
@@ -32,16 +37,33 @@ module Blog {
             this.elInput.val("");
             autosize.update(this.elInput);
             this.elInput.focus();
-
-            this.elHiddenUrl.val("");
+            this.elHiddenUrl.val("");                        
         }
 
         public post(e: Event): void {
             e.preventDefault();
 
-            this.elPost.load("/Blog/Post"
-                , this.elSubmitForm.serializeArray()
-                , () => this.init());
+            $.ajax({
+                type: "POST",
+                url: "/Blog/Post",
+                data: this.elSubmitForm.serializeArray(),
+                success: (htmlString: string) => this.htmLoadSuccess(htmlString)                
+            });
+
+
+            //this.elPost.load("/Blog/Post"
+            //    , this.elSubmitForm.serializeArray()
+            //    , () => this.init());
         }
+
+        private htmLoadSuccess(htmlString: string) {
+            this.elPost.html(htmlString);
+
+            debugger;
+
+            $(".post-image-container").imagefill({});            
+
+            this.init();
+        }             
     }
 }
