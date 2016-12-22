@@ -25,8 +25,16 @@ module Blog {
 
             this.elPostButton.on("click", (e) => this.post(e));                     
            
-            this.el16x9 = $(".embed-responsive-16by9");
-            this.el16x9.respify({});
+            //this.el16x9 = $(".img-responsive2");
+
+
+            debugger;
+
+            //$('#default-responsive').respify();
+
+            
+
+            //this.el16x9.respify({});
 
             this.init();
         }

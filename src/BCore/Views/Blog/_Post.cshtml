@@ -20,9 +20,13 @@
         
         @if (!String.IsNullOrWhiteSpace(Model.Parts[ii].ImageUrl))
         {          
-            <div class="post-image-container embed-responsive embed-responsive-16by9">
-                <img src="@Model.Parts[ii].ImageUrl" onload="$('.post-image-container').imagefill();"/>
+            <div class="embed-responsive embed-responsive-16by9">
+                <img class="img-responsive2" src="@Model.Parts[ii].ImageUrl"/>
             </div>
+
+            <span id="default-responsive" class="responsive-img">
+                <noscript><img src="@Model.Parts[ii].ImageUrl"></noscript>
+            </span>
         }
             
         <input asp-for="@Model.Parts[ii].Text" type="hidden" />

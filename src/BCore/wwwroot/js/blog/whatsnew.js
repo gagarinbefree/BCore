@@ -13,8 +13,10 @@ var Blog;
             this.elPost = $("#whatsNewPost");
             this.elHiddenUrl = $("#whatsNewImageUrl");
             this.elPostButton.on("click", function (e) { return _this.post(e); });
-            this.el16x9 = $(".embed-responsive-16by9");
-            this.el16x9.respify({});
+            //this.el16x9 = $(".img-responsive2");
+            debugger;
+            //$('#default-responsive').respify();
+            //this.el16x9.respify({});
             this.init();
         }
         WhatsNew.prototype.init = function () {

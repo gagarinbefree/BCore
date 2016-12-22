@@ -47,12 +47,13 @@
                 @if (!String.IsNullOrWhiteSpace(page.Parts[ii].ImageUrl))
                 {
                     @*<div class="embed-responsive embed-responsive-16by9">
-                        <img class="embed-responsive-item" src="@page.Parts[ii].ImageUrl" />
+                        <img class="img-responsive2" src="@page.Parts[ii].ImageUrl" />
                     </div>*@
 
-                    <div class="embed-responsive embed-responsive-16by9">
-                        <img src="@page.Parts[ii].ImageUrl" />
-                    </div>
+
+                    <span id="default-responsive" class="responsive-img">
+                        <noscript><img src="@page.Parts[ii].ImageUrl"></noscript>
+                    </span>
                 }
 
             </div>
