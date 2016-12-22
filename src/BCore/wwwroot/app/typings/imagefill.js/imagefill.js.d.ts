@@ -1,6 +1,7 @@
 // Type definitions for imagefill.js
 
 interface JQuery {
+    imagefill(): JQuery;    
     imagefill(options: any): JQuery;    
 }
 

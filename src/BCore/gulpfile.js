@@ -52,8 +52,7 @@ gulp.task("min:js", function (cb) {
             paths.webroot + "lib/nprogress/nprogress.js",
             paths.webroot + "lib/ev-emitter/ev-emitter.js",
             paths.webroot + "lib/imagesloaded/imagesloaded.js",
-            paths.webroot + "lib/imagefill.js/js/jquery-imagefill.js",
-            paths.webroot + "lib/respify/respify.js",
+            paths.webroot + "lib/imagefill.js/js/jquery-imagefill.js",            
             "!" + paths.minJs            
         ], { base: "." })
         .pipe(concat(paths.concatJsDest))
