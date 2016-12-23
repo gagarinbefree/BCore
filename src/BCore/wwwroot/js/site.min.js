@@ -58,7 +58,7 @@ var Blog;
         Image.prototype.onLoad = function (e) {
             this.elPreview.attr("src", this.reader.result);
             this.elButtonUpload.prop("disabled", false);
-            //this.elPreview.imagefill();
+            this.elPreview.imagefill();
         };
         Image.prototype.startUpload = function () {
             NProgress.start();

@@ -75,7 +75,7 @@ module Blog {
             this.elPreview.attr("src", this.reader.result);                      
             this.elButtonUpload.prop("disabled", false);
 
-            //this.elPreview.imagefill();
+            this.elPreview.imagefill();
         }
 
         private startUpload(): void {

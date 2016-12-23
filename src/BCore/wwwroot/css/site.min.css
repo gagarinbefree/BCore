@@ -62,7 +62,9 @@ div.center-cropped img {
     transform: translateX(-50%);
 }
 
-img, .embed-responsive {  
+.img-responsive-height {
+    /*height: 100%!important;*/
+    position: absolute;
 }
 /* Make clicks pass-through */
 #nprogress {
