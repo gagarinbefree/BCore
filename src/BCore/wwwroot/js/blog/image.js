@@ -7,6 +7,7 @@ var Blog;
 (function (Blog) {
     var Image = (function () {
         function Image(owner) {
+            this.elBrowseText = $("#imageBrowseText");
             this.elPreview = $("#imageUploadPreview");
             this.elBrowseButton = $("#imageBrowseBtnUpload");
             this.elInput = $("#imageInputUpload");
@@ -58,7 +59,7 @@ var Blog;
         Image.prototype.onLoad = function (e) {
             this.elPreview.attr("src", this.reader.result);
             this.elButtonUpload.prop("disabled", false);
-            this.elPreview.imagefill();
+            this.elBrowseText.hide();
         };
         Image.prototype.startUpload = function () {
             NProgress.start();

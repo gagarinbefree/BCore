@@ -7,7 +7,8 @@
 module Blog {
     export class Image {
         private owner: WhatsNew;
-        
+
+        private elBrowseText: JQuery = $("#imageBrowseText");
         private elPreview: JQuery = $("#imageUploadPreview");
         private elBrowseButton: JQuery = $("#imageBrowseBtnUpload");
         private elInput: JQuery = $("#imageInputUpload");
@@ -72,10 +73,10 @@ module Blog {
         }
 
         private onLoad(e: ProgressEvent): void {
-            this.elPreview.attr("src", this.reader.result);                      
+            this.elPreview.attr("src", this.reader.result);
             this.elButtonUpload.prop("disabled", false);
 
-            this.elPreview.imagefill();
+            this.elBrowseText.hide();
         }
 
         private startUpload(): void {
