@@ -2,11 +2,12 @@
 /// <reference path="../../typings/jquery.fileupload/jquery.fileupload.d.ts" />
 /// <reference path="../../typings/nprogress/nprogress.d.ts" />
 /// <reference path="../../typings/bootstrap/bootstrap.d.ts" />
-///// <reference path="../../typings/respify/respify.d.ts" />
+/// <reference path="../../typings/imagefill.js/imagefill.js.d.ts" />
 var Blog;
 (function (Blog) {
     var Image = (function () {
         function Image(owner) {
+            this.elBrowseText = $("#imageBrowseText");
             this.elPreview = $("#imageUploadPreview");
             this.elBrowseButton = $("#imageBrowseBtnUpload");
             this.elInput = $("#imageInputUpload");
@@ -58,10 +59,7 @@ var Blog;
         Image.prototype.onLoad = function (e) {
             this.elPreview.attr("src", this.reader.result);
             this.elButtonUpload.prop("disabled", false);
-            debugger;
-            //this.elPreview.respify({
-            //    background: true
-            //});
+            this.elBrowseText.hide();
         };
         Image.prototype.startUpload = function () {
             NProgress.start();

@@ -1,0 +1,49 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using BCore.Dal.Ef;
+
+@model BCore.Models.ViewModels.PostViewModel
+@{
+    ViewBag.Title = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<div class="row">
+    <div class="hidden-xs col-sm-2 col-md-3"></div>
+
+    <div class="col-xs-12 col-sm-8 col-md-6">
+
+        @{
+            await Html.RenderPartialAsync("_StatusLine", Model);
+        }
+
+        @for (var ii = 0; ii < Model.Parts.Count(); ii++)
+        {
+            <div class="margin-top">
+                @if (!String.IsNullOrWhiteSpace(Model.Parts[ii].Text))
+                {
+                    <div class="wrap">
+                        @if (ii == 0)
+                        {
+                            <h4><strong>@Model.Parts[ii].Text</strong></h4>
+                        }
+                        else
+                        {
+                            <div>@Model.Parts[ii].Text</div>
+                        }
+                    </div>
+                }
+
+                @if (!String.IsNullOrWhiteSpace(Model.Parts[ii].ImageUrl))
+                {
+                    <img class="img-responsive" src="@Model.Parts[ii].ImageUrl">
+                }
+            </div>
+        }
+
+    </div>
+
+    <div class="hidden-xs col-sm-2 col-md-3"></div>
+</div>

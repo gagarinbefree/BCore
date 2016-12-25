@@ -16,7 +16,7 @@ namespace BCore.Dal.Repository
             , Expression<Func<T, bool>> where = null
             , int? take = null
             , params Expression<Func<T, object>>[] includes);
-        Task<T> GetAsync(Guid id);
+        Task<T> GetAsync(Guid id, params Expression<Func<T, object>>[] includes);
         Task<int> UpdateAsync(T item);
         IPagedList<T> GetPage<TOrderKey>(Expression<Func<T, TOrderKey>> orderByDesc = null, int page = 1, int size = 50, params Expression<Func<T, object>>[] includes);        
     }

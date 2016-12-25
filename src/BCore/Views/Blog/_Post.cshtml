@@ -2,14 +2,13 @@
 
 @for (var ii = 0; ii < Model.Parts.Count(); ii++)
 {
-    <div class="margin-top">   
-        
+    <div class="margin-top">           
         @if (!String.IsNullOrWhiteSpace(Model.Parts[ii].Text))
         {
             <div class="wrap">
                 @if (ii == 0)
                 {
-                    <h4>@Model.Parts[ii].Text</h4>
+                    <h4><strong>@Model.Parts[ii].Text</strong></h4>
                 }
                 else
                 {
@@ -21,9 +20,9 @@
         @if (!String.IsNullOrWhiteSpace(Model.Parts[ii].ImageUrl))
         {          
             <img class="img-responsive" src="@Model.Parts[ii].ImageUrl">
-        }
-            
-        <input asp-for="@Model.Parts[ii].Text" type="hidden" />
-        <input asp-for="@Model.Parts[ii].ImageUrl" type="hidden" />
+        }                   
     </div>
+
+    <input asp-for="@Model.Parts[ii].Text" type="hidden" />
+    <input asp-for="@Model.Parts[ii].ImageUrl" type="hidden" />
 }

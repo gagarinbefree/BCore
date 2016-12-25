@@ -35,9 +35,15 @@ namespace BCore.Dal.Ef
             return await _db.SaveChangesAsync();
         }
 
-        public async Task<T> GetAsync(Guid id)
+        public async Task<T> GetAsync(Guid id, params Expression<Func<T, object>>[] includes)
         {
-            return await _db.Set<T>().SingleOrDefaultAsync<T>(m => m.Id == id);
+            IQueryable<T> q = _db.Set<T>();
+            foreach (var include in includes)
+            {
+                q = q.Include(include);
+            }
+
+            return await q.Where(f => f.Id == id).SingleOrDefaultAsync();            
         }
 
         public async Task<ICollection<T>> GetAllAsync<TOrderKey>(Expression<Func<T, TOrderKey>> orderBy = null

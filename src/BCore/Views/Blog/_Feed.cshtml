@@ -21,21 +21,12 @@
         @for (var ii = 0; ii < page.Parts.Count(); ii++)
         {           
             <div class="margin-top">
-                @*@if (ii == 0)
-                {
-                    <h4><strong>@page.Parts[ii].Text</strong></h4>
-                }
-                else if (ii == 2)
-                {
-                    <div>@page.Parts[ii].Text</div>
-                }*@
-
                 @if (!String.IsNullOrWhiteSpace(page.Parts[ii].Text))
                 {
                     <div class="wrap">
                         @if (ii == 0)
                         {
-                            <h4>@page.Parts[ii].Text</h4>
+                            <h4><strong>@page.Parts[ii].Text</strong></h4>
                         }
                         else
                         {
@@ -45,12 +36,9 @@
                 }
 
                 @if (!String.IsNullOrWhiteSpace(page.Parts[ii].ImageUrl))
-                {
-                    @*<div class="embed-responsive embed-responsive-16by9">*@
-                        <img class="img-responsive" src="@page.Parts[ii].ImageUrl" />
-                    @*</div>*@
+                {                    
+                    <img class="img-responsive" src="@page.Parts[ii].ImageUrl" />                    
                 }
-
             </div>
 
             <input asp-for="@page.Parts[ii].Id" type="hidden" />
