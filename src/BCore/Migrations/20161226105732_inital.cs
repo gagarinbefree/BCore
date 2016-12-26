@@ -10,6 +10,18 @@ namespace BCore.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Hashes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    Tag = table.Column<string>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Hashes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Posts",
                 columns: table => new
                 {
@@ -118,6 +130,30 @@ namespace BCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PostHashes",
+                columns: table => new
+                {
+                    PostId = table.Column<Guid>(nullable: false),
+                    HashId = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostHashes", x => new { x.PostId, x.HashId });
+                    table.ForeignKey(
+                        name: "FK_PostHashes_Hashes_HashId",
+                        column: x => x.HashId,
+                        principalTable: "Hashes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PostHashes_Posts_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -209,8 +245,24 @@ namespace BCore.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Hashes_Tag",
+                table: "Hashes",
+                column: "Tag",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Parts_PostId",
                 table: "Parts",
+                column: "PostId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostHashes_HashId",
+                table: "PostHashes",
+                column: "HashId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostHashes_PostId",
+                table: "PostHashes",
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
@@ -264,6 +316,9 @@ namespace BCore.Migrations
                 name: "Parts");
 
             migrationBuilder.DropTable(
+                name: "PostHashes");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -277,6 +332,9 @@ namespace BCore.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Hashes");
 
             migrationBuilder.DropTable(
                 name: "Posts");

@@ -34,6 +34,22 @@ namespace BCore.Migrations
                     b.ToTable("Comments");
                 });
 
+            modelBuilder.Entity("BCore.Dal.BlogModels.Hash", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Tag")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Tag")
+                        .IsUnique();
+
+                    b.ToTable("Hashes");
+                });
+
             modelBuilder.Entity("BCore.Dal.BlogModels.Part", b =>
                 {
                     b.Property<Guid>("Id")
@@ -68,6 +84,21 @@ namespace BCore.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("BCore.Dal.BlogModels.PostHash", b =>
+                {
+                    b.Property<Guid>("PostId");
+
+                    b.Property<Guid>("HashId");
+
+                    b.HasKey("PostId", "HashId");
+
+                    b.HasIndex("HashId");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("PostHashes");
                 });
 
             modelBuilder.Entity("BCore.Dal.Ef.User", b =>
@@ -238,6 +269,19 @@ namespace BCore.Migrations
                 {
                     b.HasOne("BCore.Dal.BlogModels.Post", "Post")
                         .WithMany("Parts")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("BCore.Dal.BlogModels.PostHash", b =>
+                {
+                    b.HasOne("BCore.Dal.BlogModels.Hash", "Hash")
+                        .WithMany("PostHashes")
+                        .HasForeignKey("HashId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BCore.Dal.BlogModels.Post", "Post")
+                        .WithMany("PostHashes")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

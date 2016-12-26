@@ -16,11 +16,13 @@ namespace BCore.Dal.BlogModels
         public string Stars { set; get; }
         public virtual ICollection<Part> Parts { set; get; }
         public virtual ICollection<Comment> Comments { set; get; }                
+        public virtual ICollection<PostHash> PostHashes { set; get; }
 
         public Post()
         {
             Parts = new List<Part>();
-            Comments = new List<Comment>();            
+            Comments = new List<Comment>();
+            PostHashes = new List<PostHash>();
         }
     }        
 }

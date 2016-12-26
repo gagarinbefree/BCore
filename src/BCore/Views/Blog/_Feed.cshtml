@@ -18,7 +18,7 @@
 
 
         <input asp-for="@page.Id" type="hidden" />
-        @for (var ii = 0; ii < page.Parts.Count(); ii++)
+        @for (var ii = 0; ii < (page.Parts.Count() == 1 ? 1 : 2); ii++)
         {           
             <div class="margin-top">
                 @if (!String.IsNullOrWhiteSpace(page.Parts[ii].Text))
