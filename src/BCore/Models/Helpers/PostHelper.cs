@@ -15,22 +15,22 @@ namespace BCore.Models.Helpers
     // to do DI
     public static class BlogHelper
     {
-        public static async Task<int> SubmitPostAsync(WhatsNewViewModel model, Unit _unit, UserManager<User> _userManager, ClaimsPrincipal user)
+        public static async Task<int> SubmitPostAsync(WhatsNewViewModel model, Unit unit, UserManager<User> manager, ClaimsPrincipal user)
         {
             if (model.Parts.Count > 0)
             {
                 var post = Mapper.Map<Post>(model);
-                post.UserId = _userManager.GetUserId(user);
+                post.UserId = manager.GetUserId(user);
 
-                return await _unit.PostRepository.CreateAsync(post);
+                return await unit.PostRepository.CreateAsync(post);
             }
 
             return -1;
         }
 
-        public static async Task<int> DeletePostAsync(Guid id, Unit _unit)
+        public static async Task<int> DeletePostAsync(Guid id, Unit unit)
         {
-            return await _unit.PostRepository.DeleteAsync(new Post { Id = id });
+            return await unit.PostRepository.DeleteAsync(new Post { Id = id });
         }
 
         public static void AddPartToPost(WhatsNewViewModel model)
@@ -40,12 +40,12 @@ namespace BCore.Models.Helpers
             model.Part.ImageUrl = String.Empty;
         }
 
-        public static async Task<ICollection<Post>> GetPostsByUser(Unit _unit, UserManager<User> _userManager, ClaimsPrincipal user)
+        public static async Task<ICollection<Post>> GetPostsByUser(Unit unit, UserManager<User> manager, ClaimsPrincipal user)
         {
-            return await _unit.PostRepository.GetAllAsync<DateTime>(
+            return await unit.PostRepository.GetAllAsync<DateTime>(
                 f => f.DateTime
                 , true
-                , f => f.UserId == _userManager.GetUserId(user) && f.Parts.Count > 0
+                , f => f.UserId == manager.GetUserId(user) && f.Parts.Count > 0
                 , 50
                 , f => f.Parts);
         }
