@@ -8,6 +8,7 @@ using AutoMapper;
 using BCore.Dal.BlogModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using BCore.Models.Helpers;
 
 namespace BCore.Controllers
 {
@@ -28,13 +29,8 @@ namespace BCore.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
-            var posts = await _unit.PostRepository.GetAllAsync<DateTime>(
-                f => f.DateTime
-                , true
-                , f => f.UserId == _userManager.GetUserId(HttpContext.User) && f.Parts.Count > 0
-                , 50
-                , f => f.Parts);
-            
+            var posts = await BlogHelper.GetPostsByUser(_unit, _userManager, HttpContext.User);
+
             return View(Mapper.Map<WhatsNewViewModel>(posts));
         }
         
@@ -43,9 +39,7 @@ namespace BCore.Controllers
         {
             ModelState.Clear();
 
-            m.Parts.Add(Mapper.Map<PartViewModel>(m.Part));
-            m.Part.Text = String.Empty;
-            m.Part.ImageUrl = String.Empty;
+            BlogHelper.AddPartToPost(m);
 
             return PartialView("_Post", m);
         }
@@ -56,13 +50,7 @@ namespace BCore.Controllers
         {
             ModelState.Clear();
 
-            if (m.Parts.Count > 0)
-            {
-                var post = Mapper.Map<Post>(m);
-                post.UserId = _userManager.GetUserId(HttpContext.User);
-
-                await _unit.PostRepository.CreateAsync(post);
-            }
+            await BlogHelper.SubmitPostAsync(m, _unit, _userManager, HttpContext.User);
 
             TempData["messageStatus"] = new Random(DateTime.Now.Millisecond).Next(1, 1000);
 
@@ -72,7 +60,7 @@ namespace BCore.Controllers
         [ActionName("DeletePost")]
         public async Task<ActionResult> DeletePostAsync(Guid id)
         {
-            await _unit.PostRepository.DeleteAsync(new Dal.BlogModels.Post { Id = id });
+            await BlogHelper.DeletePostAsync(id, _unit);
 
             TempData["messageStatus"] = new Random(DateTime.Now.Millisecond).Next(1, 1000);
 
