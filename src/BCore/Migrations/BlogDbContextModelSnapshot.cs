@@ -88,11 +88,14 @@ namespace BCore.Migrations
 
             modelBuilder.Entity("BCore.Dal.BlogModels.PostHash", b =>
                 {
-                    b.Property<Guid>("PostId");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<Guid>("HashId");
 
-                    b.HasKey("PostId", "HashId");
+                    b.Property<Guid>("PostId");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("HashId");
 

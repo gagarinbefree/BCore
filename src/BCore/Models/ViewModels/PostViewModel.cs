@@ -18,6 +18,6 @@ namespace BCore.Models.ViewModels
         public PostViewModel()
         {
             Parts = new List<PartViewModel>();
-        }
+        }        
     }
 }

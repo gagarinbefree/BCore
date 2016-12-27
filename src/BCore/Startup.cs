@@ -111,7 +111,7 @@ namespace BCore
 
             app.UseBackload();
 
-            //_seed(app);
+            _seed(app);
         }
 
         private void _configureAutoMapper()

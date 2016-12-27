@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.DataProtection.KeyManagement;
 
 namespace BCore.Dal.Ef
 {
-    public class BlogRepository<T> : IRepository<T>  where T : Entity        
+    public class BlogRepository<T> : IRepository<T> where T : Entity
     {
         private BlogDbContext _db;
 
@@ -20,19 +20,37 @@ namespace BCore.Dal.Ef
         {
             _db = context;
         }
-
-        public async Task<int> CreateAsync(T item)
+       
+        public async Task<Guid> CreateAsync(T item)
         {
+            var entity = item as Entity;
+
+            if (entity == null)
+                throw new Exception(String.Format("{0} is not Entity", item.GetType()));
+
             _db.Set<T>().Add(item);
 
-            return await _db.SaveChangesAsync();
+            await _db.SaveChangesAsync();
+
+            return entity.Id;
         }
 
         public async Task<int> DeleteAsync(T item)
         {
             _db.Set<T>().Remove(item);
 
-            return await _db.SaveChangesAsync();
+            return await _db.SaveChangesAsync();            
+        }
+
+        public async Task<T> GetAsync(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> q = _db.Set<T>();
+            foreach (var include in includes)
+            {
+                q = q.Include(include);
+            }
+
+            return await q.Where(where).SingleOrDefaultAsync();
         }
 
         public async Task<T> GetAsync(Guid id, params Expression<Func<T, object>>[] includes)

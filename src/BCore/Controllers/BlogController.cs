@@ -8,7 +8,7 @@ using AutoMapper;
 using BCore.Dal.BlogModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using BCore.Models.Helpers;
+using BCore.Models.Commands;
 
 namespace BCore.Controllers
 {
@@ -29,7 +29,7 @@ namespace BCore.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
-            var posts = await BlogHelper.GetPostsByUser(_unit, _userManager, HttpContext.User);
+            var posts = await BlogCommands.GetPostsByUser(_unit, _userManager, HttpContext.User);
 
             return View(Mapper.Map<WhatsNewViewModel>(posts));
         }
@@ -39,7 +39,7 @@ namespace BCore.Controllers
         {
             ModelState.Clear();
 
-            BlogHelper.AddPartToPost(m);
+            BlogCommands.AddPartToPost(m);
 
             return PartialView("_Post", m);
         }
@@ -50,7 +50,7 @@ namespace BCore.Controllers
         {
             ModelState.Clear();
 
-            await BlogHelper.SubmitPostAsync(m, _unit, _userManager, HttpContext.User);
+            await BlogCommands.SubmitPostAsync(m, _unit, _userManager, HttpContext.User);
 
             TempData["messageStatus"] = new Random(DateTime.Now.Millisecond).Next(1, 1000);
 
@@ -60,7 +60,7 @@ namespace BCore.Controllers
         [ActionName("DeletePost")]
         public async Task<ActionResult> DeletePostAsync(Guid id)
         {
-            await BlogHelper.DeletePostAsync(id, _unit);
+            await BlogCommands.DeletePostAsync(id, _unit);
 
             TempData["messageStatus"] = new Random(DateTime.Now.Millisecond).Next(1, 1000);
 

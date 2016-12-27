@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace BCore.Dal.Repository
 {
     public interface IRepository<T>
-    {
-        Task<int> CreateAsync(T item);
+    {        
+        Task<Guid> CreateAsync(T item);
         Task<int> DeleteAsync(T item);
         Task<ICollection<T>> GetAllAsync<TOrderKey>(Expression<Func<T, TOrderKey>> orderBy = null
             , bool isDesc = false
@@ -17,6 +17,7 @@ namespace BCore.Dal.Repository
             , int? take = null
             , params Expression<Func<T, object>>[] includes);
         Task<T> GetAsync(Guid id, params Expression<Func<T, object>>[] includes);
+        Task<T> GetAsync(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] includes);
         Task<int> UpdateAsync(T item);
         IPagedList<T> GetPage<TOrderKey>(Expression<Func<T, TOrderKey>> orderByDesc = null, int page = 1, int size = 50, params Expression<Func<T, object>>[] includes);        
     }

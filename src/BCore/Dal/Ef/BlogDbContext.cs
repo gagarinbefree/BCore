@@ -27,8 +27,9 @@ namespace BCore.Dal.Ef
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<PostHash>().HasKey(x => new { x.PostId, x.HashId });
-
+            builder.Entity<PostHash>().HasKey(f => f.Id);
+            //builder.Entity<PostHash>().HasKey(x => new { x.PostId, x.HashId });
+            
             builder.Entity<PostHash>()
                 .HasOne(pt => pt.Post)
                 .WithMany(p => p.PostHashes)

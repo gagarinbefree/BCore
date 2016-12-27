@@ -8,7 +8,7 @@ using BCore.Dal.Ef;
 namespace BCore.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20161226105732_inital")]
+    [Migration("20161227094942_inital")]
     partial class inital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -89,11 +89,14 @@ namespace BCore.Migrations
 
             modelBuilder.Entity("BCore.Dal.BlogModels.PostHash", b =>
                 {
-                    b.Property<Guid>("PostId");
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<Guid>("HashId");
 
-                    b.HasKey("PostId", "HashId");
+                    b.Property<Guid>("PostId");
+
+                    b.HasKey("Id");
 
                     b.HasIndex("HashId");
 

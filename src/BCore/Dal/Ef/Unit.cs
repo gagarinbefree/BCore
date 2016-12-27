@@ -49,6 +49,30 @@ namespace BCore.Dal.Ef
             }
         }
 
+        private IRepository<Hash> _hashRepository;
+        public IRepository<Hash> HashRepository
+        {
+            get
+            {
+                if (_hashRepository == null)
+                    _hashRepository = new BlogRepository<Hash>(_db);
+
+                return _hashRepository;
+            }
+        }
+
+        private IRepository<PostHash> _postHashRepository;
+        public IRepository<PostHash> PostHashRepository
+        {
+            get
+            {
+                if (_postHashRepository == null)
+                    _postHashRepository = new BlogRepository<PostHash>(_db);
+
+                return _postHashRepository;
+            }
+        }
+
         public Unit(BlogDbContext db)
         {
             _db = db;

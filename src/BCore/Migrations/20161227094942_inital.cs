@@ -133,12 +133,13 @@ namespace BCore.Migrations
                 name: "PostHashes",
                 columns: table => new
                 {
-                    PostId = table.Column<Guid>(nullable: false),
-                    HashId = table.Column<Guid>(nullable: false)
+                    Id = table.Column<Guid>(nullable: false),
+                    HashId = table.Column<Guid>(nullable: false),
+                    PostId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostHashes", x => new { x.PostId, x.HashId });
+                    table.PrimaryKey("PK_PostHashes", x => x.Id);
                     table.ForeignKey(
                         name: "FK_PostHashes_Hashes_HashId",
                         column: x => x.HashId,
