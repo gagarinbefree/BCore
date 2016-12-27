@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace BCore.Models.TagHelpers
 {
+    //<span class="media-object" gravatar-email="@UserManager.FindByIdAsync(Model.UserId).Result.Email" image-size="64" width="64"></span>
     [HtmlTargetElement("span", Attributes = EmailAttributeName)]
     public class GravatarImageTagHelper : TagHelper
     {
@@ -30,7 +31,7 @@ namespace BCore.Models.TagHelpers
         [HtmlAttributeName(WidthAttributeName)]
         public int? Width { get; set; }
 
-        private string ToGravatarHash(string email)
+        private string _toGravatarHash(string email)
         {
             var encoder = new UTF8Encoding();
             var md5 = MD5.Create();
@@ -43,12 +44,12 @@ namespace BCore.Models.TagHelpers
             return sb.ToString().ToLower();
         }
 
-        private string ToGravatarUrl(string email, int? size)
+        private string _toGravatarUrl(string email, int? size)
         {
             if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(email.Trim()))
                 return "/images/grava.jpg";
 
-            var sb = ToGravatarHash(email);
+            var sb = _toGravatarHash(email);
 
             var imageUrl = GravatarBaseUrl + "gravatar_id=" + sb;
             if (size.HasValue)
@@ -61,7 +62,7 @@ namespace BCore.Models.TagHelpers
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             var str = new StringBuilder();
-            var url = ToGravatarUrl(this.Email, this.Size);
+            var url = _toGravatarUrl(this.Email, this.Size);
             str.AppendFormat("<img src='{0}' alt='{1}' width='{2}'/>", url, AltText, this.Width);
             output.Content.AppendHtml(str.ToString());        
         }

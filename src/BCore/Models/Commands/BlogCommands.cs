@@ -17,33 +17,31 @@ namespace BCore.Models.Commands
     {
         public static async Task<Guid> SubmitPostAsync(WhatsNewViewModel model, Unit unit, UserManager<User> manager, ClaimsPrincipal user)
         {
-            if (model.Parts.Count > 0)
+            if (model.Parts.Count() == 0)
+                return Guid.Empty;
+
+            var post = Mapper.Map<Post>(model);
+            post.UserId = manager.GetUserId(user);
+            Guid postId = await unit.PostRepository.CreateAsync(post);
+
+            string text = model.Parts.Select(f => f.Text).Aggregate((a, b) => a + b);
+            List<string> tags = HashTag.GetHashTags(text);
+            foreach(var tag in tags)
             {
-                var post = Mapper.Map<Post>(model);
-                post.UserId = manager.GetUserId(user);
-                Guid postId = await unit.PostRepository.CreateAsync(post);
+                var existTag = await unit.HashRepository.GetAsync(f => f.Tag == tag);                    
+                Guid hashId = existTag == null 
+                    ? await unit.HashRepository.CreateAsync(new Hash { Tag = tag }) : existTag.Id;
 
-                string text = model.Parts.Select(f => f.Text).Aggregate((a, b) => a + b);
-                List<string> tags = HashTag.GetHashTags(text);
-                foreach(var tag in tags)
+                PostHash postHash = new PostHash
                 {
-                    var existTag = await unit.HashRepository.GetAsync(f => f.Tag == tag);                    
-                    Guid hashId = existTag == null 
-                        ? await unit.HashRepository.CreateAsync(new Hash { Tag = tag }) : existTag.Id;
+                    PostId = postId,
+                    HashId = hashId
+                };
 
-                    PostHash postHash = new PostHash
-                    {
-                        PostId = postId,
-                        HashId = hashId
-                    };
-
-                    await unit.PostHashRepository.CreateAsync(postHash);
-                }
-
-                return postId;
+                await unit.PostHashRepository.CreateAsync(postHash);
             }
 
-            return Guid.Empty;
+            return postId;
         }
 
         public static async Task<int> DeletePostAsync(Guid id, Unit unit)
@@ -58,14 +56,30 @@ namespace BCore.Models.Commands
             model.Part.ImageUrl = String.Empty;
         }
 
-        public static async Task<ICollection<Post>> GetPostsByUser(Unit unit, UserManager<User> manager, ClaimsPrincipal user)
+        public static async Task<WhatsNewViewModel> GetPostsByUser(Unit unit, UserManager<User> manager, ClaimsPrincipal user)
         {
-            return await unit.PostRepository.GetAllAsync<DateTime>(
+            var posts = await unit.PostRepository.GetAllAsync<DateTime>(
                 f => f.DateTime
                 , true
                 , f => f.UserId == manager.GetUserId(user) && f.Parts.Count > 0
                 , 50
                 , f => f.Parts);
+
+            var model = Mapper.Map<WhatsNewViewModel>(posts);
+
+            foreach (var post in posts)
+            {
+                foreach (var postHash in post.PostHashes)
+                {
+                    var hash = await unit.HashRepository.GetAsync(f => f.Id == postHash.Id);
+
+                    var feed = model.Feeds.FirstOrDefault(f => f.Id == post.Id);
+                    if (feed != null)
+                        feed.Tags.Add(hash.Tag);
+                }
+            }
+
+            return model;
         }
     }
 }

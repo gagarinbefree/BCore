@@ -29,9 +29,9 @@ namespace BCore.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
-            var posts = await BlogCommands.GetPostsByUser(_unit, _userManager, HttpContext.User);
+            var m = await BlogCommands.GetPostsByUser(_unit, _userManager, HttpContext.User);
 
-            return View(Mapper.Map<WhatsNewViewModel>(posts));
+            return View(m);
         }
         
         [HttpPost]

@@ -126,9 +126,9 @@ namespace BCore
                 
                 config.CreateMap<Part, PartViewModel>();
                 config.CreateMap<Post, PostViewModel>();
-                    
+
                 config.CreateMap<ICollection<Post>, WhatsNewViewModel>()
-                    .ForMember(g => g.Feeds, o => o.MapFrom(c => c));
+                    .ForMember(g => g.Feeds, o => o.MapFrom(c => c));                    
 
                 config.CreateMap<PartViewModel, PartViewModel>();
             });

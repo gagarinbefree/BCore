@@ -9,14 +9,6 @@
             await Html.RenderPartialAsync("_StatusLine", page);
         }
 
-        @*<div class="row">*@
-            @*<div class="span8">*@
-                
-                
-            @*</div>*@
-        @*</div>*@
-
-
         <input asp-for="@page.Id" type="hidden" />
         @for (var ii = 0; ii < (page.Parts.Count() == 1 ? 1 : 2); ii++)
         {           
@@ -26,11 +18,17 @@
                     <div class="wrap">
                         @if (ii == 0)
                         {
-                            <h4><strong>@page.Parts[ii].Text</strong></h4>
+                            <h4>
+                                <strong>
+                                    <text clean-text="@page.Parts[ii].Text"></text>
+                                </strong>
+                            </h4>
                         }
                         else
                         {
-                            <div>@page.Parts[ii].Text</div>
+                            <div>
+                                <text clean-text="@page.Parts[ii].Text"></text>
+                            </div>
                         }
                     </div>
                 }

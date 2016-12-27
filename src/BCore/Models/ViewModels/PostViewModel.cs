@@ -15,6 +15,8 @@ namespace BCore.Models.ViewModels
 
         public List<PartViewModel> Parts { set; get; }
 
+        public List<string> Tags { set; get; }
+
         public PostViewModel()
         {
             Parts = new List<PartViewModel>();
