@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace BCore.Models.ViewModels
 {
     public class PostViewModel
-    {        
+    {
         public Guid Id { set; get; }
 
         public DateTime DateTime { set; get; }
@@ -15,11 +15,12 @@ namespace BCore.Models.ViewModels
 
         public List<PartViewModel> Parts { set; get; }
 
-        public List<string> Tags { set; get; }
+        public List<PostHasheViewModel> PostHashes { set; get; }
 
         public PostViewModel()
         {
             Parts = new List<PartViewModel>();
+            PostHashes = new List<PostHasheViewModel>();
         }        
     }
 }

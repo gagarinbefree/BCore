@@ -2,24 +2,25 @@
 
 @using Microsoft.AspNetCore.Identity
 @using BCore.Dal.Ef;
+@using BCore.Models;
 
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
 <p>
     <div class="media">
-        <div class="media-left media-middle">
+        <div class="media-left">
             <span class="media-object" gravatar-email="@UserManager.FindByIdAsync(Model.UserId).Result.Email" image-size="64" width="64"></span>
         </div>
         <div class="media-body">
             <h4 class="media-heading"><strong>@UserManager.GetUserName(User)</strong></h4>
-            @*&nbsp;&nbsp;*@@*<i class="glyphicon glyphicon-calendar"></i>*@ @Model.DateTime.ToString("dd.MM.yyyy hh:mm")            
-            &nbsp;&nbsp;<i class="glyphicon glyphicon-heart"></i> <a href="#">39</a>
-            &nbsp;&nbsp;@*<i class="glyphicon glyphicon-tags"></i>*@ Tags:
-            <a href="#"><span class="label label-info">#snipp</span></a>
-            <a href="#"><span class="label label-info">#bootstrap</span></a>
-            <a href="#"><span class="label label-info">#ui</span></a>
-            <a href="#"><span class="label label-info">#growth</span></a>
+            @Model.DateTime.ToString("dd.MM.yyyy hh:mm")            
+            &nbsp; <i class="glyphicon glyphicon-heart"></i> <a href="#">39</a>
+            &nbsp; Tags:
+            @foreach (var postHash in Model.PostHashes)
+            {
+                <a href="#"><span class="label label-info">@HashTag.HashTagPrefix@postHash.Tag</span></a>
+            }
         </div>        
     </div>          
 </p>

@@ -111,7 +111,7 @@ namespace BCore
 
             app.UseBackload();
 
-            _seed(app);
+            //_seed(app);
         }
 
         private void _configureAutoMapper()
@@ -126,6 +126,7 @@ namespace BCore
                 
                 config.CreateMap<Part, PartViewModel>();
                 config.CreateMap<Post, PostViewModel>();
+                config.CreateMap<PostHash, PostHasheViewModel>();
 
                 config.CreateMap<ICollection<Post>, WhatsNewViewModel>()
                     .ForMember(g => g.Feeds, o => o.MapFrom(c => c));                    

@@ -7,6 +7,7 @@ using BCore.Dal.Ef;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using BCore.Models.ViewModels;
+using BCore.Models.Commands;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -28,7 +29,7 @@ namespace BCore.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync(Guid id)
         {
-            var post = await _unit.PostRepository.GetAsync(id, f => f.Parts);
+            var post = await BlogCommands.GetPostsById(id, _unit);
             
             return View(Mapper.Map<PostViewModel>(post));
         }

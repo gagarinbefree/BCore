@@ -18,16 +18,12 @@
                     <div class="wrap">
                         @if (ii == 0)
                         {
-                            <h4>
-                                <strong>
-                                    <text clean-text="@page.Parts[ii].Text"></text>
-                                </strong>
-                            </h4>
+                            <h4><text hashing-text="@page.Parts[ii].Text"></text></h4>
                         }
                         else
                         {
                             <div>
-                                <text clean-text="@page.Parts[ii].Text"></text>
+                                <text hashing-text="@page.Parts[ii].Text"></text>
                             </div>
                         }
                     </div>
@@ -43,7 +39,7 @@
         }
         
         <div class="margin-top">
-            <a class="btn btn-default" href="/Post?id=@page.Id" role="button">Read more</a>
+            <a class="btn btn-default" href="/Post?id=@page.Id" role="button">read more</a>
             <div class="btn-group pull-right">
                 <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span>

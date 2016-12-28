@@ -8,7 +8,15 @@ namespace BCore.Models
 {
     public static class HashTag
     {
-        private static string _pattern = @"(?<=#)\w+";
+        public static string HashTagPrefix { private set; get; }
+
+        private static string _pattern;
+
+        static HashTag()
+        {
+            HashTagPrefix = "#";
+            _pattern = String.Format(@"({0})((?:[а-яА-ЯёЁa-zA-Z0-9-_]*))", HashTagPrefix);
+        }
 
         public static List<string> GetHashTags(string text)
         {
@@ -20,7 +28,7 @@ namespace BCore.Models
             var matches = new Regex(_pattern).Matches(text);
             foreach (Match m in matches)
             {
-                var normalize = m.Value.ToUpper();
+                var normalize = m.Value.Replace(HashTagPrefix, "").ToUpper();
 
                 if (res.FirstOrDefault(f => f.ToUpper() == normalize) == null)
                     res.Add(normalize);
@@ -31,9 +39,7 @@ namespace BCore.Models
 
         public static string ReplaceHashTagsToLinks(string clearText)
         {
-            string res = Regex.Replace(clearText, _pattern, new MatchEvaluator(_link));
-
-            return res;
+            return Regex.Replace(clearText, _pattern, new MatchEvaluator(_link));
         }
 
         private static string _link(Match m)

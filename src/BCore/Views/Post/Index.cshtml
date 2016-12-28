@@ -26,12 +26,12 @@
                 {
                     <div class="wrap">
                         @if (ii == 0)
-                        {
-                            <h4><strong>@Model.Parts[ii].Text</strong></h4>
+                        {                           
+                            <h4><text hashing-text="@Model.Parts[ii].Text"></text></h4>
                         }
                         else
                         {
-                            <div>@Model.Parts[ii].Text</div>
+                            <div><text hashing-text="@Model.Parts[ii].Text"></text></div>
                         }
                     </div>
                 }

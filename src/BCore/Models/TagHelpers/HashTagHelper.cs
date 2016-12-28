@@ -7,19 +7,17 @@ using System.Threading.Tasks;
 
 namespace BCore.Models.TagHelpers
 {
-    [HtmlTargetElement("text", Attributes = CleanTextAttributeName)]
+    [HtmlTargetElement("text", Attributes = HashingTextAttributeName)]
     public class HashTagHelper : TagHelper
     {
-        private const string CleanTextAttributeName = "clean-text";
+        private const string HashingTextAttributeName = "hashing-text";
 
-        [HtmlAttributeName(CleanTextAttributeName)]
-        public string CleanText { get; set; }
+        [HtmlAttributeName(HashingTextAttributeName)]
+        public string HashingText { get; set; }
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            string outtext = HashTag.ReplaceHashTagsToLinks(CleanText);
-
-            output.Content.AppendHtml(outtext);
+            output.Content.AppendHtml(HashTag.ReplaceHashTagsToLinks(HashingText));
         }
     }
 }
