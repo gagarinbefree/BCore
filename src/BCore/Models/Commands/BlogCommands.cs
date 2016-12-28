@@ -83,7 +83,6 @@ namespace BCore.Models.Commands
             {
                 postHash.Tag = (await GetHashById(postHash.HashId, unit)).Tag;
             }
-
             return model;
         }
 
