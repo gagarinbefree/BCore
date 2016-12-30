@@ -13,8 +13,20 @@ using System.Threading;
 namespace BCore.Models.Commands
 {
     // to do DI
+
+    /// <summary>
+    /// Blog commands (Get, Save, Delete & etc)
+    /// </summary>
     public static class BlogCommands
     {
+        /// <summary>
+        /// Save new post to DB
+        /// </summary>
+        /// <param name="model">ViewModel of Post</param>
+        /// <param name="unit">Unit of work</param>
+        /// <param name="manager">User manager</param>
+        /// <param name="user">Current user</param>
+        /// <returns></returns>
         public static async Task<Guid> SubmitPostAsync(WhatsNewViewModel model, Unit unit, UserManager<User> manager, ClaimsPrincipal user)
         {
             if (model.Parts.Count() == 0)
@@ -44,11 +56,21 @@ namespace BCore.Models.Commands
             return postId;
         }
 
+        /// <summary>
+        /// Delete post from DB
+        /// </summary>
+        /// <param name="id">Post id</param>
+        /// <param name="unit">Unit of work</param>
+        /// <returns></returns>
         public static async Task<int> DeletePostAsync(Guid id, Unit unit)
         {
             return await unit.PostRepository.DeleteAsync(new Post { Id = id });
         }
 
+        /// <summary>
+        /// Add new part to model
+        /// </summary>
+        /// <param name="model">Model</param>
         public static void AddPartToPost(WhatsNewViewModel model)
         {
             model.Parts.Add(Mapper.Map<PartViewModel>(model.Part));
@@ -56,6 +78,13 @@ namespace BCore.Models.Commands
             model.Part.ImageUrl = String.Empty;
         }
 
+        /// <summary>
+        /// Get post by user
+        /// </summary>
+        /// <param name="unit">Unit of work</param>
+        /// <param name="manager">User manager</param>
+        /// <param name="user">Current user</param>
+        /// <returns></returns>
         public static async Task<WhatsNewViewModel> GetPostsByUser(Unit unit, UserManager<User> manager, ClaimsPrincipal user)
         {
             var posts = await unit.PostRepository.GetAllAsync<DateTime>(
@@ -67,25 +96,41 @@ namespace BCore.Models.Commands
 
             var model = Mapper.Map<WhatsNewViewModel>(posts);
 
+            // To Do переносить на Mapper?
             var postHashes = model.Feeds.SelectMany(f => f.PostHashes);
             foreach(var postHash in postHashes)
             {
                 postHash.Tag = (await GetHashById(postHash.HashId, unit)).Tag;
             }
+            //
 
             return model;
         }
 
+        /// <summary>
+        /// Get post by user id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="unit">Unit of work</param>
+        /// <returns></returns>
         public static async Task<PostViewModel> GetPostsById(Guid id, Unit unit)
         {            
             var model = Mapper.Map<PostViewModel>(await unit.PostRepository.GetAsync(id, f => f.Parts, f => f.PostHashes));
-            foreach(var postHash in model.PostHashes)
+            foreach (var postHash in model.PostHashes)
             {
                 postHash.Tag = (await GetHashById(postHash.HashId, unit)).Tag;
             }
+
+
             return model;
         }
 
+        /// <summary>
+        /// Get hash tag by id
+        /// </summary>
+        /// <param name="id">Hash tag id</param>
+        /// <param name="unit"></param>
+        /// <returns></returns>
         public static async Task<Hash> GetHashById(Guid id, Unit unit)
         {
             return await unit.HashRepository.GetAsync(f => f.Id == id);

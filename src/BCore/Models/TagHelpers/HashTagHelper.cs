@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace BCore.Models.TagHelpers
 {
+    /// <summary>
+    /// Replace text (for example #xxx to <a...>#xxx</a>)
+    /// </summary>
     [HtmlTargetElement("text", Attributes = HashingTextAttributeName)]
     public class HashTagHelper : TagHelper
     {
@@ -15,6 +18,11 @@ namespace BCore.Models.TagHelpers
         [HtmlAttributeName(HashingTextAttributeName)]
         public string HashingText { get; set; }
 
+        /// <summary>
+        /// Append <а> to text
+        /// </summary>
+        /// <param name="context">Current context</param>
+        /// <param name="output">Output replasing text</param>
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             output.Content.AppendHtml(HashTag.ReplaceHashTagsToLinks(HashingText));
