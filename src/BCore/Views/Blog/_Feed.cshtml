@@ -3,7 +3,7 @@
 @foreach (var page in Model.Feeds)
 {
     <div>
-        <hr />
+        <div class="margin-top"></div><hr />
         
         @{
             await Html.RenderPartialAsync("_StatusLine", page);
