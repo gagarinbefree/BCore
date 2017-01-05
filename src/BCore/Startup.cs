@@ -122,16 +122,17 @@ namespace BCore
                 config.CreateMap<PostViewModel, Post>();
                 config.CreateMap<WhatsNewViewModel, Post>()
                     .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now))
-                    .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts));
+                    .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts));                    
                 
                 config.CreateMap<Part, PartViewModel>();
                 config.CreateMap<Post, PostViewModel>();
                 config.CreateMap<PostHash, PostHasheViewModel>();
 
                 config.CreateMap<ICollection<Post>, WhatsNewViewModel>()
-                    .ForMember(g => g.Feeds, o => o.MapFrom(c => c));                    
+                    .ForMember(g => g.Feeds, o => o.MapFrom(c => c));
 
-                config.CreateMap<PartViewModel, PartViewModel>();
+                config.CreateMap<ICollection<Comment>, PostViewModel>()
+                    .ForMember(g => g.Comments, o => o.MapFrom(c => c));                
             });
         }
 

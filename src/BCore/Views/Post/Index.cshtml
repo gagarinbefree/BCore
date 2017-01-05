@@ -43,7 +43,22 @@
             </div>
         }
 
+        @{
+            await Html.RenderPartialAsync("_Comments", Model);
+        }
+
     </div>
 
     <div class="hidden-xs col-sm-2 col-md-3"></div>
 </div>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @section Scripts {
+        <script type="text/javascript">
+            $(document).ready(function() {
+                new Post.Comment();
+            });
+        </script>
+    }
+}

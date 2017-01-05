@@ -15,7 +15,11 @@ namespace BCore.Models.ViewModels
 
         public List<PartViewModel> Parts { set; get; }
 
-        public List<PostHasheViewModel> PostHashes { set; get; }
+        public List<PostHasheViewModel> PostHashes { set; get; } 
+        
+        public List<CommentViewModel> Comments { set; get; }
+
+        public CommentViewModel Comment { set; get; }
 
         public PostViewModel()
         {

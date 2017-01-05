@@ -113,14 +113,16 @@ namespace BCore.Models.Commands
         /// <param name="id"></param>
         /// <param name="unit">Unit of work</param>
         /// <returns></returns>
-        public static async Task<PostViewModel> GetPostsById(Guid id, Unit unit)
+        public static async Task<PostViewModel> GetPostsById(Guid id, Unit unit, ClaimsPrincipal user)
         {            
-            var model = Mapper.Map<PostViewModel>(await unit.PostRepository.GetAsync(id, f => f.Parts, f => f.PostHashes));
+            var model = Mapper.Map<PostViewModel>(await unit.PostRepository.GetAsync(id, f => f.Parts, f => f.PostHashes, f => f.Comments));
             foreach (var postHash in model.PostHashes)
             {
                 postHash.Tag = (await GetHashById(postHash.HashId, unit)).Tag;
             }
 
+            if (user.Identity.IsAuthenticated)
+                model.Comment = new CommentViewModel();
 
             return model;
         }

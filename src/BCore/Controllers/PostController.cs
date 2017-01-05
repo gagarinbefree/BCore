@@ -29,9 +29,18 @@ namespace BCore.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync(Guid id)
         {
-            var post = await BlogCommands.GetPostsById(id, _unit);
-            
+            var post = await BlogCommands.GetPostsById(id, _unit, HttpContext.User);
+
             return View(Mapper.Map<PostViewModel>(post));
+        }
+
+        [HttpPost]
+        [ActionName("CommentSubmit")]
+        public async Task<ActionResult> CommentSubmitAsync(PostViewModel m)
+        {
+
+
+            return RedirectToAction("Index", new { id = m.Id });
         }
     }
 }

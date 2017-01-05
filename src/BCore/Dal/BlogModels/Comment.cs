@@ -9,7 +9,7 @@ namespace BCore.Dal.BlogModels
 {
     public class Comment : Entity
     {        
-        public string UserId { set; get; }
+        public Guid UserId { set; get; }
         public string Text { set; get; }
 
         [ForeignKey("Post")]
