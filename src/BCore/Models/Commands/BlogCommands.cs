@@ -92,7 +92,7 @@ namespace BCore.Models.Commands
                 , true
                 , f => f.UserId == manager.GetUserId(user) && f.Parts.Count > 0
                 , 50
-                , f => f.Parts, f => f.PostHashes);
+                , f => f.Parts, f => f.PostHashes, f => f.Comments);
 
             var model = Mapper.Map<WhatsNewViewModel>(posts);
 
