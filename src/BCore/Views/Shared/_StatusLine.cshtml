@@ -10,12 +10,15 @@
 <p>
     <div class="media">
         <div class="media-left">
-            <span class="media-object" gravatar-email="@UserManager.FindByIdAsync(Model.UserId).Result.Email" image-size="64" width="64"></span>
+            @{
+                var user = await UserManager.FindByIdAsync(Model.UserId);
+            }
+            <span class="media-object" gravatar-email="@user.Email" image-size="64" width="64"></span>
         </div>
         <div class="media-body">
             <h4 class="media-heading"><strong>@UserManager.GetUserName(User)</strong></h4>
             @Model.DateTime.ToString("dd.MM.yyyy hh:mm")            
-            &nbsp; <a href="#"><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count</a>
+            &nbsp; <a href="/Post/Index?id=@Model.Id"><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count</a>
             &nbsp; Tags:
             @foreach (var postHash in Model.PostHashes)
             {
