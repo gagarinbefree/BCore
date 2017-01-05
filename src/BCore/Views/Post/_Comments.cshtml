@@ -27,5 +27,18 @@
 
 @foreach (var comment in Model.Comments)
 {
-
+    <div class="media">
+        <div class="media-left">            
+            @{ 
+                var user = await UserManager.FindByIdAsync(comment.UserId);
+            }
+            <span class="media-object" gravatar-email="@user.Email" image-size="64" width="64"></span>
+        </div>
+        <div class="media-body">
+            <h4 class="media-heading"><strong>@user.UserName</strong></h4>
+            @comment.DateTime.ToString("dd.MM.yyyy hh:mm")
+                        
+        </div>
+    </div>
+    <text>@comment.Text</text>
 }

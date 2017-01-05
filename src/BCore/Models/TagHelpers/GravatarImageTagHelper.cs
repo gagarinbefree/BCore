@@ -63,7 +63,7 @@ namespace BCore.Models.TagHelpers
         {
             var str = new StringBuilder();
             var url = _toGravatarUrl(this.Email, this.Size);
-            str.AppendFormat("<img src='{0}' alt='{1}' width='{2}'/>", url, AltText, this.Width);
+            str.AppendFormat("<img class='img-circle' src='{0}' alt='{1}' width='{2}'/>", url, AltText, this.Width);
             output.Content.AppendHtml(str.ToString());        
         }
     }

@@ -111,7 +111,7 @@ namespace BCore
 
             app.UseBackload();
 
-            //_seed(app);
+            _seed(app);
         }
 
         private void _configureAutoMapper()
@@ -131,8 +131,14 @@ namespace BCore
                 config.CreateMap<ICollection<Post>, WhatsNewViewModel>()
                     .ForMember(g => g.Feeds, o => o.MapFrom(c => c));
 
+                config.CreateMap<CommentViewModel, Comment>()
+                    .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
+                config.CreateMap<Comment, CommentViewModel>();
+
                 config.CreateMap<ICollection<Comment>, PostViewModel>()
-                    .ForMember(g => g.Comments, o => o.MapFrom(c => c));                
+                    .ForMember(g => g.Comments, o => o.MapFrom(c => c));
+
+                config.CreateMap<PartViewModel, PartViewModel>();
             });
         }
 

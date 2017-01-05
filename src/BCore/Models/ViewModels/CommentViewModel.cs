@@ -10,7 +10,9 @@ namespace BCore.Models.ViewModels
     {
         public Guid Id { set; get; }
 
-        public Guid UserId { set; get; }
+        public string UserId { set; get; }
+
+        public DateTime DateTime { set; get; }
 
         private string text;
         public string Text

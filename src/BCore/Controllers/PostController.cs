@@ -9,8 +9,6 @@ using AutoMapper;
 using BCore.Models.ViewModels;
 using BCore.Models.Commands;
 
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace BCore.Controllers
 {
     public class PostController : Controller
@@ -29,7 +27,7 @@ namespace BCore.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync(Guid id)
         {
-            var post = await BlogCommands.GetPostsById(id, _unit, HttpContext.User);
+            var post = await PostCommands.GetPostById(id, _unit, HttpContext.User);
 
             return View(Mapper.Map<PostViewModel>(post));
         }
@@ -38,7 +36,7 @@ namespace BCore.Controllers
         [ActionName("CommentSubmit")]
         public async Task<ActionResult> CommentSubmitAsync(PostViewModel m)
         {
-
+            await PostCommands.SubmitCommentsAsync(m, _unit, _userManager, HttpContext.User);
 
             return RedirectToAction("Index", new { id = m.Id });
         }

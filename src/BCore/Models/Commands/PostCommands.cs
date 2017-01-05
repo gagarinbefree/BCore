@@ -7,14 +7,52 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BCore.Dal.BlogModels;
+using AutoMapper;
 
 namespace BCore.Models.Commands
 {
     public static class PostCommands
     {
+        /// <summary>
+        /// Get post by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="unit">Unit of work</param>
+        /// <returns></returns>
+        public static async Task<PostViewModel> GetPostById(Guid id, Unit unit, ClaimsPrincipal user)
+        {
+            var model = Mapper.Map<PostViewModel>(await unit.PostRepository.GetAsync(id, f => f.Parts, f => f.PostHashes, f => f.Comments));
+            foreach (var postHash in model.PostHashes)
+            {
+                postHash.Tag = (await GetHashById(postHash.HashId, unit)).Tag;
+            }
+
+            if (user.Identity.IsAuthenticated)
+                model.Comment = new CommentViewModel();
+
+            model.Comments = model.Comments.OrderByDescending(f => f.DateTime).ToList();
+
+            return model;
+        }
+
         public static async Task<Guid> SubmitCommentsAsync(PostViewModel model, Unit unit, UserManager<User> manager, ClaimsPrincipal user)
         {
-            //Dal.BlogModelspost = AutoMapper.Map
+            var comment = Mapper.Map<Comment>(model.Comment);
+            comment.UserId = manager.GetUserId(user);
+            comment.PostId = model.Id;
+
+            return await unit.CommentRepository.CreateAsync(comment);
+        }
+
+        /// <summary>
+        /// Get hash tag by id
+        /// </summary>
+        /// <param name="id">Hash tag id</param>
+        /// <param name="unit"></param>
+        /// <returns></returns>
+        public static async Task<Hash> GetHashById(Guid id, Unit unit)
+        {
+            return await unit.HashRepository.GetAsync(f => f.Id == id);
         }
     }
 }
