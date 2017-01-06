@@ -68,6 +68,15 @@ div.center-cropped img {
     left: 0px;
     top: 0px;
 }
+
+.user-name {
+    font-size: 19px;
+    font-weight: bold;
+}
+
+.media-content {
+    margin-top: 50px;
+}
 /* Make clicks pass-through */
 #nprogress {
   pointer-events: none;

@@ -41,5 +41,15 @@ namespace BCore.Controllers
 
             return Redirect(Url.Action("Index", "Post", new { id = m.Id }) + "#commentInput");
         }
+
+        [ActionName("DeleteComment")]
+        public async Task<ActionResult> DeleteCommentAsync(Guid postid, Guid commentid)
+        {
+            await PostCommands.DeleteCommentAsync(commentid, _unit);
+
+            TempData["messageStatus"] = new Random(DateTime.Now.Millisecond).Next(1, 1000);
+
+            return Redirect(Url.Action("Index", "Post", new { id = postid }) + "#commentInput");
+        }
     }
 }

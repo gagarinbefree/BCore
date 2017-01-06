@@ -4,6 +4,7 @@ var Post;
 (function (Post) {
     var Comment = (function () {
         function Comment() {
+            this.elBody = $("body");
             this.elInput = $("#commentInput");
             autosize(this.elInput);
             this.elInput.val("");

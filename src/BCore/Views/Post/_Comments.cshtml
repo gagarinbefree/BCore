@@ -6,8 +6,6 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-
-
 <div class="margin-top"></div>
 
 @if (Model.Comment != null)
@@ -28,7 +26,7 @@
 }
 
 @foreach (var comment in Model.Comments)
-{
+{       
     <div class="media">
         <div class="media-left">            
             @{ 
@@ -37,9 +35,22 @@
             <span class="media-object" gravatar-email="@user.Email" image-size="48" width="48"></span>
         </div>
         <div class="media-body">
-            <h4 class="media-heading"><strong>@user.UserName</strong></h4> @comment.DateTime.ToString("dd.MM.yyyy hh:mm")                        
-            <p><small>@comment.Text</small></p>
-        </div>
+            <div class="media-heading">
+
+                <div class="pull-left">
+                    <div class="user-name">@user.UserName</div>
+                    <div>@comment.DateTime.ToString("dd.MM.yyyy hh:mm")</div>
+                </div>
+                <div class="dropdown pull-right">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Post/DeleteComment?postid=@Model.Id&commentid=@comment.Id">delete</a></li>
+                    </ul>
+                </div>
+            </div>                                           
+            <div class="media-content"><small>@comment.Text</small></div>                
+        </div>        
     </div>
-    
 }

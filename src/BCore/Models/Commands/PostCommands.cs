@@ -54,5 +54,16 @@ namespace BCore.Models.Commands
         {
             return await unit.HashRepository.GetAsync(f => f.Id == id);
         }
+
+        /// <summary>
+        /// Delete comment from DB
+        /// </summary>
+        /// <param name="id">Post id</param>
+        /// <param name="unit">Unit of work</param>
+        /// <returns></returns>
+        public static async Task<int> DeleteCommentAsync(Guid id, Unit unit)
+        {
+            return await unit.CommentRepository.DeleteAsync(new Comment { Id = id });
+        }
     }
 }
