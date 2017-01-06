@@ -10,12 +10,7 @@ module Post {
         constructor() {
             autosize(this.elInput);
             this.elInput.val("");
-            autosize.update(this.elInput);
-
-            debugger;
-
-            if (location.hash == "#comments")
-                this.elInput.focus();
+            autosize.update(this.elInput);           
         }
     }
 }

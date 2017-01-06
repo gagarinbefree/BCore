@@ -18,7 +18,7 @@
         <div class="media-body">
             <h4 class="media-heading"><strong>@UserManager.GetUserName(User)</strong></h4>
             @Model.DateTime.ToString("dd.MM.yyyy hh:mm")            
-            &nbsp; <a href="/Post/Index?id=@Model.Id#comments" onclick="return true;"><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count</a>
+            &nbsp; <a href="/Post/Index?id=@Model.Id#commentInput" onclick="return true;"><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count</a>
             &nbsp; Tags:
             @foreach (var postHash in Model.PostHashes)
             {
