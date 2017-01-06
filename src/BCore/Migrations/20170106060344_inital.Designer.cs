@@ -8,7 +8,7 @@ using BCore.Dal.Ef;
 namespace BCore.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20170105170505_inital")]
+    [Migration("20170106060344_inital")]
     partial class inital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -35,8 +35,9 @@ namespace BCore.Controllers
         [HttpPost]
         [ActionName("CommentSubmit")]
         public async Task<ActionResult> CommentSubmitAsync(PostViewModel m)
-        {
-            await PostCommands.SubmitCommentsAsync(m, _unit, _userManager, HttpContext.User);
+        {     
+            if (!String.IsNullOrWhiteSpace(m.Comment.Text))      
+                await PostCommands.SubmitCommentsAsync(m, _unit, _userManager, HttpContext.User);
 
             return RedirectToAction("Index", new { id = m.Id });
         }
