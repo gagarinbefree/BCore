@@ -9,8 +9,6 @@ var Post;
             autosize(this.elInput);
             this.elInput.val("");
             autosize.update(this.elInput);
-            //if (location.hash == "#comments")
-            //    this.elInput.focus();
         }
         return Comment;
     }());
