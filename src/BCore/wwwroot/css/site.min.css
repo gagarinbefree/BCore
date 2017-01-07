@@ -77,6 +77,10 @@ div.center-cropped img {
 .media-content {
     margin-top: 50px;
 }
+
+.dropdown-menu{
+    position:fixed;
+}
 /* Make clicks pass-through */
 #nprogress {
   pointer-events: none;
