@@ -24,6 +24,35 @@
             {
                 <a href="#"><span class="label label-info">@HashTag.HashTagPrefix@postHash.Tag</span></a>
             }
+        </div>     
+        
+        
+        
+        <div class="media-left">
+            @{
+                var user = await UserManager.FindByIdAsync(Model.UserId);
+            }
+            <span class="media-object" gravatar-email="@user.Email" image-size="64" width="64"></span>
+        </div>
+        <div class="media-body">
+            <div class="media-heading">
+
+                <div class="pull-left">
+                    <div class="user-name">@user.UserName</div>
+                    <div>@Model.DateTime.ToString("dd.MM.yyyy hh:mm")</div>
+                </div>
+                <div class="dropdown pull-right">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/Post/DeleteComment?postid=@Model.Id&commentid=@comment.Id">delete</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="media-content"><small>@comment.Text</small></div>
         </div>        
+        
+           
     </div>          
 </p>
