@@ -5,12 +5,13 @@ var Blog;
     var WhatsNew = (function () {
         function WhatsNew(userId) {
             var _this = this;
-            this.userId = userId;
             this.elSubmitForm = $("#whatsNewForm");
+            this.elHiddenUrl = $("#whatsNewImageUrl");
             this.elInput = $("#whatsNewInput");
             this.elPostButton = $("#whatsNewPostButton");
             this.elPost = $("#whatsNewPost");
-            this.elHiddenUrl = $("#whatsNewImageUrl");
+            this.elDropdown = $(".dropdown-toggle");
+            this.userId = userId;
             this.elPostButton.on("click", function (e) { return _this.post(e); });
             this.init();
         }
@@ -21,6 +22,7 @@ var Blog;
             autosize.update(this.elInput);
             this.elInput.focus();
             this.elHiddenUrl.val("");
+            this.elDropdown.dropdown();
         };
         WhatsNew.prototype.post = function (e) {
             var _this = this;

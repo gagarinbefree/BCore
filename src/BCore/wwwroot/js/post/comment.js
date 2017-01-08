@@ -6,9 +6,11 @@ var Post;
         function Comment() {
             this.elBody = $("body");
             this.elInput = $("#commentInput");
+            this.elDropdown = $(".dropdown-toggle");
             autosize(this.elInput);
             this.elInput.val("");
             autosize.update(this.elInput);
+            this.elDropdown.dropdown();
         }
         return Comment;
     }());

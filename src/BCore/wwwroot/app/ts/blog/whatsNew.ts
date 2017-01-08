@@ -4,21 +4,17 @@
 module Blog {
     export class WhatsNew {
         public userId: string;
-        public elSubmitForm: JQuery;
-        public elHiddenUrl: JQuery;        
+        public elSubmitForm: JQuery = $("#whatsNewForm");
+        public elHiddenUrl = $("#whatsNewImageUrl");
 
-        private elInput: JQuery;
-        private elPostButton: JQuery;
-        private elPost: JQuery;
+        private elInput: JQuery = $("#whatsNewInput");
+        private elPostButton: JQuery = $("#whatsNewPostButton");
+        private elPost: JQuery = $("#whatsNewPost");
+
+        private elDropdown = $(".dropdown-toggle"); 
      
         constructor(userId: string) {
-            this.userId = userId;
-
-            this.elSubmitForm = $("#whatsNewForm");
-            this.elInput = $("#whatsNewInput");
-            this.elPostButton = $("#whatsNewPostButton");
-            this.elPost = $("#whatsNewPost");
-            this.elHiddenUrl = $("#whatsNewImageUrl");                                    
+            this.userId = userId;            
 
             this.elPostButton.on("click", (e) => this.post(e));                     
 
@@ -32,7 +28,8 @@ module Blog {
             this.elInput.val("");
             autosize.update(this.elInput);
             this.elInput.focus();
-            this.elHiddenUrl.val("");                        
+            this.elHiddenUrl.val("");
+            this.elDropdown.dropdown();                  
         }
 
         public post(e: Event): void {

@@ -8,6 +8,8 @@
 @inject UserManager<User> UserManager
 
 <p>
+    @*https://philipwalton.github.io/solved-by-flexbox/demos/media-object/*@
+
     <div class="media">
         @*<div class="media-left">
             @{
@@ -49,15 +51,18 @@
                         }
                     </div>
                 </div>
-                <div class="dropdown pull-right">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="/Blog/DeletePost?postid=@Model.Id">delete</a></li>
-                    </ul>
-                </div>
-            </div>            
-        </div>        
+
+                @*<div class="bs-example">*@                    
+                    <div class="dropdown pull-right">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a href="/Blog/DeletePost?postid=@Model.Id">delete</a></li>
+                        </ul>
+                    </div>
+                @*</div>*@
+            </div>
+        </div>
     </div>          
 </p>

@@ -6,11 +6,14 @@ module Post {
 
         private elBody: JQuery = $("body");
         private elInput: JQuery = $("#commentInput");
+        private elDropdown: JQuery = $(".dropdown-toggle");
 
         constructor() {
             autosize(this.elInput);
             this.elInput.val("");
-            autosize.update(this.elInput);           
+            autosize.update(this.elInput);
+
+            this.elDropdown.dropdown();
         }
     }
 }

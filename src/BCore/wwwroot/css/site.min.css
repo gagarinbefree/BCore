@@ -74,12 +74,16 @@ div.center-cropped img {
     font-weight: bold;
 }
 
-.media-content {
-    margin-top: 50px;
+.media,
+.media-body {
+  overflow: visible;
 }
 
-.dropdown-menu{
-    position:fixed;
+.media:after,
+.media-body:after{
+ content:'';
+ clear:both;
+ display:block;
 }
 /* Make clicks pass-through */
 #nprogress {
