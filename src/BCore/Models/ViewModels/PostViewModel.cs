@@ -21,6 +21,8 @@ namespace BCore.Models.ViewModels
 
         public CommentViewModel Comment { set; get; }
 
+        public bool CanEdit { set; get; }
+
         public PostViewModel()
         {
             Parts = new List<PartViewModel>();

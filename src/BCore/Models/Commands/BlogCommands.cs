@@ -104,6 +104,8 @@ namespace BCore.Models.Commands
             }
             //
 
+            model.Feeds.ForEach(f => f.CanEdit = true);
+
             return model;
         }               
     }

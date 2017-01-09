@@ -20,23 +20,23 @@ textarea {
 }
 
 .btn-file {
-  position: relative;
-  overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-file input[type=file] {
-  position: absolute;
-  top: 0;
-  right: 0;
-  min-width: 100%;
-  min-height: 100%;
-  font-size: 100px;
-  text-align: right;
-  filter: alpha(opacity=0);
-  opacity: 0;
-  background: red;
-  cursor: inherit;
-  display: block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    background: red;
+    cursor: inherit;
+    display: block;
 }
 
 .preview-well {
@@ -50,7 +50,6 @@ div.center-cropped {
     bottom: 0;
     height: 100%;
     border: 0;
-
 }
 
 div.center-cropped img {
@@ -74,16 +73,19 @@ div.center-cropped img {
     font-weight: bold;
 }
 
-.media,
-.media-body {
-    overflow: visible;
+.mymedia {
+    display: flex;
+    align-items: flex-start;
 }
 
-.media:after,
-.media-body:after{
-     content:'';
-     clear:both;
-     display:block;
+.mymedia-figure {
+    margin-right: 1em;
 }
 
-http://bootsnipp.com/snippets/featured/google-plus-styled-post
+.mymedia-body {
+    flex: 1;
+}
+
+.mymedia-status {
+    color: #808080;
+}

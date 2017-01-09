@@ -9,39 +9,19 @@
 
 <p>
     @*https://philipwalton.github.io/solved-by-flexbox/demos/media-object/*@
+    @*http://bootsnipp.com/snippets/featured/google-plus-styled-post*@
 
-    <div class="media">
-        @*<div class="media-left">
-            @{
-                var user = await UserManager.FindByIdAsync(Model.UserId);
-            }
-            <span class="media-object" gravatar-email="@user.Email" image-size="64" width="64"></span>
-        </div>
-        <div class="media-body">
-            <h4 class="media-heading"><strong>@UserManager.GetUserName(User)</strong></h4>
-            @Model.DateTime.ToString("dd.MM.yyyy hh:mm")            
-            &nbsp; <a href="/Post/Index?id=@Model.Id#commentInput"><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count</a>
-            &nbsp;
-            @foreach (var postHash in Model.PostHashes)
-            {
-                <a href="#"><span class="label label-info">@HashTag.HashTagPrefix@postHash.Tag</span></a>
-            }
-        </div>*@     
+    <div class="mymedia">
+        @{
+            var user = await UserManager.FindByIdAsync(Model.UserId);
+        }
+        <span  class="mymedia-figure" gravatar-email="@user.Email" image-size="64" width="64"></span>
         
-        
-        
-        <div class="media-left">
-            @{
-                var user = await UserManager.FindByIdAsync(Model.UserId);
-            }
-            <span class="media-object" gravatar-email="@user.Email" image-size="64" width="64"></span>
-        </div>
-        <div class="media-body">
-            <div class="media-heading">
-
-                <div class="pull-left">
+        <div class="mymedia-body">
+            <div class="row">                
+                <div class="col-xs-9 block">
                     <div class="user-name">@user.UserName</div>
-                    <div>
+                    <div class="mymedia-status">
                         @Model.DateTime.ToString("dd.MM.yyyy hh:mm")
                         &nbsp; <a href="/Post/Index?id=@Model.Id#commentInput"><i class="glyphicon glyphicon-comment"></i> @Model.Comments.Count</a>
                         &nbsp;
@@ -52,16 +32,19 @@
                     </div>
                 </div>
 
-                @*<div class="bs-example">*@                    
-                    <div class="dropdown pull-right">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="/Blog/DeletePost?postid=@Model.Id">delete</a></li>
-                        </ul>
+                @if (Model.CanEdit)
+                {
+                    <div class="col-xs-1 col-xs-push-2 block">
+                        <div class="dropdown pull-right">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Blog/DeletePost?postid=@Model.Id">delete</a></li>
+                            </ul>
+                        </div>   
                     </div>
-                @*</div>*@
+                }
             </div>
         </div>
     </div>          

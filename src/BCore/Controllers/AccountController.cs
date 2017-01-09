@@ -23,6 +23,7 @@ namespace BCore.Controllers
             _signInManager = signInManager;
             _roleManager = roleManager;
         }
+
         [HttpGet]
         public IActionResult Signin()
         {
