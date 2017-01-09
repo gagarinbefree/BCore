@@ -96,13 +96,10 @@ namespace BCore.Models.Commands
 
             var model = Mapper.Map<WhatsNewViewModel>(posts);
 
-            // To Do переносить на Mapper?
-            var postHashes = model.Feeds.SelectMany(f => f.PostHashes);
-            foreach(var postHash in postHashes)
-            {
-                postHash.Tag = (await PostCommands.GetHashById(postHash.HashId, unit)).Tag;
-            }
-            //
+            var postHashes = model.Feeds.SelectMany(f => f.PostHashes).ToList();
+            postHashes.ForEach(async (f) => {
+                f.Tag = (await PostCommands.GetHashById(f.HashId, unit)).Tag;
+            });
 
             model.Feeds.ForEach(f => f.CanEdit = true);
 

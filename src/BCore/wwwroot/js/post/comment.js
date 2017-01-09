@@ -4,6 +4,7 @@ var Post;
 (function (Post) {
     var Comment = (function () {
         function Comment() {
+            var _this = this;
             this.elBody = $("body");
             this.elInput = $("#commentInput");
             this.elDropdown = $(".dropdown-toggle");
@@ -11,7 +12,11 @@ var Post;
             this.elInput.val("");
             autosize.update(this.elInput);
             this.elDropdown.dropdown();
+            $(window).on('scroll', function () { return _this.scroll(); });
         }
+        Comment.prototype.scroll = function () {
+            debugger;
+        };
         return Comment;
     }());
     Post.Comment = Comment;
