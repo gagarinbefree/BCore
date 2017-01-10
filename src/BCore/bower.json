@@ -13,6 +13,7 @@
         "imagesloaded": "4.1.1",
         "ev-emitter": "1.0.3",
         "simple-uuid": "1.0.1",
-        "respify": "*"
+        "respify": "*",
+        "jquery-appear": "*"
     }
 }

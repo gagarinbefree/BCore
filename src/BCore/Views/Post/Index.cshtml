@@ -20,13 +20,13 @@
         }
 
         @for (var ii = 0; ii < Model.Parts.Count(); ii++)
-        {
+        {           
             <div class="margin-top">
                 @if (!String.IsNullOrWhiteSpace(Model.Parts[ii].Text))
                 {
-                    <div class="wrap">
+                    <div class="wrap">                       
                         @if (ii == 0)
-                        {                           
+                        {
                             <h2><text hashing-text="@Model.Parts[ii].Text"></text></h2>
                         }
                         else

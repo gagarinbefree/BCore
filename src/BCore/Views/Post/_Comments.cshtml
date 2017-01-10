@@ -6,53 +6,54 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-<div class="margin-top"></div>
+<span id ="commentAnchor" class="anchor"></span>
+<div class="margin-top">
+    @if (Model.Comment != null)
+    {
+        <form id="commentForm" asp-action="CommentSubmit" asp-controller="Post" method="post">
+            <div class="form-group">
+                <textarea id="commentInput" asp-for="Comment.Text" class="form-control" rows="1">@Model.Comment.Text</textarea>
+            </div>
 
-@if (Model.Comment != null)
-{
-    <form id="commentForm" asp-action="CommentSubmit" asp-controller="Post" method="post">      
-        <div class="form-group">
-            <textarea id="commentInput" asp-for="Comment.Text" class="form-control" rows="1">@Model.Comment.Text</textarea>
-        </div>
-        
-        <div class="btn-group">
-            <button id="commentSubmitButton" type="submit" class="btn btn-success">
-                <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> submit
-            </button>
-        </div>
+            <div class="btn-group">
+                <button id="commentSubmitButton" type="submit" class="btn btn-success">
+                    <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> submit
+                </button>
+            </div>
 
-        <input asp-for="@Model.Id" type="hidden" />
-    </form>    
-}
+            <input asp-for="@Model.Id" type="hidden" />
+        </form>
+    }
 
-@foreach (var comment in Model.Comments)
-{      
-    <div class="margin-top"></div>
-    <div class="mymedia">        
-        @{ 
-            var user = await UserManager.FindByIdAsync(comment.UserId);
-        }
-        <span class="mymedia-figure" gravatar-email="@user.Email" image-size="48" width="48"></span>        
-        
-        <div class="mymedia-body">
-            <div class="row">
-                <div class="col-xs-9 block">
-                    <div class="user-name">@user.UserName</div>
-                    <div class="mymedia-status">@comment.DateTime.ToString("dd.MM.yyyy hh:mm")</div>
-                </div>
-                <div class="col-xs-1 col-xs-push-2 block">
-                    <div class="dropdown pull-right">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="/Post/DeleteComment?postid=@Model.Id&commentid=@comment.Id">delete</a></li>
-                        </ul>
+    @foreach (var comment in Model.Comments)
+    {
+        <div class="margin-top"></div>
+        <div class="mymedia">
+            @{
+                var user = await UserManager.FindByIdAsync(comment.UserId);
+            }
+            <span class="mymedia-figure" gravatar-email="@user.Email" image-size="48" width="48"></span>
+
+            <div class="mymedia-body">
+                <div class="row">
+                    <div class="col-xs-9 block">
+                        <div class="user-name">@user.UserName</div>
+                        <div class="mymedia-status">@comment.DateTime.ToString("dd.MM.yyyy hh:mm")</div>
+                    </div>
+                    <div class="col-xs-1 col-xs-push-2 block">
+                        <div class="dropdown pull-right">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="/Post/DeleteComment?postid=@Model.Id&commentid=@comment.Id">delete</a></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>          
+            </div>
         </div>
-    </div>
 
-    <div><small>@comment.Text</small></div>
-}
+        <div><small>@comment.Text</small></div>
+    }
+</div>

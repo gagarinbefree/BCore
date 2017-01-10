@@ -1,4 +1,6 @@
-﻿/// <binding BeforeBuild='build' />
+﻿/// <reference path="wwwroot/lib/jquery.appear/jquery.appear.js" />
+/// <reference path="wwwroot/lib/jquery.appear/jquery.appear.js" />
+/// <binding BeforeBuild='build' />
 /// <reference path="wwwroot/lib/simple-uuid/lib/uuid-node.js" />
 /// <reference path="wwwroot/lib/simple-uuid/lib/uuid-node.js" />
 /// <binding BeforeBuild='build' />
@@ -52,7 +54,9 @@ gulp.task("min:js", function (cb) {
             paths.webroot + "lib/nprogress/nprogress.js",
             paths.webroot + "lib/ev-emitter/ev-emitter.js",
             paths.webroot + "lib/imagesloaded/imagesloaded.js",
-            paths.webroot + "lib/imagefill.js/js/jquery-imagefill.js",            
+            paths.webroot + "lib/imagefill.js/js/jquery-imagefill.js",
+            paths.webroot + "lib/jquery.appear/jquery.appear.js",
+
             "!" + paths.minJs            
         ], { base: "." })
         .pipe(concat(paths.concatJsDest))
