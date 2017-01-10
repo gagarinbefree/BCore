@@ -58,7 +58,6 @@ div.center-cropped {
 
 div.center-cropped img {
     height: auto!important;
-    /*min-width: 100%;*/
     max-width: 100%;
     left: 50%;
     position: relative;
@@ -66,7 +65,6 @@ div.center-cropped img {
 }
 
 .img-absolute {
-    /*height: 100%;*/
     position: relative;
     left: 0px;
     top: 0px;
