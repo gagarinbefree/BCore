@@ -1,16 +1,21 @@
-﻿@model BCore.Models.ViewModels.RegisterViewModel
+﻿@model BCore.Models.ViewModels.SigninViewModel
 
 <div class="row">
     <div class="hidden-xs col-sm-2 col-md-3"></div>
 
     <div class="col-xs-12 col-sm-8 col-md-6">
         <h1>Sign Up</h1>
-        <form method="post" asp-controller="Account" asp-action="Register">
+        <form method="post" asp-controller="Account" asp-action="Signin">
             <div asp-validation-summary="ModelOnly"></div>
             <div class="form-group">
                 <label asp-for="@Model.UserName"></label><br />
                 <input class="form-control" asp-for="@Model.UserName" />
                 <span class="text-error" asp-validation-for="@Model.UserName"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.EmailAdress"></label><br />
+                <input class="form-control" asp-for="@Model.EmailAdress" />
+                <span class="text-error" asp-validation-for="@Model.EmailAdress"></span>
             </div>
             <div class="form-group">
                 <label asp-for="@Model.Password"></label><br />

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BCore.Models.ViewModels
 {
-    public class RegisterViewModel
+    public class SigninViewModel
     {
         [Required]
         [Display(Name = "User name")]
@@ -27,6 +27,5 @@ namespace BCore.Models.ViewModels
         [DataType(DataType.EmailAddress)]
         [Display(Name = "E-mail adress")]
         public string EmailAdress { get; set; }
-
     }
 }

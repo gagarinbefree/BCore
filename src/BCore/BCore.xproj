@@ -20,5 +20,12 @@
     <DnxInvisibleContent Include="wwwroot\js\feed.js.map" />
     <DnxInvisibleContent Include="wwwroot\js\whatsnew.js.map" />
   </ItemGroup>
+  <ItemGroup>
+    <DnxInvisibleFolder Include="gulp-tsc-tmp-117010-14596-160r48m\" />
+    <DnxInvisibleFolder Include="gulp-tsc-tmp-117010-5184-1synema\" />
+    <DnxInvisibleFolder Include="gulp-tsc-tmp-117010-7020-n8n65o\" />
+    <DnxInvisibleFolder Include="gulp-tsc-tmp-117010-8820-1s46g3u\" />
+    <DnxInvisibleFolder Include="gulp-tsc-tmp-11707-4480-yikjcb\" />
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\DotNet.Web\Microsoft.DotNet.Web.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>

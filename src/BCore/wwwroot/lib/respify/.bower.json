@@ -29,6 +29,6 @@
     "commit": "fb1fbe0e4554b2b464a70b901b5db980d9a45612"
   },
   "_source": "https://github.com/matthisk/Respify.git",
-  "_target": "*",
+  "_target": "0.3.2",
   "_originalSource": "respify"
 }

@@ -32,7 +32,7 @@ namespace BCore.Controllers
 
         [HttpPost]
         [ActionName("Signin")]
-        public async Task<IActionResult> SigninAsync(RegisterViewModel model)
+        public async Task<IActionResult> SigninAsync(SigninViewModel model)
         {
             if (ModelState.IsValid)
             {

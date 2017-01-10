@@ -9,18 +9,18 @@ var Post;
             this.elBody = $("body");
             this.elInput = $("#commentInput");
             this.elDropdown = $(".dropdown-toggle");
-            this.isFocus = true;
             autosize(this.elInput);
             this.elInput.val("");
             autosize.update(this.elInput);
             this.elDropdown.dropdown();
+            debugger;
             this.elInput.appear();
             this.elInput.on("appear", function (e, elements) { return _this.inputAppear(e, elements); });
         }
         Comment.prototype.inputAppear = function (e, elements) {
-            if (location.hash == "#commentAnchor" && this.isFocus) {
+            if (location.hash == "#commentAnchor") {
                 elements.focus();
-                this.isFocus = false;
+                location.hash = "";
             }
         };
         return Comment;
