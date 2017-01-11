@@ -1,48 +1,48 @@
 ﻿@model BCore.Models.ViewModels.WhatsNewViewModel
 
 
-@foreach (var page in Model.Feeds)
+@foreach (var feed in Model.Feeds)
 {
     <div>
         <div class="margin-top"></div><hr />
 
         @{
-            await Html.RenderPartialAsync("_StatusLine", page);
+            await Html.RenderPartialAsync("_StatusLine", feed);
         }
 
         <div>
-            <input asp-for="@page.Id" type="hidden" />
-            @for (var ii = 0; ii < (page.Parts.Count() == 1 ? 1 : 2); ii++)
+            <input asp-for="@feed.Id" type="hidden" />
+            @for (var ii = 0; ii < (feed.Parts.Count() == 1 ? 1 : 2); ii++)
             {
                 <div class="margin-top">
-                    @if (!String.IsNullOrWhiteSpace(page.Parts[ii].Text))
+                    @if (!String.IsNullOrWhiteSpace(feed.Parts[ii].Text))
                     {
                         <div class="wrap">
                             @if (ii == 0)
                             {
-                                <h2><text hashing-text="@page.Parts[ii].Text"></text></h2>
+                                <h2><text hashing-text="@feed.Parts[ii].Text"></text></h2>
                             }
                             else
                             {
                                 <div>
-                                    <text hashing-text="@page.Parts[ii].Text"></text>
+                                    <text hashing-text="@feed.Parts[ii].Text"></text>
                                 </div>
                             }
                         </div>
                     }
 
-                    @if (!String.IsNullOrWhiteSpace(page.Parts[ii].ImageUrl))
+                    @if (!String.IsNullOrWhiteSpace(feed.Parts[ii].ImageUrl))
                     {
-                        <img class="img-responsive" src="@page.Parts[ii].ImageUrl" />
+                        <img class="img-responsive" src="@feed.Parts[ii].ImageUrl" />
                     }
                 </div>
 
-                <input asp-for="@page.Parts[ii].Id" type="hidden" />
+                <input asp-for="@feed.Parts[ii].Id" type="hidden" />
             }
         </div>
 
         <div class="margin-top">
-            <a class="btn btn-default" href="/Post?id=@page.Id" role="button">read</a>
+            <a class="btn btn-default" href="/Post?id=@feed.Id" role="button">read</a>
             <div class="btn-group pull-right">
                 @*<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>

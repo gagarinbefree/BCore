@@ -146,7 +146,7 @@ namespace BCore
         {
             using (var db = app.ApplicationServices.GetService<BlogDbContext>())
             {
-                db.Database.Migrate();
+                //db.Database.Migrate();
 
                 var userStore = new UserStore<User>(db);
                 var roleStore = new RoleStore<IdentityRole>(db);
