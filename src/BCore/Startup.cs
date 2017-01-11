@@ -111,7 +111,7 @@ namespace BCore
 
             app.UseBackload();
 
-            //_seed(app);
+            _seed(app);
         }
 
         private void _configureAutoMapper()
@@ -154,9 +154,15 @@ namespace BCore
                 if (!db.Roles.Any(r => r.Name == "Admin"))
                 {
                     var r = roleStore.CreateAsync(new IdentityRole() { Name = "Admin", NormalizedName = "ADMIN" }).Result;
-
                     db.SaveChanges();
                 }
+
+                if (!db.Roles.Any(r => r.Name == "User"))
+                {
+                    var r = roleStore.CreateAsync(new IdentityRole() { Name = "User", NormalizedName = "USER" }).Result;
+                    db.SaveChanges();
+                }
+
 
                 if (!userStore.Users.Any(u => u.UserName == "gagarin"))
                 {
