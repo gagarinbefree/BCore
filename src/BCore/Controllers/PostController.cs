@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using BCore.Models.ViewModels;
 using BCore.Models.Commands;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BCore.Controllers
 {
@@ -42,10 +43,11 @@ namespace BCore.Controllers
             return Redirect(Url.Action("Index", "Post", new { id = m.Id }) + "#commentInput");
         }
 
+        [Authorize]
         [ActionName("DeleteComment")]
         public async Task<ActionResult> DeleteCommentAsync(Guid postid, Guid commentid)
         {
-            await PostCommands.DeleteCommentAsync(commentid, _unit);
+            await PostCommands.DeleteCommentAsync(commentid, _unit, _userManager, HttpContext.User);
 
             TempData["messageStatus"] = new Random(DateTime.Now.Millisecond).Next(1, 1000);
 

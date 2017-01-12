@@ -14,6 +14,8 @@ namespace BCore.Models.ViewModels
 
         public DateTime DateTime { set; get; }
 
+        public bool CanEdit { set; get; }
+
         private string text;
         public string Text
         {

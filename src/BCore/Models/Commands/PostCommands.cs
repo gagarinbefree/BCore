@@ -61,9 +61,14 @@ namespace BCore.Models.Commands
         /// <param name="id">Post id</param>
         /// <param name="unit">Unit of work</param>
         /// <returns></returns>
-        public static async Task<int> DeleteCommentAsync(Guid id, Unit unit)
+        public static async Task<int> DeleteCommentAsync(Guid id, Unit unit, UserManager<User> manager, ClaimsPrincipal user)
         {
-            return await unit.CommentRepository.DeleteAsync(new Comment { Id = id });
+            var comment = await unit.CommentRepository.GetAsync(id);
+
+            if (comment.UserId == manager.GetUserId(user))
+                return await unit.CommentRepository.DeleteAsync(comment);
+            else
+                return -1;
         }
     }
 }
