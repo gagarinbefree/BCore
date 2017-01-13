@@ -3,42 +3,42 @@
 @foreach (var feed in Model.Feeds)
 {
     <div>
-        <div class="margin-top"></div><hr />
+        <div class="margin-top">
+            
+            <hr />
+            @await Html.PartialAsync("_StatusLine", feed);
 
-        @{
-            await Html.RenderPartialAsync("_StatusLine", feed);
-        }
+            <div>
+                <input asp-for="@feed.Id" type="hidden" />
+                @for (var ii = 0; ii < (feed.Parts.Count() == 1 ? 1 : 2); ii++)
+                {
+                    <div class="margin-top">
+                        @if (!String.IsNullOrWhiteSpace(feed.Parts[ii].Text))
+                        {
+                            <div class="wrap">
+                                @if (ii == 0)
+                                {
+                                    <h2><text hashing-text="@feed.Parts[ii].Text"></text></h2>
+                                }
+                                else
+                                {
+                                    <div>
+                                        <text hashing-text="@feed.Parts[ii].Text"></text>
+                                    </div>
+                                }
+                            </div>
+                        }
 
-        <div>
-            <input asp-for="@feed.Id" type="hidden" />
-            @for (var ii = 0; ii < (feed.Parts.Count() == 1 ? 1 : 2); ii++)
-            {
-                <div class="margin-top">
-                    @if (!String.IsNullOrWhiteSpace(feed.Parts[ii].Text))
-                    {
-                        <div class="wrap">
-                            @if (ii == 0)
-                            {
-                                <h2><text hashing-text="@feed.Parts[ii].Text"></text></h2>
-                            }
-                            else
-                            {
-                                <div>
-                                    <text hashing-text="@feed.Parts[ii].Text"></text>
-                                </div>
-                            }
-                        </div>
-                    }
+                        @if (!String.IsNullOrWhiteSpace(feed.Parts[ii].ImageUrl))
+                        {
+                            <img class="img-responsive" src="@feed.Parts[ii].ImageUrl" />
+                        }
+                    </div>
 
-                    @if (!String.IsNullOrWhiteSpace(feed.Parts[ii].ImageUrl))
-                    {
-                        <img class="img-responsive" src="@feed.Parts[ii].ImageUrl" />
-                    }
-                </div>
-
-                <input asp-for="@feed.Parts[ii].Id" type="hidden" />
-            }
-        </div>
+                    <input asp-for="@feed.Parts[ii].Id" type="hidden" />
+                }
+            </div>
+        </div>            
 
         <div class="margin-top">
             <a class="btn btn-default" href="/Post?id=@feed.Id" role="button">read</a>

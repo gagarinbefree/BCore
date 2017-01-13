@@ -19,18 +19,20 @@ namespace BCore.Models.Commands
         /// <param name="id"></param>
         /// <param name="unit">Unit of work</param>
         /// <returns></returns>
-        public static async Task<PostViewModel> GetPostById(Guid id, Unit unit, ClaimsPrincipal user)
+        public static async Task<PostViewModel> GetPostById(Guid id, Unit unit, UserManager<User> manager, ClaimsPrincipal user)
         {
             var model = Mapper.Map<PostViewModel>(await unit.PostRepository.GetAsync(id, f => f.Parts, f => f.PostHashes, f => f.Comments));
-            foreach (var postHash in model.PostHashes)
-            {
-                postHash.Tag = (await GetHashById(postHash.HashId, unit)).Tag;
-            }
+            
+            model.PostHashes.ForEach(async (f) => {
+                f.Tag = (await PostCommands.GetHashById(f.HashId, unit)).Tag;
+            });
 
             if (user.Identity.IsAuthenticated)
                 model.Comment = new CommentViewModel();
 
             model.Comments = model.Comments.OrderByDescending(f => f.DateTime).ToList();
+            var userId = manager.GetUserId(user);
+            model.Comments.ForEach(f => f.CanEdit = userId == f.UserId);
 
             return model;
         }

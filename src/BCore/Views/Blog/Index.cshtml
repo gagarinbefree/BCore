@@ -15,9 +15,7 @@
     <div class="hidden-xs col-sm-2 col-md-3"></div>
 
     <div class="col-xs-12 col-sm-8 col-md-6">
-        @{            
-            await Html.RenderPartialAsync("_WhatsNew", Model);
-        }
+            @await Html.PartialAsync("_WhatsNew", Model);
     </div>
 
     <div class="hidden-xs col-sm-2 col-md-3"></div>
@@ -27,20 +25,14 @@
 <div class="row">
     <div class="hidden-xs col-sm-2 col-md-3"></div>
 
-    <div class="col-xs-12 col-sm-8 col-md-6">
-        @{
-            await Html.RenderPartialAsync("_Feed", Model);
-        }
+    <div class="col-xs-12 col-sm-8 col-md-6">        
+            @await Html.PartialAsync("_Feed", Model);      
     </div>
 
     <div class="hidden-xs col-sm-2 col-md-3"></div>
 </div>
 
-
-@{
-    await Html.RenderPartialAsync("_Image");
-
-}
+@await Html.PartialAsync("_Image");
 
 @if (SignInManager.IsSignedIn(User))
 {

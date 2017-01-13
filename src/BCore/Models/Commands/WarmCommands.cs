@@ -25,10 +25,7 @@ namespace BCore.Models.Commands
             var postHashes = model.Feeds.SelectMany(f => f.PostHashes).ToList();
             postHashes.ForEach(async (f) => {
                 f.Tag = (await PostCommands.GetHashById(f.HashId, unit)).Tag;
-            });
-
-            var userId = manager.GetUserId(user);
-            model.Feeds.ForEach(f => f.CanEdit = userId == f.UserId);
+            });            
 
             return model;
         }
