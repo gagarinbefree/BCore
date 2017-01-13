@@ -40,7 +40,7 @@ namespace BCore.Controllers
             if (!String.IsNullOrWhiteSpace(m.Comment.Text))      
                 await PostCommands.SubmitCommentsAsync(m, _unit, _userManager, HttpContext.User);
 
-            return Redirect(Url.Action("Index", "Post", new { id = m.Id }) + "#commentInput");
+            return Redirect(Url.Action("Index", "Post", new { id = m.Id }) + "#commentAnchor");
         }
 
         [Authorize]

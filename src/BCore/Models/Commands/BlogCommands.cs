@@ -109,7 +109,8 @@ namespace BCore.Models.Commands
                 f.Tag = (await PostCommands.GetHashById(f.HashId, unit)).Tag;
             });
 
-            model.Feeds.ForEach(f => f.CanEdit = true);
+            var userId = manager.GetUserId(user);
+            model.Feeds.ForEach(f => f.CanEdit = userId == f.UserId);
 
             return model;
         }               
