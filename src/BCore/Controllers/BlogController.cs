@@ -60,7 +60,7 @@ namespace BCore.Controllers
         [ActionName("DeletePost")]
         public async Task<ActionResult> DeletePostAsync(Guid id)
         {
-            await BlogCommands.DeletePostAsync(id, _unit);
+            await BlogCommands.DeletePostAsync(id, _unit, _userManager, HttpContext.User);
 
             TempData["messageStatus"] = new Random(DateTime.Now.Millisecond).Next(1, 1000);
 

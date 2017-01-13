@@ -42,6 +42,18 @@ namespace BCore.Dal.Ef
             return await _db.SaveChangesAsync();            
         }
 
+        public async Task<int> DeleteAsync(Guid id)
+        {
+            T item = default(T);
+            item = Activator.CreateInstance<T>();
+            item.Id = id;
+
+            _db.Set<T>().Attach(item);
+            _db.Set<T>().Remove(item);
+
+            return await _db.SaveChangesAsync();
+        }
+
         public async Task<T> GetAsync(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> q = _db.Set<T>();
@@ -62,6 +74,13 @@ namespace BCore.Dal.Ef
             }
 
             return await q.Where(f => f.Id == id).SingleOrDefaultAsync();            
+        }
+
+        public async Task<object> GetValueAsync(Guid id, Expression<Func<T, object>> selector)
+        {
+            IQueryable<T> q = _db.Set<T>();
+
+            return await q.Where(f => f.Id == id).Select(selector).SingleOrDefaultAsync();
         }
 
         public async Task<ICollection<T>> GetAllAsync<TOrderKey>(Expression<Func<T, TOrderKey>> orderBy = null
