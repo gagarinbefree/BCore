@@ -191,7 +191,43 @@ namespace BCore
                     var result = _userManager.AddToRolesAsync(user, roles).Result;                                      
 
                     db.SaveChanges();
-                }                
+                }       
+                
+                if (!db.Set<PartType>().Any(f => f.Name == "text"))
+                {
+                    db.Set<PartType>().Add(new PartType
+                    {
+                        Name = "text"
+                    });
+                }
+                if (!db.Set<PartType>().Any(f => f.Name == "image"))
+                {
+                    db.Set<PartType>().Add(new PartType
+                    {
+                        Name = "image"
+                    });
+                }
+                if (!db.Set<PartType>().Any(f => f.Name == "video"))
+                {
+                    db.Set<PartType>().Add(new PartType
+                    {
+                        Name = "video"
+                    });
+                }
+                if (!db.Set<PartType>().Any(f => f.Name == "geo"))
+                {
+                    db.Set<PartType>().Add(new PartType
+                    {
+                        Name = "geo"
+                    });
+                }
+                if (!db.Set<PartType>().Any(f => f.Name == "url"))
+                {
+                    db.Set<PartType>().Add(new PartType
+                    {
+                        Name = "url"
+                    });
+                }
             }
         }
     }

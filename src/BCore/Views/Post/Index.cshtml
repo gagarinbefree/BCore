@@ -20,23 +20,23 @@
         @for (var ii = 0; ii < Model.Parts.Count(); ii++)
         {           
             <div class="margin-top">
-                @if (!String.IsNullOrWhiteSpace(Model.Parts[ii].Text))
+                @if (Model.Parts[ii].PartType.Name == "text" && !String.IsNullOrWhiteSpace(Model.Parts[ii].Value))
                 {
                     <div class="wrap">                       
                         @if (ii == 0)
                         {
-                            <h2><text hashing-text="@Model.Parts[ii].Text"></text></h2>
+                            <h2><text hashing-text="@Model.Parts[ii].Value"></text></h2>
                         }
                         else
                         {
-                            <div><text hashing-text="@Model.Parts[ii].Text"></text></div>
+                            <div><text hashing-text="@Model.Parts[ii].Value"></text></div>
                         }
                     </div>
                 }
 
-                @if (!String.IsNullOrWhiteSpace(Model.Parts[ii].ImageUrl))
+                @if (Model.Parts[ii].PartType.Name == "image" && !String.IsNullOrWhiteSpace(Model.Parts[ii].Value))
                 {
-                    <img class="img-responsive" src="@Model.Parts[ii].ImageUrl">
+                    <img class="img-responsive" src="@Model.Parts[ii].Value">
                 }
             </div>
         }

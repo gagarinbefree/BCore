@@ -8,7 +8,7 @@ using BCore.Dal.Ef;
 namespace BCore.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20170106060344_inital")]
+    [Migration("20170114174907_inital")]
     partial class inital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,6 +42,8 @@ namespace BCore.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("DateTime");
+
                     b.Property<string>("Tag")
                         .IsRequired();
 
@@ -60,17 +62,32 @@ namespace BCore.Migrations
 
                     b.Property<DateTime>("DateTime");
 
-                    b.Property<string>("ImageUrl");
+                    b.Property<Guid>("PartTypeId");
 
                     b.Property<Guid>("PostId");
 
-                    b.Property<string>("Text");
+                    b.Property<string>("Value");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PartTypeId")
+                        .IsUnique();
 
                     b.HasIndex("PostId");
 
                     b.ToTable("Parts");
+                });
+
+            modelBuilder.Entity("BCore.Dal.BlogModels.PartType", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PartType");
                 });
 
             modelBuilder.Entity("BCore.Dal.BlogModels.Post", b =>
@@ -274,6 +291,11 @@ namespace BCore.Migrations
 
             modelBuilder.Entity("BCore.Dal.BlogModels.Part", b =>
                 {
+                    b.HasOne("BCore.Dal.BlogModels.PartType", "Type")
+                        .WithOne("Part")
+                        .HasForeignKey("BCore.Dal.BlogModels.Part", "PartTypeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("BCore.Dal.BlogModels.Post", "Post")
                         .WithMany("Parts")
                         .HasForeignKey("PostId")

@@ -5,7 +5,7 @@ module Blog {
     export class WhatsNew {
         public userId: string;
         public elSubmitForm: JQuery = $("#whatsNewForm");
-        public elHiddenUrl = $("#whatsNewImageUrl");
+        public elHiddenValue = $("#whatsNewPartValue");
 
         private elInput: JQuery = $("#whatsNewInput");
         private elPostButton: JQuery = $("#whatsNewPostButton");
@@ -28,7 +28,7 @@ module Blog {
             this.elInput.val("");
             autosize.update(this.elInput);
             this.elInput.focus();
-            this.elHiddenUrl.val("");
+            this.elHiddenValue.val("");
             this.elDropdown.dropdown();                  
         }
 

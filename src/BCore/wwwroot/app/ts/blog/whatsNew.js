@@ -6,7 +6,7 @@ var Blog;
         function WhatsNew(userId) {
             var _this = this;
             this.elSubmitForm = $("#whatsNewForm");
-            this.elHiddenUrl = $("#whatsNewImageUrl");
+            this.elHiddenValue = $("#whatsNewPartValue");
             this.elInput = $("#whatsNewInput");
             this.elPostButton = $("#whatsNewPostButton");
             this.elPost = $("#whatsNewPost");
@@ -21,7 +21,7 @@ var Blog;
             this.elInput.val("");
             autosize.update(this.elInput);
             this.elInput.focus();
-            this.elHiddenUrl.val("");
+            this.elHiddenValue.val("");
             this.elDropdown.dropdown();
         };
         WhatsNew.prototype.post = function (e) {

@@ -35,8 +35,14 @@ namespace BCore.Models.Commands
             var post = Mapper.Map<Post>(model);
             post.UserId = manager.GetUserId(user);
             Guid postId = await unit.PostRepository.CreateAsync(post);
+            
+            string text = model
+                .Parts
+                .Where(f => f.PartType.Name == "text")
+                .Select(f => String.Format("{0} ", f.Value)).Aggregate((a, b) => a + b);
+            if (String.IsNullOrWhiteSpace(text))
+                return postId;
 
-            string text = model.Parts.Select(f => String.Format("{0} ", f.Text)).Aggregate((a, b) => a + b);
             List<string> tags = HashTag.GetHashTags(text);
             foreach(var tag in tags)
             {
@@ -82,8 +88,7 @@ namespace BCore.Models.Commands
         public static void AddPartToPost(WhatsNewViewModel model)
         {
             model.Parts.Add(Mapper.Map<PartViewModel>(model.Part));
-            model.Part.Text = String.Empty;
-            model.Part.ImageUrl = String.Empty;
+            model.Part.Value = String.Empty;            
         }
 
         /// <summary>

@@ -8,13 +8,16 @@ using System.Threading.Tasks;
 namespace BCore.Dal.BlogModels
 {
     public class Part : Entity
-    {        
-        public string Text { set; get; }
-        public string ImageUrl { set; get; }
+    {
+        public string Value { set; get; }        
         public DateTime DateTime { set; get; }
 
         [ForeignKey("Post")]
         public Guid PostId { set; get; }
         public virtual Post Post { set; get; }
+
+        [ForeignKey("PartType")]
+        public Guid PartTypeId { set; get; }
+        public virtual PartType Type {set;get;}        
     }
 }

@@ -2,9 +2,9 @@
 
 <form id="whatsNewForm" asp-action="Submit" asp-controller="Blog" method="post">
     <div class="form-group">           
-        <textarea id="whatsNewInput" asp-for="Part.Text" class="form-control" rows="1">@Model.Part.Text</textarea>
+        <textarea id="whatsNewInput" asp-for="Part.Value" class="form-control" rows="1">@Model.Part.Value</textarea>
     </div>    
-    <input id="whatsNewImageUrl" asp-for="Part.ImageUrl" type="hidden" value="@Model.Part.ImageUrl"/>
+    <input id="whatsNewPartValue" asp-for="Part.Value" type="hidden" value="@Model.Part.Value"/>
 
     <button id="whatsNewSubmitButton" class="btn btn-success">
         <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> submit

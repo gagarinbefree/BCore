@@ -70,7 +70,7 @@ var Blog;
         Image.prototype.doneUpload = function (e, data) {
             var _this = this;
             NProgress.done(true);
-            this.owner.elHiddenUrl.val(data.result.files.length > 0 ? data.result.files[0].url : "");
+            this.owner.elHiddenValue.val(data.result.files.length > 0 ? data.result.files[0].url : "");
             this.owner.post(e);
             setTimeout(function () {
                 _this.elModalForm.modal("hide");

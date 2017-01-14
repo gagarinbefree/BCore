@@ -10,31 +10,24 @@ namespace BCore.Models.ViewModels
     {
         public Guid Id { set; get; }
 
-        private string text;
-        public string Text
+        private string value;
+        public string Value
         {
             set
             {
-                text = value != null ? Regex.Replace(value.Replace("\r\n", " "), "<.*?>", String.Empty) : "";
+                if (this.PartType.Name == "text")
+                    Value = value != null ? Regex.Replace(value.Replace("\r\n", " "), "<.*?>", String.Empty) : "";
+
+                if (this.PartType.Name == "image")
+                    Value = value != null ? Regex.Replace(value, "<.*?>", String.Empty) : "";
             }
             get
             {
-                return text;
+                return value;
             }
         }
 
-        private string imageUrl;
-        public string ImageUrl
-        {
-            set
-            {
-                imageUrl = value != null ? Regex.Replace(value, "<.*?>", String.Empty) : "";
-            }
-            get
-            {
-                return imageUrl;
-            }
-        }
+        public PartTypeViewModel PartType { set; get; }
 
         public DateTime DateTime { set; get; }
 
