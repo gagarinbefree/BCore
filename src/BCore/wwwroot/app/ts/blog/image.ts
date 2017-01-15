@@ -90,7 +90,7 @@ module Blog {
         private doneUpload(e: Event, data: any): void {
             NProgress.done(true);
 
-            this.owner.elHiddenValue.val(data.result.files.length > 0 ? data.result.files[0].url : "");
+            this.owner.elImageUrl.val(data.result.files.length > 0 ? data.result.files[0].url : "");
             this.owner.post(e);
 
             setTimeout(() => {

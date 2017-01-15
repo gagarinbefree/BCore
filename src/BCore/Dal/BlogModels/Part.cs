@@ -11,13 +11,10 @@ namespace BCore.Dal.BlogModels
     {
         public string Value { set; get; }        
         public DateTime DateTime { set; get; }
+        public int PartType { set; get; }
 
         [ForeignKey("Post")]
         public Guid PostId { set; get; }
-        public virtual Post Post { set; get; }
-
-        [ForeignKey("PartType")]
-        public Guid PartTypeId { set; get; }
-        public virtual PartType Type {set;get;}        
+        public virtual Post Post { set; get; }        
     }
 }

@@ -35,7 +35,7 @@ namespace BCore.Dal.Ef
 
                 return _partRepository;
             }
-        }
+        }        
 
         private IRepository<Comment> _commentRepository;
         public IRepository<Comment> CommentRepository

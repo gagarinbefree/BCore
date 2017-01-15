@@ -23,18 +23,6 @@ namespace BCore.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PartType",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PartType", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Posts",
                 columns: table => new
                 {
@@ -128,19 +116,13 @@ namespace BCore.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     DateTime = table.Column<DateTime>(nullable: false),
-                    PartTypeId = table.Column<Guid>(nullable: false),
+                    PartType = table.Column<int>(nullable: false),
                     PostId = table.Column<Guid>(nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Parts", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Parts_PartType_PartTypeId",
-                        column: x => x.PartTypeId,
-                        principalTable: "PartType",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Parts_Posts_PostId",
                         column: x => x.PostId,
@@ -272,12 +254,6 @@ namespace BCore.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Parts_PartTypeId",
-                table: "Parts",
-                column: "PartTypeId",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Parts_PostId",
                 table: "Parts",
                 column: "PostId");
@@ -355,9 +331,6 @@ namespace BCore.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "PartType");
 
             migrationBuilder.DropTable(
                 name: "Hashes");

@@ -5,17 +5,15 @@
     <div>
         <div class="margin-top"></div><hr />
 
-        @{
-            await Html.RenderPartialAsync("_StatusLine", feed);
-        }
+        @await Html.PartialAsync("_StatusLine", feed)
 
         <div>
             <input asp-for="@feed.Id" type="hidden" />
             @for (var ii = 0; ii < (feed.Parts.Count() == 1 ? 1 : 2); ii++)
             {
                 <div class="margin-top">
-                   @if (feed.Parts[ii].PartType.Name == "text" && !String.IsNullOrWhiteSpace(feed.Parts[ii].Value))
-                    {
+                   @if (feed.Parts[ii].PartType == 0 && !String.IsNullOrWhiteSpace(feed.Parts[ii].Value))
+                   {
                         <div class="wrap">
                             @if (ii == 0)
                             {
@@ -30,7 +28,7 @@
                         </div>
                     }
 
-                    @if (feed.Parts[ii].PartType.Name == "image" && !String.IsNullOrWhiteSpace(feed.Parts[ii].Value))
+                    @if (feed.Parts[ii].PartType == 1 && !String.IsNullOrWhiteSpace(feed.Parts[ii].Value))
                     {
                         <img class="img-responsive" src="@feed.Parts[ii].Value" />
                     }

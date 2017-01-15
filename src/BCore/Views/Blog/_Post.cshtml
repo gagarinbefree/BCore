@@ -3,7 +3,7 @@
 @for (var ii = 0; ii < Model.Parts.Count(); ii++)
 {
     <div class="margin-top">           
-        @if (Model.Parts[ii].PartType.Name == "text" && !String.IsNullOrWhiteSpace(Model.Parts[ii].Value))
+        @if (Model.Parts[ii].PartType == 0 && !String.IsNullOrWhiteSpace(Model.Parts[ii].Value))
         {
             <div class="wrap">
                 @if (ii == 0)
@@ -17,12 +17,13 @@
             </div>
         }
         
-        @if (Model.Parts[ii].PartType.Name == "image" && !String.IsNullOrWhiteSpace(Model.Parts[ii].Value))
+        @if (Model.Parts[ii].PartType == 1 && !String.IsNullOrWhiteSpace(Model.Parts[ii].Value))
         {          
             <img class="img-responsive" src="@Model.Parts[ii].Value">
         }                   
     </div>
 
     <input asp-for="@Model.Parts[ii].Value" type="hidden" />
-    <input asp-for="@Model.Parts[ii].PartType.Name" type="hidden" />
+    <input asp-for="@Model.Parts[ii].PartType" type="hidden" />
+    <input asp-for="@Model.Parts[ii].DateTime" type="hidden" />
 }

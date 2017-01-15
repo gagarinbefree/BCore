@@ -42,8 +42,8 @@ namespace BCore.Dal.Ef
             builder.Entity<Hash>().HasIndex(f => f.Tag).IsUnique();
             builder.Entity<Hash>().Property(f => f.Tag).IsRequired();
 
-            builder.Entity<PartType>()
-                .HasKey(e => e.Id);
+            //builder.Entity<PartType>()
+            //    .HasKey(e => e.Id);
 
             //builder.Entity<Part>()
             //    .HasOne(p => p.Type)

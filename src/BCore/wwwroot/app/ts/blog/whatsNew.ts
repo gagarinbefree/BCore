@@ -5,9 +5,9 @@ module Blog {
     export class WhatsNew {
         public userId: string;
         public elSubmitForm: JQuery = $("#whatsNewForm");
-        public elHiddenValue = $("#whatsNewPartValue");
+        public elImageUrl = $("#whatsNewPartImageUrl");
 
-        private elInput: JQuery = $("#whatsNewInput");
+        private elInput: JQuery = $("#whatsNewPartText");
         private elPostButton: JQuery = $("#whatsNewPostButton");
         private elPost: JQuery = $("#whatsNewPost");
 
@@ -28,12 +28,14 @@ module Blog {
             this.elInput.val("");
             autosize.update(this.elInput);
             this.elInput.focus();
-            this.elHiddenValue.val("");
+            this.elImageUrl.val("");
             this.elDropdown.dropdown();                  
         }
 
         public post(e: Event): void {
             e.preventDefault();
+
+            debugger;
 
             this.elPost.load("/Blog/Post"
                 , this.elSubmitForm.serializeArray()
