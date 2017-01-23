@@ -8,7 +8,7 @@ using BCore.Dal.Ef;
 namespace BCore.Migrations
 {
     [DbContext(typeof(BlogDbContext))]
-    [Migration("20170106060344_inital")]
+    [Migration("20170115123850_inital")]
     partial class inital
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,6 +42,8 @@ namespace BCore.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("DateTime");
+
                     b.Property<string>("Tag")
                         .IsRequired();
 
@@ -60,11 +62,11 @@ namespace BCore.Migrations
 
                     b.Property<DateTime>("DateTime");
 
-                    b.Property<string>("ImageUrl");
+                    b.Property<int>("PartType");
 
                     b.Property<Guid>("PostId");
 
-                    b.Property<string>("Text");
+                    b.Property<string>("Value");
 
                     b.HasKey("Id");
 

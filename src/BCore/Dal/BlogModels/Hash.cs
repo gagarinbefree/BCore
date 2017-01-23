@@ -8,6 +8,7 @@ namespace BCore.Dal.BlogModels
     public class Hash : Entity
     {
         public string Tag { set; get; }
+        public string DateTime { set; get; }
         public virtual ICollection<PostHash> PostHashes { set; get; }
 
         public Hash()

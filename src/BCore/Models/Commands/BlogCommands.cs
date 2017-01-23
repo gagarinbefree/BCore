@@ -32,11 +32,17 @@ namespace BCore.Models.Commands
             if (model.Parts.Count() == 0)
                 return Guid.Empty;
 
-            var post = Mapper.Map<Post>(model);
+            var post = Mapper.Map<Post>(model);            
             post.UserId = manager.GetUserId(user);
             Guid postId = await unit.PostRepository.CreateAsync(post);
+            
+            string text = model
+                .Parts
+                .Where(f => f.PartType == 0)
+                .Select(f => String.Format("{0} ", f.Value)).Aggregate((a, b) => a + b);
+            if (String.IsNullOrWhiteSpace(text))
+                return postId;
 
-            string text = model.Parts.Select(f => String.Format("{0} ", f.Text)).Aggregate((a, b) => a + b);
             List<string> tags = HashTag.GetHashTags(text);
             foreach(var tag in tags)
             {
@@ -81,9 +87,9 @@ namespace BCore.Models.Commands
         /// <param name="model">Model</param>
         public static void AddPartToPost(WhatsNewViewModel model)
         {
-            model.Parts.Add(Mapper.Map<PartViewModel>(model.Part));
-            model.Part.Text = String.Empty;
-            model.Part.ImageUrl = String.Empty;
+            model.Parts.Add(Mapper.Map<PartViewModel>(model.PreviewPart));
+            model.PreviewPart.Text = "";
+            model.PreviewPart.ImageUrl = "";
         }
 
         /// <summary>
@@ -102,13 +108,15 @@ namespace BCore.Models.Commands
                 , 50
                 , f => f.Parts, f => f.PostHashes, f => f.Comments);
 
-            var model = Mapper.Map<WhatsNewViewModel>(posts);
+            var model = Mapper.Map<WhatsNewViewModel>(posts);            
 
             var postHashes = model.Feeds.SelectMany(f => f.PostHashes).ToList();
             postHashes.ForEach(async (f) => {
                 f.Tag = (await PostCommands.GetHashById(f.HashId, unit)).Tag;
             });
 
+            model.Feeds.ForEach(f => f.Parts = f.Parts.OrderBy(o => o.DateTime).ToList());
+            
             var userId = manager.GetUserId(user);
             model.Feeds.ForEach(f => f.CanEdit = userId == f.UserId);
 

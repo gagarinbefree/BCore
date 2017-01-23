@@ -105,6 +105,13 @@ namespace BCore.Dal.Ef
             return await q.ToListAsync();
         }
 
+        public async Task<ICollection<T>> GetAllAsync()
+        {
+            IQueryable<T> q = _db.Set<T>();
+       
+            return await q.ToListAsync();
+        }
+
         public async Task<int> UpdateAsync(T item)
         {
             _db.Entry(item).State = EntityState.Modified;

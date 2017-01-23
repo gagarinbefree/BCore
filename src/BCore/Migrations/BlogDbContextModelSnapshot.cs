@@ -41,6 +41,8 @@ namespace BCore.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("DateTime");
+
                     b.Property<string>("Tag")
                         .IsRequired();
 
@@ -59,11 +61,11 @@ namespace BCore.Migrations
 
                     b.Property<DateTime>("DateTime");
 
-                    b.Property<string>("ImageUrl");
+                    b.Property<int>("PartType");
 
                     b.Property<Guid>("PostId");
 
-                    b.Property<string>("Text");
+                    b.Property<string>("Value");
 
                     b.HasKey("Id");
 

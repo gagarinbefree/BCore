@@ -1,10 +1,10 @@
 ﻿@model BCore.Models.ViewModels.WhatsNewViewModel
 
 <form id="whatsNewForm" asp-action="Submit" asp-controller="Blog" method="post">
-    <div class="form-group">           
-        <textarea id="whatsNewInput" asp-for="Part.Text" class="form-control" rows="1">@Model.Part.Text</textarea>
+    <div class="form-group">                   
+        <textarea id="whatsNewPartText" asp-for="PreviewPart.Text" class="form-control" rows="1">@Model.PreviewPart.Text</textarea>
     </div>    
-    <input id="whatsNewImageUrl" asp-for="Part.ImageUrl" type="hidden" value="@Model.Part.ImageUrl"/>
+    <input id="whatsNewPartImageUrl" asp-for="PreviewPart.ImageUrl" type="hidden" value="@Model.PreviewPart.ImageUrl"/>
 
     <button id="whatsNewSubmitButton" class="btn btn-success">
         <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> submit

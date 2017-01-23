@@ -34,6 +34,8 @@ namespace BCore.Models.Commands
             var userId = manager.GetUserId(user);
             model.Comments.ForEach(f => f.CanEdit = userId == f.UserId);
 
+            model.Parts = model.Parts.OrderBy(f => f.DateTime).ToList();
+
             return model;
         }
 

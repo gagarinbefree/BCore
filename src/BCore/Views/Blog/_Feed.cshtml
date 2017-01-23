@@ -13,25 +13,25 @@
                 @for (var ii = 0; ii < (feed.Parts.Count() == 1 ? 1 : 2); ii++)
                 {
                     <div class="margin-top">
-                        @if (!String.IsNullOrWhiteSpace(feed.Parts[ii].Text))
+                        @if (feed.Parts[ii].PartType == 0 && !String.IsNullOrWhiteSpace(feed.Parts[ii].Value))
                         {
                             <div class="wrap">
                                 @if (ii == 0)
                                 {
-                                    <h2><text hashing-text="@feed.Parts[ii].Text"></text></h2>
+                                    <h2><text hashing-text="@feed.Parts[ii].Value"></text></h2>
                                 }
                                 else
                                 {
                                     <div>
-                                        <text hashing-text="@feed.Parts[ii].Text"></text>
+                                        <text hashing-text="@feed.Parts[ii].Value"></text>
                                     </div>
                                 }
                             </div>
                         }
 
-                        @if (!String.IsNullOrWhiteSpace(feed.Parts[ii].ImageUrl))
+                        @if (feed.Parts[ii].PartType == 1 && !String.IsNullOrWhiteSpace(feed.Parts[ii].Value))
                         {
-                            <img class="img-responsive" src="@feed.Parts[ii].ImageUrl" />
+                            <img class="img-responsive" src="@feed.Parts[ii].Value" />
                         }
                     </div>
 

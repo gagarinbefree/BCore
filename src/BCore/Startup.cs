@@ -117,12 +117,12 @@ namespace BCore
         private void _configureAutoMapper()
         {
             Mapper.Initialize(config =>
-            {                
-                config.CreateMap<PartViewModel, Part>();
+            {
+                config.CreateMap<PartViewModel, Part>();                    
                 config.CreateMap<PostViewModel, Post>();
                 config.CreateMap<WhatsNewViewModel, Post>()
                     .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now))
-                    .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts));  
+                    .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts));
                                                
                 config.CreateMap<Part, PartViewModel>();
                 config.CreateMap<Post, PostViewModel>();
@@ -142,6 +142,11 @@ namespace BCore
                     .ForMember(g => g.Comments, o => o.MapFrom(c => c));
 
                 config.CreateMap<PartViewModel, PartViewModel>();
+
+                config.CreateMap<PreviewPartViewModel, PartViewModel>()
+                    .ForMember(g => g.Value, o => o.MapFrom(c => c.GetPartValue()))
+                    .ForMember(g => g.PartType, o => o.MapFrom(c => c.GetPartTypeName()))
+                    .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
             });
         }
 
@@ -191,7 +196,7 @@ namespace BCore
                     var result = _userManager.AddToRolesAsync(user, roles).Result;                                      
 
                     db.SaveChanges();
-                }                
+                }                       
             }
         }
     }

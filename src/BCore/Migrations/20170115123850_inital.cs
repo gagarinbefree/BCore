@@ -14,6 +14,7 @@ namespace BCore.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    DateTime = table.Column<string>(nullable: true),
                     Tag = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -115,9 +116,9 @@ namespace BCore.Migrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     DateTime = table.Column<DateTime>(nullable: false),
-                    ImageUrl = table.Column<string>(nullable: true),
+                    PartType = table.Column<int>(nullable: false),
                     PostId = table.Column<Guid>(nullable: false),
-                    Text = table.Column<string>(nullable: true)
+                    Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
