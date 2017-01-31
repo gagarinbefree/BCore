@@ -10,6 +10,6 @@ namespace BCore.Models.ViewModels.Blog
         public string Text { set; get; }
         public string ImageUrl { set; get; }
         public string VideoUrl { set; get; }
-        public string Geo { set; get; }
+        public string Geo { set; get;   }
     }
 }
