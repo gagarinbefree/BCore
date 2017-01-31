@@ -13,7 +13,8 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using BCore.Dal.BlogModels;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
-using BCore.Models.ViewModels;
+//using BCore.Models.ViewModels;
+using BCore.Models.ViewModels.Blog;
 using Backload.MiddleWare;
 
 namespace BCore
@@ -116,37 +117,52 @@ namespace BCore
 
         private void _configureAutoMapper()
         {
+            //Mapper.Initialize(config =>
+            //{
+            //    config.CreateMap<PartViewModel, Part>();
+            //    config.CreateMap<PostViewModel, Post>();
+            //    config.CreateMap<WhatsNewViewModel, Post>()
+            //        .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now))
+            //        .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts));
+
+            //    config.CreateMap<Part, PartViewModel>();
+            //    config.CreateMap<Post, PostViewModel>();
+            //    config.CreateMap<PostHash, PostHasheViewModel>();
+
+            //    config.CreateMap<ICollection<Post>, WhatsNewViewModel>()
+            //        .ForMember(g => g.Feeds, o => o.MapFrom(c => c));
+
+            //    config.CreateMap<ICollection<Post>, WarmViewModel>()
+            //        .ForMember(g => g.Feeds, o => o.MapFrom(c => c));
+
+            //    config.CreateMap<CommentViewModel, Comment>()
+            //        .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
+            //    config.CreateMap<Comment, CommentViewModel>();
+
+            //    config.CreateMap<ICollection<Comment>, PostViewModel>()
+            //        .ForMember(g => g.Comments, o => o.MapFrom(c => c));
+
+            //    config.CreateMap<PartViewModel, PartViewModel>();
+
+            //    config.CreateMap<PreviewPartViewModel, PartViewModel>()
+            //        .ForMember(g => g.Value, o => o.MapFrom(c => c.GetPartValue()))
+            //        .ForMember(g => g.PartType, o => o.MapFrom(c => c.GetPartTypeName()))
+            //        .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
+            //});
+
             Mapper.Initialize(config =>
             {
-                config.CreateMap<PartViewModel, Part>();                    
-                config.CreateMap<PostViewModel, Post>();
-                config.CreateMap<WhatsNewViewModel, Post>()
-                    .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now))
-                    .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts));
-                                               
-                config.CreateMap<Part, PartViewModel>();
-                config.CreateMap<Post, PostViewModel>();
-                config.CreateMap<PostHash, PostHasheViewModel>();
+                // UpdateViewModel
+                config.CreateMap<ICollection<Post>, UpdateViewModel>()
+                    .ForMember(g => g.Posts, o => o.MapFrom(c => c));
 
-                config.CreateMap<ICollection<Post>, WhatsNewViewModel>()
-                    .ForMember(g => g.Feeds, o => o.MapFrom(c => c));
+                config.CreateMap<Post, PostViewModel>()
+                    .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts))
+                    .ForMember(g => g.Comments, o => o.MapFrom(c => c.Comments))
+                    .ForMember(g => g.PostHashes, o => o.MapFrom(c => c.PostHashes));
 
-                config.CreateMap<ICollection<Post>, WarmViewModel>()
-                    .ForMember(g => g.Feeds, o => o.MapFrom(c => c));
-
-                config.CreateMap<CommentViewModel, Comment>()
-                    .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
-                config.CreateMap<Comment, CommentViewModel>();
-
-                config.CreateMap<ICollection<Comment>, PostViewModel>()
-                    .ForMember(g => g.Comments, o => o.MapFrom(c => c));
-
-                config.CreateMap<PartViewModel, PartViewModel>();
-
-                config.CreateMap<PreviewPartViewModel, PartViewModel>()
-                    .ForMember(g => g.Value, o => o.MapFrom(c => c.GetPartValue()))
-                    .ForMember(g => g.PartType, o => o.MapFrom(c => c.GetPartTypeName()))
-                    .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
+                config.CreateMap<PostHash, string>()
+                    .ForMember(g => g, o => o.MapFrom(c => c.Hash));                
             });
         }
 
