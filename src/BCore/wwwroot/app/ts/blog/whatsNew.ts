@@ -5,9 +5,13 @@ module Blog {
     export class WhatsNew {
         public userId: string;
         public elSubmitForm: JQuery = $("#whatsNewForm");
-        public elImageUrl = $("#whatsNewPartImageUrl");
 
-        private elInput: JQuery = $("#whatsNewPartText");
+        private elInput: JQuery = $("#whatsNewText");
+
+        public elImageUrl = $("#whatsNewImageUrl");
+        public elVideoUrl = $("#whatsNewVideoUrl");
+        public elGeo = $("#whatsNewGeo");
+        
         private elPostButton: JQuery = $("#whatsNewPostButton");
         private elPost: JQuery = $("#whatsNewPost");
 
@@ -35,9 +39,7 @@ module Blog {
         public post(e: Event): void {
             e.preventDefault();
 
-            debugger;
-
-            this.elPost.load("/Blog/Post"
+            this.elPost.load("/Update/Post"
                 , this.elSubmitForm.serializeArray()
                 , () => this.init());
         }

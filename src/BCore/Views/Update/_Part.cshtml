@@ -1,0 +1,18 @@
+﻿@model BCore.Models.ViewModels.Blog.PartViewModel
+
+@if (Model.PartType == 0)
+{
+    if (Model.IsStrong)
+    {
+        <h2><text hashing-text="@Model.Value"></text></h2>
+    }
+    else
+    {
+        <div><text hashing-text="@Model.Value"></text></div>
+    }
+}
+else if (Model.PartType == 1)
+{
+    <img class="img-responsive" src="@Model.Value" />
+}
+

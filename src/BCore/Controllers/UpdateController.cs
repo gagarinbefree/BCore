@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using BCore.Dal.Ef;
 using Microsoft.AspNetCore.Identity;
 using BCore.Models.ViewModels.Blog;
+using BCore.Models.Commands;
 
 namespace BCore.Controllers
 {
@@ -17,13 +18,29 @@ namespace BCore.Controllers
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
+        public UpdateController(BlogDbContext db, UserManager<User> userManager, SignInManager<User> signInManager)
+        {
+            _unit = new Unit(db);
+            _userManager = userManager;
+            _signInManager = signInManager;
+        }
 
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
-            UpdateViewModel m = new UpdateViewModel();
+            var m = await UpdateCommands.GetPostsByUser(_unit, _userManager, HttpContext.User);
 
             return View(m);
+        }
+
+        [HttpPost]
+        public IActionResult Post(UpdateViewModel m)
+        {
+            ModelState.Clear();
+
+            UpdateCommands.AddPartToPost(m);
+
+            return PartialView("_Post", m.PreviewPost);
         }
     }
 }

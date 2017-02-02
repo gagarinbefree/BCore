@@ -1,0 +1,36 @@
+﻿@model BCore.Models.ViewModels.Blog.PostViewModel
+
+<input asp-for="Id" value="@Model.Id" type="hidden" />
+
+@if (Model.StatusLine != null)
+{
+    @await Html.PartialAsync("_PostStatusLine", Model.StatusLine)
+}
+
+@if (Model.IsPreview)
+{
+    if (Model.Parts.Count() > 0)
+    {
+        Model.Parts[0].IsStrong = true;
+        @await Html.PartialAsync("_Part", Model.Parts[0]);
+    }
+
+    if (Model.Parts.Count() > 1 && Model.Parts[0].PartType == 0)
+    {
+        @await Html.PartialAsync("_Part", Model.Parts[0]);
+    }
+
+    <div class="margin-top">
+        <a class="btn btn-default" href="/Post?id=@Model.Id" role="button">read</a>
+        <div class="btn-group pull-right">
+        </div>
+    </div>
+}
+else
+{
+    @for(int ii = 0; ii < Model.Parts.Count(); ii++)
+    {
+        Model.Parts[0].IsStrong = ii == 0;
+        @await Html.PartialAsync("_Part", Model.Parts[ii]);
+    }
+}

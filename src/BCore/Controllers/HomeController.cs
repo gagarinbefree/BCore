@@ -11,7 +11,7 @@ namespace BCore.Controllers
     {
         public IActionResult Index()
         {
-            return RedirectPermanent("Blog/Index");
+            return RedirectPermanent("Update/Index");
         }        
     }
 }

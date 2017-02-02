@@ -1,0 +1,41 @@
+﻿@model BCore.Models.ViewModels.Blog.UpdateViewModel
+
+@using Microsoft.AspNetCore.Identity
+@using BCore.Dal.Ef;
+
+@{
+    ViewBag.Title = "Blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<div class="row">
+    <div class="hidden-xs col-sm-2 col-md-3"></div>
+
+    <div class="col-xs-12 col-sm-8 col-md-6">
+        @{
+
+        } 
+
+
+        @await Html.PartialAsync("_WhatsNew", Model.WhatsNew, new ViewDataDictionary
+        {
+            TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "ContactInfo" }
+        })
+    </div>
+
+    <div class="hidden-xs col-sm-2 col-md-3"></div>
+</div>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    @section Scripts {
+        <script type="text/javascript">
+            $(document).ready(function() {
+                new Blog.WhatsNew("@UserManager.GetUserId(User)");
+            });
+        </script>
+    }
+}

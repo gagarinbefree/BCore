@@ -161,8 +161,14 @@ namespace BCore
                     .ForMember(g => g.Comments, o => o.MapFrom(c => c.Comments))
                     .ForMember(g => g.PostHashes, o => o.MapFrom(c => c.PostHashes));
 
-                config.CreateMap<PostHash, string>()
-                    .ForMember(g => g, o => o.MapFrom(c => c.Hash));                
+                config.CreateMap<Part, PartViewModel>();
+
+                config.CreateMap<PostHash, HashViewModel>();         
+                
+                config.CreateMap<WhatsNewViewModel, PartViewModel>()
+                      .ForMember(g => g.Value, o => o.MapFrom(c => c.GetPartValue()))
+                      .ForMember(g => g.PartType, o => o.MapFrom(c => c.GetPartTypeName()))
+                      .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
             });
         }
 

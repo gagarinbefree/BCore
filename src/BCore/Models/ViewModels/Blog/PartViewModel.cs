@@ -11,6 +11,7 @@ namespace BCore.Models.ViewModels.Blog
         public string Value { set; get; }
         public int PartType { set; get; }
         public DateTime DateTime { set; get; }
+        public bool IsStrong { set; get; }
 
         public PartViewModel()
         {
