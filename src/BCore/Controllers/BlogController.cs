@@ -29,9 +29,11 @@ namespace BCore.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
-            var m = await BlogCommands.GetPostsByUser(_unit, _userManager, HttpContext.User);
+            return RedirectPermanent("/Update/Index");
 
-            return View(m);
+            /*var m = await BlogCommands.GetPostsByUser(_unit, _userManager, HttpContext.User);
+
+            return View(m);*/
         }
         
         [HttpPost]

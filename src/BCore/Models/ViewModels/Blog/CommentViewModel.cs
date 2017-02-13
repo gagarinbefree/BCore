@@ -7,7 +7,9 @@ namespace BCore.Models.ViewModels.Blog
 {
     public class CommentViewModel
     {
-        public CommentStatusLineViewModel StatusLine { set; get; }
+        public CommentStatusLineViewModel StatusLine { set; get; }       
+        public string UserId { set; get; }
+        public DateTime DateTime { set; get; }
         public string Text { set; get; }
     }
 }
