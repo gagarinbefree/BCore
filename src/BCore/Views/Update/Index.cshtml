@@ -2,6 +2,7 @@
 
 @using Microsoft.AspNetCore.Identity
 @using BCore.Dal.Ef;
+@using BCore.Models.Extensions;
 
 @{
     ViewBag.Title = "Blog";
@@ -18,12 +19,7 @@
         @{
 
         } 
-
-
-        @await Html.PartialAsync("_WhatsNew", Model.WhatsNew, new ViewDataDictionary
-        {
-            TemplateInfo = new System.Web.Mvc.TemplateInfo { HtmlFieldPrefix = "ContactInfo" }
-        })
+        @await Html.PartialAsync("_WhatsNew", Model.WhatsNew, nameof(Model.WhatsNew))
     </div>
 
     <div class="hidden-xs col-sm-2 col-md-3"></div>

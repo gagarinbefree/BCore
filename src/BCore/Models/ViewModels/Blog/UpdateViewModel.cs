@@ -16,6 +16,7 @@ namespace BCore.Models.ViewModels.Blog
         public UpdateViewModel()
         {
             WhatsNew = new WhatsNewViewModel();
+            PreviewPost = new PostViewModel();
         }    
     }
 }

@@ -48,8 +48,9 @@ namespace BCore.Models.Commands
         /// </summary>
         /// <param name="model">Model</param>
         public static void AddPartToPost(UpdateViewModel model)
-        {            
+        {
             model.PreviewPost.Parts.Add(Mapper.Map<PartViewModel>(model.WhatsNew));
+
             model.WhatsNew.Clear();
         }
     }
