@@ -40,6 +40,8 @@ namespace BCore.Controllers
 
             UpdateCommands.AddPartToPost(m);
 
+            ViewData.TemplateInfo.HtmlFieldPrefix = nameof(m.PreviewPost);
+
             return PartialView("_Post", m.PreviewPost);
         }
     }

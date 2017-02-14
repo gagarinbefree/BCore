@@ -23,6 +23,9 @@ namespace BCore.Models.Extensions
             var viewData = new ViewDataDictionary(htmlHelper.ViewData);
             var htmlPrefix = viewData.TemplateInfo.HtmlFieldPrefix;
             viewData.TemplateInfo.HtmlFieldPrefix += !Equals(htmlPrefix, string.Empty) ? $".{prefix}" : prefix;
+
+            var xx = htmlHelper.PartialAsync(partialViewName, model, viewData).Result;
+
             return htmlHelper.PartialAsync(partialViewName, model, viewData);
         }
     }

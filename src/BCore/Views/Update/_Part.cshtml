@@ -16,3 +16,8 @@ else if (Model.PartType == 1)
     <img class="img-responsive" src="@Model.Value" />
 }
 
+<input asp-for="@Model.Id" type="hidden" />
+<input asp-for="@Model.Value" type="hidden" />
+<input asp-for="@Model.PartType" type="hidden" />
+
+

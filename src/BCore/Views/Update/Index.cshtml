@@ -1,8 +1,8 @@
 ﻿@model BCore.Models.ViewModels.Blog.UpdateViewModel
 
 @using Microsoft.AspNetCore.Identity
-@using BCore.Dal.Ef;
-@using BCore.Models.Extensions;
+@using BCore.Dal.Ef
+@using BCore.Models.Extensions
 
 @{
     ViewBag.Title = "Blog";
@@ -15,10 +15,7 @@
 <div class="row">
     <div class="hidden-xs col-sm-2 col-md-3"></div>
 
-    <div class="col-xs-12 col-sm-8 col-md-6">
-        @{
-
-        } 
+    <div class="col-xs-12 col-sm-8 col-md-6">    
         @await Html.PartialAsync("_WhatsNew", Model.WhatsNew, nameof(Model.WhatsNew))
     </div>
 
