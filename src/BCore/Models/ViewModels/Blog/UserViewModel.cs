@@ -7,6 +7,7 @@ namespace BCore.Models.ViewModels.Blog
 {
     public class UserViewModel
     {
+        public Guid UserId { set; get; }
         public string UserName { set; get; }
         public string Email { set; get; }
     }

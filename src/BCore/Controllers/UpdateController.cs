@@ -44,5 +44,16 @@ namespace BCore.Controllers
 
             return PartialView("_Post", m.PreviewPost);
         }
+
+        [HttpPost]
+        [ActionName("Submit")]
+        public async Task<ActionResult> SubmitAsync(UpdateViewModel m)
+        {
+            ModelState.Clear();
+
+            await UpdateCommands.SubmitPostAsync(m, _unit, _userManager, HttpContext.User);
+
+            return RedirectToAction("Index");
+        }
     }
 }

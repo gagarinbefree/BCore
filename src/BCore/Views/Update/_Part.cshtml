@@ -1,20 +1,24 @@
 ﻿@model BCore.Models.ViewModels.Blog.PartViewModel
 
-@if (Model.PartType == 0)
-{
-    if (Model.IsStrong)
+<div class="margin-top">
+    @if (Model.PartType == 0)
     {
-        <h2><text hashing-text="@Model.Value"></text></h2>
+
+        @if (Model.IsStrong)
+        {
+            <h2><text hashing-text="@Model.Value"></text></h2>
+        }
+        else
+        {
+            <div><text hashing-text="@Model.Value"></text></div>
+        }
+
     }
-    else
+    else if (Model.PartType == 1)
     {
-        <div><text hashing-text="@Model.Value"></text></div>
+        <img class="img-responsive" src="@Model.Value" />
     }
-}
-else if (Model.PartType == 1)
-{
-    <img class="img-responsive" src="@Model.Value" />
-}
+</div>
 
 <input asp-for="@Model.Id" type="hidden" />
 <input asp-for="@Model.Value" type="hidden" />

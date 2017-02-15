@@ -152,11 +152,8 @@ namespace BCore
 
             Mapper.Initialize(config =>
             {
-                //BCore.Dal.BlogModels.Comment->BCore.Models.ViewModels.Blog.CommentViewModel
-
-                // UpdateViewModel
                 config.CreateMap<ICollection<Post>, UpdateViewModel>()
-                    .ForMember(g => g.Posts, o => o.MapFrom(c => c));
+                    .ForMember(g => g.RecentPosts, o => o.MapFrom(c => c));
 
                 config.CreateMap<Post, PostViewModel>()
                     .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts))
@@ -171,6 +168,13 @@ namespace BCore
                       .ForMember(g => g.Value, o => o.MapFrom(c => c.GetPartValue()))
                       .ForMember(g => g.PartType, o => o.MapFrom(c => c.GetPartTypeName()))
                       .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
+
+                //UpdateViewModel -> Post
+                config.CreateMap<UpdateViewModel, Post>()
+                    .ForMember(g => g.Parts, o => o.MapFrom(c => c.PreviewPost.Parts));
+
+                //BCore.Models.ViewModels.Blog.PartViewModel->BCore.Dal.BlogModels.Part
+                config.CreateMap<PartViewModel, Part>();
             });
         }
 

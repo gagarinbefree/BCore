@@ -11,7 +11,7 @@ namespace BCore.Models.ViewModels.Blog
 
         public PostViewModel PreviewPost { set; get; }
 
-        public List<PostViewModel> Posts { set; get; }
+        public List<PostViewModel> RecentPosts { set; get; }
 
         public UpdateViewModel()
         {
