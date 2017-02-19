@@ -4,17 +4,17 @@
 @using BCore.Dal.Ef;
 @using BCore.Models;
 
-7<p>
+<p>
     <div class="mymedia">        
-        @*<span class="mymedia-figure" gravatar-email="@Model.User.Email" image-size="64" width="64"></span>*@
+        <span class="mymedia-figure" gravatar-email="@Model.User.Email" image-size="64" width="64"></span>
 
         <div class="mymedia-body">
             <div class="row">
                 <div class="col-xs-9 block">
-                    @*<div class="user-name">@Model.User.UserName</div>*@
+                    <div class="user-name">@Model.User.UserName</div>
                     <div class="mymedia-status">
-                        @*@Model.PostDateTime.ToString("dd.MM.yyyy hh:mm")*@
-                        &nbsp; <a href="/Post/Index?id=xxxcommentAnchor"><i class="glyphicon glyphicon-comment"></i> xxx </a>
+                        @Model.PostDateTime.ToString("dd.MM.yyyy hh:mm")
+                        &nbsp; <a href="/Post/Index?id=xxxcommentAnchor"><i class="glyphicon glyphicon-comment"></i> @Model.CommentsCount</a>
                         &nbsp;
                         @*@foreach (var postHash in Model.PostHashes)
                         {

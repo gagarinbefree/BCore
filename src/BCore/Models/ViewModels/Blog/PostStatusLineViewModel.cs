@@ -9,7 +9,9 @@ namespace BCore.Models.ViewModels.Blog
     {
         public UserViewModel User { set; get; }
         public DateTime PostDateTime {set; get; }
+        public int CommentsCount { set; get; }
         public List<string> PostHashes { set; get; }
         public bool IsEditable { set; get; }
+
     }
 }

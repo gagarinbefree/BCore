@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using AutoMapper;
 using BCore.Dal.BlogModels;
+using BCore.Models.Extensions;
 
 namespace BCore.Models.Commands
 {
@@ -28,7 +29,7 @@ namespace BCore.Models.Commands
                 , f => f.UserId == manager.GetUserId(user) && f.Parts.Count > 0
                 , 50
                 , f => f.Parts, f => f.PostHashes, f => f.Comments);
-
+          
             var model = Mapper.Map<UpdateViewModel>(posts);
 
             /*var postHashes = model.RecentPosts.SelectMany(f => f.PostHashes).ToList();
@@ -36,14 +37,15 @@ namespace BCore.Models.Commands
                 f. = (await PostCommands.GetHashById(f.HashId, unit)).Tag;
             });*/
 
-            model.RecentPosts.ForEach(f => f.Parts = f.Parts.OrderBy(o => o.DateTime).ToList());
-
             var userId = manager.GetUserId(user);
-
-            model.RecentPosts.ForEach(f => 
+            model.RecentPosts.ForEach(async (f) =>
             {
-                f.StatusLine = new PostStatusLineViewModel();
-                //f.StatusLine.IsEditable = userId == f.StatusLine.User.UserId.ToString();
+                f.Parts = f.Parts.OrderBy(o => o.DateTime).ToList();
+                f.StatusLine = new PostStatusLineViewModel();                       
+                f.StatusLine.User = Mapper.Map<UserViewModel>(await manager.FindByIdAsync(f.UserId));
+                f.StatusLine.IsEditable = userId == f.UserId.ToString();
+                f.StatusLine.PostDateTime = f.DateTime;
+                f.StatusLine.CommentsCount = f.Comments.Count;
             });
 
             return model;
