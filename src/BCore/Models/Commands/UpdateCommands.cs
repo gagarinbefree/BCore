@@ -38,14 +38,11 @@ namespace BCore.Models.Commands
             });*/
 
             var userId = manager.GetUserId(user);
-            model.RecentPosts.ForEach(async (f) =>
+            model.RecentPosts.ForEach(f =>
             {
                 f.Parts = f.Parts.OrderBy(o => o.DateTime).ToList();
-                f.StatusLine = new PostStatusLineViewModel();                       
-                f.StatusLine.User = Mapper.Map<UserViewModel>(await manager.FindByIdAsync(f.UserId));
-                f.StatusLine.IsEditable = userId == f.UserId.ToString();
-                f.StatusLine.PostDateTime = f.DateTime;
-                f.StatusLine.CommentsCount = f.Comments.Count;
+                f.StatusLine = new PostStatusLineViewModel();                                       
+                f.StatusLine.IsEditable = userId == f.UserId.ToString();                
             });
 
             return model;

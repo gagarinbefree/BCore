@@ -1,20 +1,27 @@
-﻿@model BCore.Models.ViewModels.Blog.PostStatusLineViewModel
+﻿@model BCore.Models.ViewModels.Blog.PostViewModel
 
 @using Microsoft.AspNetCore.Identity
 @using BCore.Dal.Ef;
 @using BCore.Models;
 
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+ var user = await UserManager.FindByIdAsync(Model.UserId);
+}
+
 <p>
     <div class="mymedia">        
-        <span class="mymedia-figure" gravatar-email="@Model.User.Email" image-size="64" width="64"></span>
+        <span class="mymedia-figure" gravatar-email="@user.Email" image-size="64" width="64"></span>
 
         <div class="mymedia-body">
             <div class="row">
                 <div class="col-xs-9 block">
-                    <div class="user-name">@Model.User.UserName</div>
+                    <div class="user-name">@user.UserName</div>
                     <div class="mymedia-status">
-                        @Model.PostDateTime.ToString("dd.MM.yyyy hh:mm")
-                        &nbsp; <a href="/Post/Index?id=xxxcommentAnchor"><i class="fa fa-commenting"></i> @Model.CommentsCount</a>
+                        @Model.DateTime.ToString("dd.MM.yyyy hh:mm")
+                        &nbsp; <a href="/Post/Index?id=@Model.Id"><i class="fa fa-commenting"></i> @Model.Comments.Count()</a>
                         &nbsp;
                         @*@foreach (var postHash in Model.PostHashes)
                         {
@@ -23,7 +30,7 @@
                     </div>
                 </div>
 
-                @if (Model.IsEditable)
+                @if (Model.StatusLine.IsEditable)
                 {
                     <div class="col-xs-1 col-xs-push-2 block">
                         <div class="dropdown pull-right">

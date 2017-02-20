@@ -1,5 +1,5 @@
 ﻿using BCore.Dal.Ef;
-using BCore.Models.ViewModels;
+using BCore.Models.ViewModels.Blog;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -23,30 +23,33 @@ namespace BCore.Models.Commands
         {
             var model = Mapper.Map<PostViewModel>(await unit.PostRepository.GetAsync(id, f => f.Parts, f => f.PostHashes, f => f.Comments));
             
-            model.PostHashes.ForEach(async (f) => {
-                f.Tag = (await PostCommands.GetHashById(f.HashId, unit)).Tag;
-            });
+            //model.PostHashes.ForEach(async (f) => {
+            //    f.Tag = (await PostCommands.GetHashById(f.HashId, unit)).Tag;
+            //});
 
-            if (user.Identity.IsAuthenticated)
-                model.Comment = new CommentViewModel();
+            //if (user.Identity.IsAuthenticated)
+            //    model.Comment = new CommentViewModel();
 
             model.Comments = model.Comments.OrderByDescending(f => f.DateTime).ToList();
             var userId = manager.GetUserId(user);
-            model.Comments.ForEach(f => f.CanEdit = userId == f.UserId);
+            /*model.Comments.ForEach(f => 
+            {
+                f.StatusLine.IsEditable = userId == f.UserId;
+            });*/
 
             model.Parts = model.Parts.OrderBy(f => f.DateTime).ToList();
 
             return model;
         }
 
-        public static async Task<Guid> SubmitCommentsAsync(PostViewModel model, Unit unit, UserManager<User> manager, ClaimsPrincipal user)
+        /*public static async Task<Guid> SubmitCommentsAsync(PostViewModel model, Unit unit, UserManager<User> manager, ClaimsPrincipal user)
         {
             var comment = Mapper.Map<Comment>(model.Comment);
             comment.UserId = manager.GetUserId(user);
             comment.PostId = model.Id;
 
             return await unit.CommentRepository.CreateAsync(comment);
-        }
+        }*/
 
         /// <summary>
         /// Get hash tag by id

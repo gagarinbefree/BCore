@@ -8,7 +8,7 @@
 <div class="margin-top">
     @if (Model.StatusLine != null)
     {
-        @await Html.PartialAsync("_PostStatusLine", Model.StatusLine, nameof(Model.StatusLine))
+        @await Html.PartialAsync("_PostStatusLine", Model)
     }
 
     @if (Model.IsPreview)

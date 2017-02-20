@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using BCore.Dal.Ef;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
-using BCore.Models.ViewModels;
+using BCore.Models.ViewModels.Blog;
 using BCore.Models.Commands;
 using Microsoft.AspNetCore.Authorization;
 
@@ -37,8 +37,8 @@ namespace BCore.Controllers
         [ActionName("CommentSubmit")]
         public async Task<ActionResult> CommentSubmitAsync(PostViewModel m)
         {     
-            if (!String.IsNullOrWhiteSpace(m.Comment.Text))      
-                await PostCommands.SubmitCommentsAsync(m, _unit, _userManager, HttpContext.User);
+            //if (!String.IsNullOrWhiteSpace(m.Comment.Text))      
+            //    await PostCommands.SubmitCommentsAsync(m, _unit, _userManager, HttpContext.User);
 
             return Redirect(Url.Action("Index", "Post", new { id = m.Id }) + "#commentAnchor");
         }
