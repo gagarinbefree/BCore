@@ -14,6 +14,7 @@
         "ev-emitter": "1.0.3",
         "simple-uuid": "1.0.1",
         "respify": "0.3.2",
-        "jquery-appear": "0.2.6"
+        "jquery-appear": "0.2.6",
+        "Font-Awesome": ""
     }
 }

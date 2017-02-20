@@ -57,6 +57,9 @@ namespace BCore.Models.Commands
         /// <param name="model">Model</param>
         public static void AddPartToPost(UpdateViewModel model)
         {
+            if (model.PreviewPost.Parts.Count() == 0)
+                model.PreviewPost.DateTime = DateTime.Now;
+
             model.PreviewPost.Parts.Add(Mapper.Map<PartViewModel>(model.WhatsNew));
 
             model.WhatsNew.Clear();
@@ -69,7 +72,7 @@ namespace BCore.Models.Commands
 
             var post = Mapper.Map<Post>(model);
             post.UserId = manager.GetUserId(user);
-            Guid postId = await unit.PostRepository.CreateAsync(post);
+            Guid postId = await unit.PostRepository.CreateAsync(post);            
 
             string text = model
                 .PreviewPost

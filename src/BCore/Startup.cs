@@ -159,8 +159,7 @@ namespace BCore
                     .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts))
                     .ForMember(g => g.Comments, o => o.MapFrom(c => c.Comments))
                     .ForMember(g => g.PostHashes, o => o.MapFrom(c => c.PostHashes));
-                    
-              
+                                  
                 config.CreateMap<Part, PartViewModel>();
                 config.CreateMap<Comment, CommentViewModel>();                           
                 config.CreateMap<PostHash, HashViewModel>();         
@@ -170,12 +169,15 @@ namespace BCore
                       .ForMember(g => g.PartType, o => o.MapFrom(c => c.GetPartTypeName()))
                       .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
 
-                config.CreateMap<User, UserViewModel>();                    
+                config.CreateMap<User, UserViewModel>();
 
                 //UpdateViewModel -> Post
-                config.CreateMap<UpdateViewModel, Post>()
-                    .ForMember(g => g.Parts, o => o.MapFrom(c => c.PreviewPost.Parts));
 
+                //config.CreateMap<PostViewModel, Post>();
+                config.CreateMap<UpdateViewModel, Post>()        
+                    .ForMember(g => g.DateTime, o => o.MapFrom(c => c.PreviewPost.DateTime))            
+                    .ForMember(g => g.Parts, o => o.MapFrom(c => c.PreviewPost.Parts));
+                
                 //BCore.Models.ViewModels.Blog.PartViewModel->BCore.Dal.BlogModels.Part
                 config.CreateMap<PartViewModel, Part>();
             });
