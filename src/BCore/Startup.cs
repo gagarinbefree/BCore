@@ -16,9 +16,35 @@ using AutoMapper;
 //using BCore.Models.ViewModels;
 using BCore.Models.ViewModels.Blog;
 using Backload.MiddleWare;
+using Microsoft.AspNetCore.Mvc.ApplicationModels;
+using System.Reflection;
 
 namespace BCore
 {
+    public class FeatureConvention : IControllerModelConvention
+    {
+        public void Apply(ControllerModel controller)
+        {
+            controller.Properties.Add("feature", _getFeatureName(controller.ControllerType));
+        }
+
+        private string _getFeatureName(TypeInfo controllerType)
+        {
+            string[] tokens = controllerType.FullName.Split('.');
+
+            if (!tokens.Any(t => t == "Features"))
+                return "";
+
+            string featureName = tokens
+                .SkipWhile(t => !t.Equals("features", StringComparison.CurrentCultureIgnoreCase))
+                .Skip(1)
+                .Take(1)
+                .FirstOrDefault();
+
+            return featureName;
+        }
+    }
+
     public class Startup
     {
         public IConfigurationRoot Configuration { get; }        
@@ -50,9 +76,13 @@ namespace BCore
             })
             .AddEntityFrameworkStores<BlogDbContext>()
             .AddDefaultTokenProviders();
-
+            
             // Add MVC services to the services container
-            services.AddMvc();
+            services .AddMvc(o => o.Conventions.Add(new FeatureConvention()))
+                .AddRazorOptions(options => 
+            {
+                options.ViewLocationFormats.Insert(0, "/Views/Shared/Blog/{0}.cshtml");
+            });
 
             // Add session related services.
             services.AddSession();          
@@ -66,7 +96,7 @@ namespace BCore
                     {
                         authBuilder.RequireClaim("ManageStore", "Allowed");
                     });
-            });
+            });            
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

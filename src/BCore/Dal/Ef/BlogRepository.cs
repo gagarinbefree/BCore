@@ -102,7 +102,7 @@ namespace BCore.Dal.Ef
             if (take != null)
                 q = q.Take((int)take);
 
-            return await q.ToListAsync();
+            return await q.ToListAsync();            
         }
 
         public async Task<ICollection<T>> GetAllAsync()

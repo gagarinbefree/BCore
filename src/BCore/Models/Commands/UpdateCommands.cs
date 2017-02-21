@@ -29,7 +29,7 @@ namespace BCore.Models.Commands
                 , f => f.UserId == manager.GetUserId(user) && f.Parts.Count > 0
                 , 50
                 , f => f.Parts, f => f.PostHashes, f => f.Comments);
-          
+                       
             var model = Mapper.Map<UpdateViewModel>(posts);
 
             /*var postHashes = model.RecentPosts.SelectMany(f => f.PostHashes).ToList();
@@ -39,10 +39,11 @@ namespace BCore.Models.Commands
 
             var userId = manager.GetUserId(user);
             model.RecentPosts.ForEach(f =>
-            {
-                f.Parts = f.Parts.OrderBy(o => o.DateTime).ToList();
+            {               
+                f.Parts = f.Parts.OrderBy(o => o.DateTime).ToList();                
                 f.StatusLine = new PostStatusLineViewModel();                                       
-                f.StatusLine.IsEditable = userId == f.UserId.ToString();                
+                f.StatusLine.IsEditable = userId == f.UserId.ToString();
+                f.IsPreview = true;            
             });
 
             return model;
