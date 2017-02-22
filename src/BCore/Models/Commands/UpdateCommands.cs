@@ -28,7 +28,7 @@ namespace BCore.Models.Commands
                 , true
                 , f => f.UserId == manager.GetUserId(user) && f.Parts.Count > 0
                 , 50
-                , f => f.PostHashes, f => f.Comments);
+                , f => f.PostHashes, f => f.PostHashes, f => f.Comments);
 
             foreach(Post post in posts)
             {                
@@ -49,10 +49,11 @@ namespace BCore.Models.Commands
                        
             var model = Mapper.Map<UpdateViewModel>(posts);
 
-            /*var postHashes = model.RecentPosts.SelectMany(f => f.PostHashes).ToList();
-            postHashes.ForEach(async (f) => {
-                f. = (await PostCommands.GetHashById(f.HashId, unit)).Tag;
-            });*/
+            model.RecentPosts.SelectMany(f => f.Hashes).ToList().ForEach(async (f) =>
+            {
+                Hash hash = await unit.HashRepository.GetAsync(f.Id);
+                f.Tag = hash.Tag;
+            });
 
             var userId = manager.GetUserId(user);
             model.RecentPosts.ForEach(f =>

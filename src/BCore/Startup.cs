@@ -189,11 +189,13 @@ namespace BCore
                 config.CreateMap<Post, PostViewModel>()
                     .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts))
                     .ForMember(g => g.Comments, o => o.MapFrom(c => c.Comments))
-                    .ForMember(g => g.PostHashes, o => o.MapFrom(c => c.PostHashes));
+                    .ForMember(g => g.Hashes, o => o.MapFrom(c => c.PostHashes));
                                   
                 config.CreateMap<Part, PartViewModel>();
-                config.CreateMap<Comment, CommentViewModel>();                           
-                config.CreateMap<PostHash, HashViewModel>();         
+                config.CreateMap<Comment, CommentViewModel>();
+                config.CreateMap<PostHash, HashViewModel>()
+                    .ForMember(g => g.Id, o => o.MapFrom(c => c.HashId))
+                    .ForMember(g => g.Tag, o => o.MapFrom(c => c.Hash.Tag));
                 
                 config.CreateMap<WhatsNewViewModel, PartViewModel>()
                       .ForMember(g => g.Value, o => o.MapFrom(c => c.GetPartValue()))

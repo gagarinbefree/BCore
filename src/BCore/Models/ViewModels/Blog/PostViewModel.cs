@@ -14,7 +14,7 @@ namespace BCore.Models.ViewModels.Blog
         public PostStatusLineViewModel StatusLine { set; get; }
         public List<PartViewModel> Parts { set; get; }
         public List<CommentViewModel> Comments { set; get; }
-        public List<string> PostHashes { set; get; }               
+        public List<HashViewModel> Hashes { set; get; }               
                        
         public PostViewModel()
         {            

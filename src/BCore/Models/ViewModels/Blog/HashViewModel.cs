@@ -7,6 +7,7 @@ namespace BCore.Models.ViewModels.Blog
 {
     public class HashViewModel
     {
+        public Guid Id { set; get; }
         public string Tag { set; get; }
     }
 }
