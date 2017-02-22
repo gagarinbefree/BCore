@@ -55,5 +55,13 @@ namespace BCore.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [ActionName("Delete")]
+        public async Task<ActionResult> DeleteAsync(Guid id)
+        {
+            await UpdateCommands.DeletePostAsync(id, _unit, _userManager, HttpContext.User);
+
+            return RedirectToAction("Index");
+        }
     }
 }

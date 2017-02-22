@@ -23,12 +23,29 @@ namespace BCore.Models.Commands
         /// <returns></returns>
         public static async Task<UpdateViewModel> GetPostsByUser(Unit unit, UserManager<User> manager, ClaimsPrincipal user)
         {
-            var posts = await unit.PostRepository.GetAllAsync<DateTime>(
+            ICollection<Post> posts = await unit.PostRepository.GetAllAsync<DateTime>(
                 f => f.DateTime
                 , true
                 , f => f.UserId == manager.GetUserId(user) && f.Parts.Count > 0
                 , 50
-                , f => f.Parts, f => f.PostHashes, f => f.Comments);
+                , f => f.PostHashes, f => f.Comments);
+
+            foreach(Post post in posts)
+            {                
+                ICollection<Part> imagePart = await unit.PartRepository.GetAllAsync<DateTime>(
+                f => f.DateTime
+                , false
+                , f => f.PostId == post.Id && f.PartType == 1
+                , 1);
+
+                ICollection<Part> txtPart = await unit.PartRepository.GetAllAsync<DateTime>(
+                f => f.DateTime
+                , false
+                , f => f.PostId == post.Id && f.PartType == 0
+                , imagePart.Count != 0 ? 1 : 2 );
+
+                post.Parts = txtPart.Concat(imagePart).ToList();
+            }
                        
             var model = Mapper.Map<UpdateViewModel>(posts);
 
@@ -39,8 +56,7 @@ namespace BCore.Models.Commands
 
             var userId = manager.GetUserId(user);
             model.RecentPosts.ForEach(f =>
-            {               
-                f.Parts = f.Parts.OrderBy(o => o.DateTime).ToList();                
+            {                               
                 f.StatusLine = new PostStatusLineViewModel();                                       
                 f.StatusLine.IsEditable = userId == f.UserId.ToString();
                 f.IsPreview = true;            
@@ -97,6 +113,25 @@ namespace BCore.Models.Commands
             }
 
             return postId;
+        }
+
+        /// <summary>
+        /// Delete post from DB
+        /// </summary>
+        /// <param name="id">Post id</param>
+        /// <param name="unit">Unit of work</param>
+        /// <returns></returns>
+        public static async Task<int> DeletePostAsync(Guid id, Unit unit, UserManager<User> manager, ClaimsPrincipal user)
+        {
+            var userId = await unit.PostRepository.GetValueAsync(id, f => f.UserId);
+
+            if (userId == null)
+                return -1;
+
+            if (manager.GetUserId(user) != userId.ToString())
+                return -1;
+
+            return await unit.PostRepository.DeleteAsync(id);
         }
     }
 }
