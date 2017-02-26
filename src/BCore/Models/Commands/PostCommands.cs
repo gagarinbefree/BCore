@@ -22,23 +22,24 @@ namespace BCore.Models.Commands
         public static async Task<PostViewModel> GetPostById(Guid id, Unit unit, UserManager<User> manager, ClaimsPrincipal user)
         {
             var model = Mapper.Map<PostViewModel>(await unit.PostRepository.GetAsync(id, f => f.Parts, f => f.PostHashes, f => f.Comments));
-            
-            //model.PostHashes.ForEach(async (f) => {
-            //    f.Tag = (await PostCommands.GetHashById(f.HashId, unit)).Tag;
-            //});
 
-            //if (user.Identity.IsAuthenticated)
-            //    model.Comment = new CommentViewModel();
-
-            model.Comments = model.Comments.OrderByDescending(f => f.DateTime).ToList();
-            var userId = manager.GetUserId(user);
-            /*model.Comments.ForEach(f => 
+            model.Hashes.ForEach(async (f) =>
             {
-                f.StatusLine.IsEditable = userId == f.UserId;
-            });*/
+                Hash hash = await unit.HashRepository.GetAsync(f.Id);
+                f.Tag = hash.Tag;
+            });
+
+            string userId = manager.GetUserId(user);
+
+            model.StatusLine = new PostStatusLineViewModel();
+            model.StatusLine.IsEditable = userId == model.UserId;
+            model.IsPreview = false;
 
             model.Parts = model.Parts.OrderBy(f => f.DateTime).ToList();
 
+            model.Comment = new WhatsThinkViewModel();
+            model.Comments = model.Comments.OrderByDescending(f => f.DateTime).ToList();
+            
             return model;
         }
 

@@ -13,8 +13,9 @@ namespace BCore.Models.ViewModels.Blog
         public DateTime DateTime { set; get; }
         public PostStatusLineViewModel StatusLine { set; get; }
         public List<PartViewModel> Parts { set; get; }
+        public WhatsThinkViewModel Comment { set; get; }
         public List<CommentViewModel> Comments { set; get; }
-        public List<HashViewModel> Hashes { set; get; }               
+        public List<HashViewModel> Hashes { set; get; }      
                        
         public PostViewModel()
         {            

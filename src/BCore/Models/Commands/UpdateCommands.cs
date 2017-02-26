@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using AutoMapper;
 using BCore.Dal.BlogModels;
-using BCore.Models.Extensions;
+
 
 namespace BCore.Models.Commands
 {
@@ -28,7 +28,7 @@ namespace BCore.Models.Commands
                 , true
                 , f => f.UserId == manager.GetUserId(user) && f.Parts.Count > 0
                 , 50
-                , f => f.PostHashes, f => f.PostHashes, f => f.Comments);
+                , f => f.PostHashes, f => f.Comments);
 
             foreach(Post post in posts)
             {                
@@ -53,7 +53,7 @@ namespace BCore.Models.Commands
             {
                 Hash hash = await unit.HashRepository.GetAsync(f.Id);
                 f.Tag = hash.Tag;
-            });
+            });         
 
             var userId = manager.GetUserId(user);
             model.RecentPosts.ForEach(f =>
