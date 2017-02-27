@@ -16,19 +16,23 @@ namespace BCore.Controllers
     {
         private Unit _unit;
         private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly IUpdateCommands _commands;
 
-        public UpdateController(BlogDbContext db, UserManager<User> userManager, SignInManager<User> signInManager)
+        //private readonly SignInManager<User> _signInManager;
+
+        public UpdateController(BlogDbContext db, UserManager<User> userManager, IUpdateCommands commands)
         {
             _unit = new Unit(db);
             _userManager = userManager;
-            _signInManager = signInManager;
+            _commands = commands;
+
+            //_signInManager = signInManager;
         }
 
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
-            var m = await UpdateCommands.GetPostsByUser(_unit, _userManager, HttpContext.User);
+            var m = await _commands.GetPostsByUser(_unit, HttpContext.User);
 
             return View(m);
         }
@@ -38,7 +42,7 @@ namespace BCore.Controllers
         {
             ModelState.Clear();
 
-            UpdateCommands.AddPartToPost(m);
+            _commands.AddPartToPost(m);
 
             ViewData.TemplateInfo.HtmlFieldPrefix = nameof(m.PreviewPost);
 
@@ -59,7 +63,7 @@ namespace BCore.Controllers
         [ActionName("Delete")]
         public async Task<ActionResult> DeleteAsync(Guid id)
         {
-            await UpdateCommands.DeletePostAsync(id, _unit, _userManager, HttpContext.User);
+            await _commands.DeletePostAsync(id, _unit, HttpContext.User);
 
             return RedirectToAction("Index");
         }

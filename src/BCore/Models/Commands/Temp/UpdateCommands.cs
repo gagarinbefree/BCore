@@ -13,7 +13,7 @@ using BCore.Dal.BlogModels;
 namespace BCore.Models.Commands
 {
     public static class UpdateCommands
-    {
+    {        
         /// <summary>
         /// Get post by user
         /// </summary>

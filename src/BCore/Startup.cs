@@ -78,12 +78,12 @@ namespace BCore
             .AddDefaultTokenProviders();
             
             // Add MVC services to the services container
-            services .AddMvc(o => o.Conventions.Add(new FeatureConvention()))
+            services.AddMvc(o => o.Conventions.Add(new FeatureConvention()))
                 .AddRazorOptions(options => 
             {
                 options.ViewLocationFormats.Insert(0, "/Views/Shared/Blog/{0}.cshtml");
             });
-
+            
             // Add session related services.
             services.AddSession();          
 
@@ -96,13 +96,15 @@ namespace BCore
                     {
                         authBuilder.RequireClaim("ManageStore", "Allowed");
                     });
-            });            
+            });
+
+            _configureAutoMapper(services);
+
+            services.AddScoped<Models.Commands.IUpdateCommands, Models.Commands.Ef.UpdateCommand>();            
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            _configureAutoMapper();
-
             loggerFactory.AddConsole();
 
             if (env.IsDevelopment())
@@ -145,7 +147,7 @@ namespace BCore
             _seed(app);
         }
 
-        private void _configureAutoMapper()
+        private void _configureAutoMapper(IServiceCollection services)
         {
             //Mapper.Initialize(config =>
             //{
@@ -180,7 +182,7 @@ namespace BCore
             //        .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
             //});
 
-            Mapper.Initialize(config =>
+            services.AddAutoMapper(config =>
             {
                 config.CreateMap<ICollection<Post>, UpdateViewModel>()
                     .ForMember(g => g.RecentPosts, o => o.MapFrom(c => c));
@@ -208,7 +210,7 @@ namespace BCore
                     .ForMember(g => g.DateTime, o => o.MapFrom(c => c.PreviewPost.DateTime))            
                     .ForMember(g => g.Parts, o => o.MapFrom(c => c.PreviewPost.Parts));
                 
-                config.CreateMap<PartViewModel, Part>();
+                config.CreateMap<PartViewModel, Part>();               
             });
         }
 
