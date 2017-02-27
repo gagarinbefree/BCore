@@ -100,7 +100,7 @@ namespace BCore
 
             _configureAutoMapper(services);
 
-            services.AddScoped<Models.Commands.IUpdateCommands, Models.Commands.Ef.UpdateCommand>();            
+            services.AddScoped<Models.Commands.IUpdateCommands, Models.Commands.Ef.UpdateCommands>();            
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

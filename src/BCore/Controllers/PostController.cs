@@ -14,21 +14,19 @@ namespace BCore.Controllers
 {
     public class PostController : Controller
     {
-        private Unit _unit;
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private Unit _unit;        
+        private readonly IPostCommands _commands;
 
-        public PostController(BlogDbContext db, UserManager<User> userManager, SignInManager<User> signInManager)
+        public PostController(BlogDbContext db, IPostCommands commands)
         {
-            _unit = new Unit(db);
-            _userManager = userManager;
-            _signInManager = signInManager;
+            _unit = new Unit(db);            
+            _commands = commands;
         }
 
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync(Guid id)
         {
-            var post = await PostCommands.GetPostById(id, _unit, _userManager, HttpContext.User);
+            var post = await _commands.GetPostById(id, _unit, HttpContext.User);
 
             return View(Mapper.Map<PostViewModel>(post));
         }
@@ -37,8 +35,8 @@ namespace BCore.Controllers
         [ActionName("CommentSubmit")]
         public async Task<ActionResult> CommentSubmitAsync(PostViewModel m)
         {     
-            //if (!String.IsNullOrWhiteSpace(m.Comment.Text))      
-            //    await PostCommands.SubmitCommentsAsync(m, _unit, _userManager, HttpContext.User);
+            if (!String.IsNullOrWhiteSpace(m.Comment.Text))      
+                await _commands.SubmitCommentsAsync(m, _unit, HttpContext.User);
 
             return Redirect(Url.Action("Index", "Post", new { id = m.Id }) + "#commentAnchor");
         }
@@ -47,7 +45,7 @@ namespace BCore.Controllers
         [ActionName("DeleteComment")]
         public async Task<ActionResult> DeleteCommentAsync(Guid postid, Guid commentid)
         {
-            await PostCommands.DeleteCommentAsync(commentid, _unit, _userManager, HttpContext.User);
+            await _commands.DeleteCommentAsync(commentid, _unit, HttpContext.User);
 
             TempData["messageStatus"] = new Random(DateTime.Now.Millisecond).Next(1, 1000);
 

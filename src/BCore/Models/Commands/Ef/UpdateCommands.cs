@@ -11,12 +11,12 @@ using BCore.Dal.Ef;
 
 namespace BCore.Models.Commands.Ef
 {
-    public class UpdateCommand : IUpdateCommands
+    public class UpdateCommands : IUpdateCommands
     {
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;        
 
-        public UpdateCommand(UserManager<User> userManager, IMapper map)
+        public UpdateCommands(UserManager<User> userManager, IMapper map)
         {
             _userManager = userManager;
             _mapper = map;

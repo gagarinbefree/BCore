@@ -14,25 +14,19 @@ namespace BCore.Controllers
     [Authorize]
     public class UpdateController : Controller
     {
-        private Unit _unit;
-        private readonly UserManager<User> _userManager;
+        private Unit _unit;        
         private readonly IUpdateCommands _commands;
 
-        //private readonly SignInManager<User> _signInManager;
-
-        public UpdateController(BlogDbContext db, UserManager<User> userManager, IUpdateCommands commands)
+        public UpdateController(BlogDbContext db, IUpdateCommands commands)
         {
-            _unit = new Unit(db);
-            _userManager = userManager;
+            _unit = new Unit(db);            
             _commands = commands;
-
-            //_signInManager = signInManager;
         }
 
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
-            var m = await _commands.GetPostsByUser(_unit, HttpContext.User);
+            UpdateViewModel m = await _commands.GetPostsByUser(_unit, HttpContext.User);
 
             return View(m);
         }
@@ -55,7 +49,7 @@ namespace BCore.Controllers
         {
             ModelState.Clear();
 
-            await UpdateCommands.SubmitPostAsync(m, _unit, _userManager, HttpContext.User);
+            await _commands.SubmitPostAsync(m, _unit, HttpContext.User);
 
             return RedirectToAction("Index");
         }
