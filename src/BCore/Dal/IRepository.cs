@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace BCore.Dal.Repository
+namespace BCore.Dal
 {
     public interface IRepository<T>
     {        

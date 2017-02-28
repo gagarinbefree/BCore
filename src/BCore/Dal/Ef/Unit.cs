@@ -1,5 +1,4 @@
 ﻿using BCore.Dal.BlogModels;
-using BCore.Dal.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BCore.Dal.Ef
 {
-    public class Unit : IDisposable
+    public class Unit : IUoW, IDisposable
     {
         private bool disposed = false;
 

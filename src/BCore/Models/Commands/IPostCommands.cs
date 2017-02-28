@@ -11,9 +11,9 @@ namespace BCore.Models.Commands
 {
     public interface IPostCommands
     {
-        Task<PostViewModel> GetPostById(Guid id, Unit unit, ClaimsPrincipal user);        
-        Task<Hash> GetHashById(Guid id, Unit unit);
-        Task<int> DeleteCommentAsync(Guid id, Unit unit, ClaimsPrincipal user);
-        Task<Guid> SubmitCommentsAsync(PostViewModel model, Unit unit, ClaimsPrincipal user);
+        Task<PostViewModel> GetPostById(Guid id,ClaimsPrincipal user);        
+        Task<Hash> GetHashById(Guid id);
+        Task<int> DeleteCommentAsync(Guid id, ClaimsPrincipal user);
+        Task<Guid> SubmitCommentsAsync(PostViewModel model, ClaimsPrincipal user);
     }
 }

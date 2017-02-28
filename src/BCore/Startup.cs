@@ -18,6 +18,8 @@ using BCore.Models.ViewModels.Blog;
 using Backload.MiddleWare;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using System.Reflection;
+using BCore.Models.Commands;
+using BCore.Models.Commands.Ef;
 
 namespace BCore
 {
@@ -100,7 +102,9 @@ namespace BCore
 
             _configureAutoMapper(services);
 
-            services.AddScoped<Models.Commands.IUpdateCommands, Models.Commands.Ef.UpdateCommands>();            
+            services.AddScoped<IUpdateCommands, Models.Commands.Ef.UpdateCommands>();
+            services.AddScoped<IPostCommands, Models.Commands.Ef.PostCommands>();
+            services.AddScoped<Dal.IUoW, Dal.Ef.Unit>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)

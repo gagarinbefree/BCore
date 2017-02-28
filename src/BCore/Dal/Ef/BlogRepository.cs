@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using BCore.Dal.Repository;
 using Microsoft.EntityFrameworkCore;
 using PagedList.Core;
 using Microsoft.EntityFrameworkCore.Metadata;

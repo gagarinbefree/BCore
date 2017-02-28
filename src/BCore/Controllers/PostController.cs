@@ -14,19 +14,19 @@ namespace BCore.Controllers
 {
     public class PostController : Controller
     {
-        private Unit _unit;        
+        //private Unit _unit;        
         private readonly IPostCommands _commands;
 
-        public PostController(BlogDbContext db, IPostCommands commands)
+        public PostController(IPostCommands commands)
         {
-            _unit = new Unit(db);            
+            //_unit = new Unit(db);            
             _commands = commands;
         }
 
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync(Guid id)
         {
-            var post = await _commands.GetPostById(id, _unit, HttpContext.User);
+            var post = await _commands.GetPostById(id, HttpContext.User);
 
             return View(Mapper.Map<PostViewModel>(post));
         }
@@ -36,7 +36,7 @@ namespace BCore.Controllers
         public async Task<ActionResult> CommentSubmitAsync(PostViewModel m)
         {     
             if (!String.IsNullOrWhiteSpace(m.Comment.Text))      
-                await _commands.SubmitCommentsAsync(m, _unit, HttpContext.User);
+                await _commands.SubmitCommentsAsync(m, HttpContext.User);
 
             return Redirect(Url.Action("Index", "Post", new { id = m.Id }) + "#commentAnchor");
         }
@@ -45,9 +45,9 @@ namespace BCore.Controllers
         [ActionName("DeleteComment")]
         public async Task<ActionResult> DeleteCommentAsync(Guid postid, Guid commentid)
         {
-            await _commands.DeleteCommentAsync(commentid, _unit, HttpContext.User);
+            await _commands.DeleteCommentAsync(commentid, HttpContext.User);
 
-            TempData["messageStatus"] = new Random(DateTime.Now.Millisecond).Next(1, 1000);
+            //TempData["messageStatus"] = new Random(DateTime.Now.Millisecond).Next(1, 1000);
 
             return Redirect(Url.Action("Index", "Post", new { id = postid }) + "#commentInput");
         }
