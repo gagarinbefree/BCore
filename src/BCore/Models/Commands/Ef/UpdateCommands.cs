@@ -8,23 +8,26 @@ using AutoMapper;
 using BCore.Dal.BlogModels;
 using Microsoft.AspNetCore.Identity;
 using BCore.Dal.Ef;
+using BCore.Dal;
 
 namespace BCore.Models.Commands.Ef
 {
     public class UpdateCommands : IUpdateCommands
     {
+        private IUoW _unit;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;        
 
-        public UpdateCommands(UserManager<User> userManager, IMapper map)
+        public UpdateCommands(IUoW unit, IMapper map, UserManager<User> userManager)
         {
-            _userManager = userManager;
+            _unit = unit;            
             _mapper = map;
+            _userManager = userManager;
         }
 
-        public async Task<UpdateViewModel> GetPostsByUser(Unit unit, ClaimsPrincipal user)
+        public async Task<UpdateViewModel> GetPostsByUser(ClaimsPrincipal user)
         {
-            ICollection<Post> posts = await unit.PostRepository.GetAllAsync<DateTime>(
+            ICollection<Post> posts = await _unit.PostRepository.GetAllAsync<DateTime>(
                 f => f.DateTime
                 , true
                 , f => f.UserId == _userManager.GetUserId(user) && f.Parts.Count > 0
@@ -33,13 +36,13 @@ namespace BCore.Models.Commands.Ef
 
             foreach (Post post in posts)
             {
-                ICollection<Part> imagePart = await unit.PartRepository.GetAllAsync<DateTime>(
+                ICollection<Part> imagePart = await _unit.PartRepository.GetAllAsync<DateTime>(
                 f => f.DateTime
                 , false
                 , f => f.PostId == post.Id && f.PartType == 1
                 , 1);
 
-                ICollection<Part> txtPart = await unit.PartRepository.GetAllAsync<DateTime>(
+                ICollection<Part> txtPart = await _unit.PartRepository.GetAllAsync<DateTime>(
                 f => f.DateTime
                 , false
                 , f => f.PostId == post.Id && f.PartType == 0
@@ -52,7 +55,7 @@ namespace BCore.Models.Commands.Ef
 
             model.RecentPosts.SelectMany(f => f.Hashes).ToList().ForEach(async (f) =>
             {
-                Hash hash = await unit.HashRepository.GetAsync(f.Id);
+                Hash hash = await _unit.HashRepository.GetAsync(f.Id);
                 f.Tag = hash.Tag;
             });
 
@@ -81,14 +84,14 @@ namespace BCore.Models.Commands.Ef
             model.WhatsNew.Clear();
         }
 
-        public async Task<Guid> SubmitPostAsync(UpdateViewModel model, Unit unit, ClaimsPrincipal user)
+        public async Task<Guid> SubmitPostAsync(UpdateViewModel model, ClaimsPrincipal user)
         {
             if (model.PreviewPost.Parts.Count() == 0)
                 return Guid.Empty;
 
             var post = Mapper.Map<Post>(model);
             post.UserId = _userManager.GetUserId(user);
-            Guid postId = await unit.PostRepository.CreateAsync(post);
+            Guid postId = await _unit.PostRepository.CreateAsync(post);
 
             string text = model
                 .PreviewPost
@@ -101,9 +104,9 @@ namespace BCore.Models.Commands.Ef
             List<string> tags = HashTag.GetHashTags(text);
             foreach (var tag in tags)
             {
-                var existTag = await unit.HashRepository.GetAsync(f => f.Tag == tag);
+                var existTag = await _unit.HashRepository.GetAsync(f => f.Tag == tag);
                 Guid hashId = existTag == null
-                    ? await unit.HashRepository.CreateAsync(new Hash { Tag = tag }) : existTag.Id;
+                    ? await _unit.HashRepository.CreateAsync(new Hash { Tag = tag }) : existTag.Id;
 
                 PostHash postHash = new PostHash
                 {
@@ -111,7 +114,7 @@ namespace BCore.Models.Commands.Ef
                     HashId = hashId
                 };
 
-                await unit.PostHashRepository.CreateAsync(postHash);
+                await _unit.PostHashRepository.CreateAsync(postHash);
             }
 
             return postId;
@@ -123,9 +126,9 @@ namespace BCore.Models.Commands.Ef
         /// <param name="id">Post id</param>
         /// <param name="unit">Unit of work</param>
         /// <returns></returns>
-        public async Task<int> DeletePostAsync(Guid id, Unit unit, ClaimsPrincipal user)
+        public async Task<int> DeletePostAsync(Guid id, ClaimsPrincipal user)
         {
-            var userId = await unit.PostRepository.GetValueAsync(id, f => f.UserId);
+            var userId = await _unit.PostRepository.GetValueAsync(id, f => f.UserId);
 
             if (userId == null)
                 return -1;
@@ -133,7 +136,7 @@ namespace BCore.Models.Commands.Ef
             if (_userManager.GetUserId(user) != userId.ToString())
                 return -1;
 
-            return await unit.PostRepository.DeleteAsync(id);
+            return await _unit.PostRepository.DeleteAsync(id);
         }
     }
 }

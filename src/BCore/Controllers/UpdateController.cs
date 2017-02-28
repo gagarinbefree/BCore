@@ -14,19 +14,17 @@ namespace BCore.Controllers
     [Authorize]
     public class UpdateController : Controller
     {
-        private Unit _unit;        
         private readonly IUpdateCommands _commands;
 
-        public UpdateController(BlogDbContext db, IUpdateCommands commands)
+        public UpdateController(IUpdateCommands commands)
         {
-            _unit = new Unit(db);            
             _commands = commands;
         }
 
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
-            UpdateViewModel m = await _commands.GetPostsByUser(_unit, HttpContext.User);
+            UpdateViewModel m = await _commands.GetPostsByUser(HttpContext.User);
 
             return View(m);
         }
@@ -49,7 +47,7 @@ namespace BCore.Controllers
         {
             ModelState.Clear();
 
-            await _commands.SubmitPostAsync(m, _unit, HttpContext.User);
+            await _commands.SubmitPostAsync(m, HttpContext.User);
 
             return RedirectToAction("Index");
         }
@@ -57,7 +55,7 @@ namespace BCore.Controllers
         [ActionName("Delete")]
         public async Task<ActionResult> DeleteAsync(Guid id)
         {
-            await _commands.DeletePostAsync(id, _unit, HttpContext.User);
+            await _commands.DeletePostAsync(id, HttpContext.User);
 
             return RedirectToAction("Index");
         }

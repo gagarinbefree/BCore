@@ -14,12 +14,10 @@ namespace BCore.Controllers
 {
     public class PostController : Controller
     {
-        //private Unit _unit;        
         private readonly IPostCommands _commands;
 
         public PostController(IPostCommands commands)
         {
-            //_unit = new Unit(db);            
             _commands = commands;
         }
 
@@ -46,9 +44,7 @@ namespace BCore.Controllers
         public async Task<ActionResult> DeleteCommentAsync(Guid postid, Guid commentid)
         {
             await _commands.DeleteCommentAsync(commentid, HttpContext.User);
-
-            //TempData["messageStatus"] = new Random(DateTime.Now.Millisecond).Next(1, 1000);
-
+            
             return Redirect(Url.Action("Index", "Post", new { id = postid }) + "#commentInput");
         }
     }
