@@ -28,9 +28,11 @@
     <div class="col-xs-12 col-sm-8 col-md-6">
         @if (Model.Comment != null)
         {
-            @await Html.PartialAsync("_WhatsThink", Model.Comment, nameof(Model.Comment))
+            <div class="margin-top">
+                @await Html.PartialAsync("_WhatsThink", Model.Comment, nameof(Model.Comment))
 
-            <input asp-for="@Model.Id" type="hidden" />
+                <input asp-for="@Model.Id" type="hidden" />
+            </div>
         }        
     </div>
 
@@ -41,7 +43,9 @@
     <div class="hidden-xs col-sm-2 col-md-3"></div>
 
     <div class="col-xs-12 col-sm-8 col-md-6">
-        @await Html.PartialAsync("_Comments", Model.Comments, nameof(Model))
+        <div class="margin-top">
+            @await Html.PartialAsync("_Comments", Model.Comments, nameof(Model))
+        </div>
     </div>
 
     <div class="hidden-xs col-sm-2 col-md-3"></div>

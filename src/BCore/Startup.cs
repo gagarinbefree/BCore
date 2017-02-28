@@ -213,8 +213,10 @@ namespace BCore
                 config.CreateMap<UpdateViewModel, Post>()        
                     .ForMember(g => g.DateTime, o => o.MapFrom(c => c.PreviewPost.DateTime))            
                     .ForMember(g => g.Parts, o => o.MapFrom(c => c.PreviewPost.Parts));
+                                
+                config.CreateMap<PartViewModel, Part>();
                 
-                config.CreateMap<PartViewModel, Part>();               
+                config.CreateMap<WhatsThinkViewModel, Comment>();
             });
         }
 

@@ -4,23 +4,23 @@
 var Post;
 (function (Post) {
     var Comment = (function () {
+        //private isFocus: boolean = true;
         function Comment() {
             var _this = this;
             this.elBody = $("body");
             this.elInput = $("#commentInput");
             this.elDropdown = $(".dropdown-toggle");
-            this.isFocus = true;
             autosize(this.elInput);
-            this.elInput.val("");
             autosize.update(this.elInput);
             this.elDropdown.dropdown();
+            this.elInput.val("");
             this.elInput.appear();
             this.elInput.on("appear", function (e, elements) { return _this.inputAppear(e, elements); });
         }
         Comment.prototype.inputAppear = function (e, elements) {
-            if (location.hash == "#commentAnchor" && this.isFocus) {
+            //if (location.hash == "#commentAnchor" && this.isFocus) {
+            if (location.hash == "#commentAnchor") {
                 elements.focus();
-                this.isFocus = false;
             }
         };
         return Comment;
