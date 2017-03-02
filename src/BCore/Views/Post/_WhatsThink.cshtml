@@ -1,7 +1,7 @@
 ﻿@model BCore.Models.ViewModels.Blog.WhatsThinkViewModel
 
 <span id="commentAnchor" class="anchor"></span>
-<form id="commentForm" asp-action="CommentSubmit" asp-controller="Post" method="post">
+<form id="commentForm" asp-action="CommentSubmit" asp-controller="Post" method="post">    
     <div class="form-group">
         <textarea id="commentInput" asp-for="Text" class="form-control" rows="1">@Model.Text</textarea>
     </div>

@@ -196,7 +196,7 @@ namespace BCore
                     .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts))
                     .ForMember(g => g.Comments, o => o.MapFrom(c => c.Comments))
                     .ForMember(g => g.Hashes, o => o.MapFrom(c => c.PostHashes));
-                                  
+                                 
                 config.CreateMap<Part, PartViewModel>();
                 config.CreateMap<Comment, CommentViewModel>();
                 config.CreateMap<PostHash, HashViewModel>()
@@ -216,7 +216,8 @@ namespace BCore
                                 
                 config.CreateMap<PartViewModel, Part>();
                 
-                config.CreateMap<WhatsThinkViewModel, Comment>();
+                config.CreateMap<WhatsThinkViewModel, Comment>()
+                    .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
             });
         }
 

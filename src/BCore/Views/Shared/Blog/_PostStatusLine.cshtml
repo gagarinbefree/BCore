@@ -20,7 +20,7 @@
                 <div class="col-xs-9 block">
                     <div class="user-name">@user.UserName</div>
                     <div class="mymedia-status">
-                        @Model.DateTime.ToString("dd.MM.yyyy hh:mm")
+                        @Model.DateTime.ToString("dd.MM.yyyy HH:mm")
                         &nbsp; <a href="/Post/Index?id=@Model.Id#commentAnchor"><i class="fa fa-commenting"></i> @Model.Comments.Count()</a>
                         &nbsp;
                         @foreach (var postHash in Model.Hashes)
