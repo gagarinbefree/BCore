@@ -22,7 +22,7 @@ namespace BCore.Models.Commands.Ef
         {
             _userManager = userManager;
             _mapper = map;
-            _unit = unit;
+            _unit = unit; 
         }
 
         /// <summary>
