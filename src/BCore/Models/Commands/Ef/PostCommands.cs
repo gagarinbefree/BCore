@@ -52,6 +52,8 @@ namespace BCore.Models.Commands.Ef
             model.Comment = new WhatsThinkViewModel();
             model.Comments = model.Comments.OrderByDescending(f => f.DateTime).ToList();
 
+            model.Comments.ForEach(f => f.StatusLine.IsEditable = userId == f.UserId);
+
             return model;
         }
 

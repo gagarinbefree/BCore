@@ -41,11 +41,11 @@ namespace BCore.Controllers
 
         [Authorize]
         [ActionName("DeleteComment")]
-        public async Task<ActionResult> DeleteCommentAsync(Guid postid, Guid commentid)
-        {
+        public async Task<ActionResult> DeleteCommentAsync(Guid commentid, Guid postid)
+        {            
             await _commands.DeleteCommentAsync(commentid, HttpContext.User);
             
-            return Redirect(Url.Action("Index", "Post", new { id = postid }) + "#commentInput");
+            return Redirect(Url.Action("Index", "Post", new { id = postid }) + "#commentAnchor");
         }
     }
 }
