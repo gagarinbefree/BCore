@@ -10,7 +10,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace BCore.Models.Commands
+namespace BCore.Models.Commands.Temp
 {
     // to do DI
 

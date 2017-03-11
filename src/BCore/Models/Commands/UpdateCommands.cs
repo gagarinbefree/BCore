@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using BCore.Dal.Ef;
 using BCore.Dal;
 
-namespace BCore.Models.Commands.Ef
+namespace BCore.Models.Commands
 {
     public class UpdateCommands : IUpdateCommands
     {

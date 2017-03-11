@@ -19,7 +19,6 @@ using Backload.MiddleWare;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using System.Reflection;
 using BCore.Models.Commands;
-using BCore.Models.Commands.Ef;
 
 namespace BCore
 {
@@ -102,8 +101,8 @@ namespace BCore
 
             _configureAutoMapper(services);
 
-            services.AddScoped<IUpdateCommands, Models.Commands.Ef.UpdateCommands>();
-            services.AddScoped<IPostCommands, Models.Commands.Ef.PostCommands>();
+            services.AddScoped<IUpdateCommands, Models.Commands.UpdateCommands>();
+            services.AddScoped<IPostCommands, Models.Commands.PostCommands>();
             services.AddScoped<Dal.IUoW, Dal.Ef.Unit>();
         }
 

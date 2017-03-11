@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using BCore.Dal.BlogModels;
 using AutoMapper;
 
-namespace BCore.Models.Commands
+namespace BCore.Models.Commands.Temp
 {
     public static class PostCommands
     {

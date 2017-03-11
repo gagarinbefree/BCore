@@ -8,7 +8,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace BCore.Models.Commands
+namespace BCore.Models.Commands.Temp
 {
     public static class WarmCommands
     {

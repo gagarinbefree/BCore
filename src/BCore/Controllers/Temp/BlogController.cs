@@ -8,7 +8,7 @@ using AutoMapper;
 using BCore.Dal.BlogModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using BCore.Models.Commands;
+using BCore.Models.Commands.Temp;
 
 namespace BCore.Controllers
 {

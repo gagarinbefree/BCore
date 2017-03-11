@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using AutoMapper;
 using BCore.Dal;
 
-namespace BCore.Models.Commands.Ef
+namespace BCore.Models.Commands
 {
     public class PostCommands : IPostCommands
     {
@@ -25,12 +25,6 @@ namespace BCore.Models.Commands.Ef
             _unit = unit; 
         }
 
-        /// <summary>
-        /// Get post by id
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="unit">Unit of work</param>
-        /// <returns></returns>
         public async Task<PostViewModel> GetPostById(Guid id, ClaimsPrincipal user)
         {
             var model = _mapper.Map<PostViewModel>(await _unit.PostRepository.GetAsync(id, f => f.Parts, f => f.PostHashes, f => f.Comments));
@@ -66,23 +60,11 @@ namespace BCore.Models.Commands.Ef
             return await _unit.CommentRepository.CreateAsync(comment);
         }
 
-        /// <summary>
-        /// Get hash tag by id
-        /// </summary>
-        /// <param name="id">Hash tag id</param>
-        /// <param name="unit"></param>
-        /// <returns></returns>
         public async Task<Hash> GetHashById(Guid id)
         {
             return await _unit.HashRepository.GetAsync(f => f.Id == id);
         }
 
-        /// <summary>
-        /// Delete comment from DB
-        /// </summary>
-        /// <param name="id">Post id</param>
-        /// <param name="unit">Unit of work</param>
-        /// <returns></returns>
         public async Task<int> DeleteCommentAsync(Guid id, ClaimsPrincipal user)
         {
             var userId = await _unit.CommentRepository.GetValueAsync(id, f => f.UserId);

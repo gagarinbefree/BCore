@@ -10,7 +10,7 @@ using AutoMapper;
 using BCore.Dal.BlogModels;
 
 
-namespace BCore.Models.Commands
+namespace BCore.Models.Commands.Temp
 {
     public static class UpdateCommands
     {        
