@@ -15,61 +15,31 @@ namespace BCore.Dal.Ef
         private IRepository<Post> _postRepository;
         public IRepository<Post> PostRepository
         {
-            get
-            {
-                if (_postRepository == null)
-                    _postRepository = new BlogRepository<Post>(_db);
-
-                return _postRepository;
-            }
+            get { return _postRepository ?? (_postRepository = new BlogRepository<Post>(_db)); }
         }
 
         private IRepository<Part> _partRepository;
         public IRepository<Part> PartRepository
         {
-            get
-            {
-                if (_partRepository == null)
-                    _partRepository = new BlogRepository<Part>(_db);
-
-                return _partRepository;
-            }
+            get { return _partRepository ?? (_partRepository = new BlogRepository<Part>(_db)); }
         }        
 
         private IRepository<Comment> _commentRepository;
         public IRepository<Comment> CommentRepository
         {
-            get
-            {
-                if (_commentRepository == null)
-                    _commentRepository = new BlogRepository<Comment>(_db);
-
-                return _commentRepository;
-            }
+            get { return _commentRepository ?? (_commentRepository = new BlogRepository<Comment>(_db)); }
         }
 
         private IRepository<Hash> _hashRepository;
         public IRepository<Hash> HashRepository
         {
-            get
-            {
-                if (_hashRepository == null)
-                    _hashRepository = new BlogRepository<Hash>(_db);
-
-                return _hashRepository;
-            }
+            get { return _hashRepository ?? (_hashRepository = new BlogRepository<Hash>(_db)); }
         }
 
         private IRepository<PostHash> _postHashRepository;
         public IRepository<PostHash> PostHashRepository
         {
-            get
-            {
-                if (_postHashRepository == null)
-                    _postHashRepository = new BlogRepository<PostHash>(_db);
-
-                return _postHashRepository;
-            }
+            get { return _postHashRepository ?? (_postHashRepository = new BlogRepository<PostHash>(_db)); }
         }
 
         public Unit(BlogDbContext db)
