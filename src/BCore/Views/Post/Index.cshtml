@@ -26,13 +26,15 @@
     <div class="hidden-xs col-sm-2 col-md-3"></div>
 
     <div class="col-xs-12 col-sm-8 col-md-6">
-        @if (Model.Comment != null)
+        <span id="commentAnchor" class="anchor"></span>
+
+        @if (SignInManager.IsSignedIn(User) && Model.Comment != null)
         {
             <div class="margin-top">
                 @await Html.PartialAsync("_WhatsThink", Model.Comment, nameof(Model.Comment))                
                 <input asp-for="@Model.Id" form="commentForm" type="hidden" />
             </div>
-        }        
+        }
     </div>
 
     <div class="hidden-xs col-sm-2 col-md-3"></div>

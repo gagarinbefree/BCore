@@ -25,7 +25,7 @@ namespace BCore.Models.Commands
             _userManager = userManager;
         }
 
-        public async Task<UpdateViewModel> GetPostsByUser(ClaimsPrincipal user)
+        public async Task<UpdateViewModel> GetPostsByUserAsync(ClaimsPrincipal user)
         {
             ICollection<Post> posts = await _unit.PostRepository.GetAllAsync<DateTime>(
                 f => f.DateTime

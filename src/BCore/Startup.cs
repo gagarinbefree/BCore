@@ -19,6 +19,7 @@ using Backload.MiddleWare;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using System.Reflection;
 using BCore.Models.Commands;
+using BCore.Dal;
 
 namespace BCore
 {
@@ -101,9 +102,10 @@ namespace BCore
 
             _configureAutoMapper(services);
 
-            services.AddScoped<IUpdateCommands, Models.Commands.UpdateCommands>();
-            services.AddScoped<IPostCommands, Models.Commands.PostCommands>();
-            services.AddScoped<Dal.IUoW, Dal.Ef.Unit>();
+            services.AddScoped<IUpdateCommands, UpdateCommands>();
+            services.AddScoped<IPostCommands, PostCommands>();
+            services.AddScoped<IFeedCommands, FeedCommands>();
+            services.AddScoped<IUoW, Unit>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -152,45 +154,14 @@ namespace BCore
 
         private void _configureAutoMapper(IServiceCollection services)
         {
-            //Mapper.Initialize(config =>
-            //{
-            //    config.CreateMap<PartViewModel, Part>();
-            //    config.CreateMap<PostViewModel, Post>();
-            //    config.CreateMap<WhatsNewViewModel, Post>()
-            //        .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now))
-            //        .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts));
-
-            //    config.CreateMap<Part, PartViewModel>();
-            //    config.CreateMap<Post, PostViewModel>();
-            //    config.CreateMap<PostHash, PostHasheViewModel>();
-
-            //    config.CreateMap<ICollection<Post>, WhatsNewViewModel>()
-            //        .ForMember(g => g.Feeds, o => o.MapFrom(c => c));
-
-            //    config.CreateMap<ICollection<Post>, WarmViewModel>()
-            //        .ForMember(g => g.Feeds, o => o.MapFrom(c => c));
-
-            //    config.CreateMap<CommentViewModel, Comment>()
-            //        .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
-            //    config.CreateMap<Comment, CommentViewModel>();
-
-            //    config.CreateMap<ICollection<Comment>, PostViewModel>()
-            //        .ForMember(g => g.Comments, o => o.MapFrom(c => c));
-
-            //    config.CreateMap<PartViewModel, PartViewModel>();
-
-            //    config.CreateMap<PreviewPartViewModel, PartViewModel>()
-            //        .ForMember(g => g.Value, o => o.MapFrom(c => c.GetPartValue()))
-            //        .ForMember(g => g.PartType, o => o.MapFrom(c => c.GetPartTypeName()))
-            //        .ForMember(g => g.DateTime, o => o.MapFrom(c => DateTime.Now));
-            //});
-
             services.AddAutoMapper(config =>
             {
                 config.CreateMap<ICollection<Post>, UpdateViewModel>()
                     .ForMember(g => g.RecentPosts, o => o.MapFrom(c => c));
 
-                //BCore.Dal.BlogModels.Post -> BCore.Models.ViewModels.PostViewModel
+                config.CreateMap<ICollection<Post>, FeedViewModel>()
+                    .ForMember(g => g.RecentPosts, o => o.MapFrom(c => c));
+
                 config.CreateMap<Post, PostViewModel>()
                     .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts))
                     .ForMember(g => g.Comments, o => o.MapFrom(c => c.Comments))

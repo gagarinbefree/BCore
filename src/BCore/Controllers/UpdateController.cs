@@ -24,7 +24,7 @@ namespace BCore.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
-            UpdateViewModel m = await _commands.GetPostsByUser(HttpContext.User);
+            UpdateViewModel m = await _commands.GetPostsByUserAsync(HttpContext.User);
 
             return View(m);
         }

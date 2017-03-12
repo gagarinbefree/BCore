@@ -10,7 +10,7 @@ namespace BCore.Models.Commands
 {
     public interface IUpdateCommands
     {
-        Task<UpdateViewModel> GetPostsByUser(ClaimsPrincipal user);
+        Task<UpdateViewModel> GetPostsByUserAsync(ClaimsPrincipal user);
         void AddPartToPost(UpdateViewModel model);
         Task<Guid> SubmitPostAsync(UpdateViewModel model, ClaimsPrincipal user);
         Task<int> DeletePostAsync(Guid id, ClaimsPrincipal user);
