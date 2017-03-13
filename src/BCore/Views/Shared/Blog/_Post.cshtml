@@ -20,7 +20,7 @@
     @if (Model.IsPreview)
     {
         <div class="margin-top">
-            <a class="btn btn-default" href="/Post?id=@Model.Id" role="button">read</a>
+            <a class="btn btn-default" asp-controller="Post" asp-action="Index" asp-route-id="@Model.Id" role="button">read</a>
             <div class="btn-group pull-right">
             </div>
         </div>

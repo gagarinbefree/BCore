@@ -48,7 +48,7 @@ namespace BCore.Models.Commands
                 , f => f.PostId == post.Id && f.PartType == 0
                 , imagePart.Count != 0 ? 1 : 2);
 
-                post.Parts = txtPart.Concat(imagePart).ToList();
+                post.Parts = txtPart.Concat(imagePart).ToList();                
             }
 
             var model = _mapper.Map<FeedViewModel>(posts);
