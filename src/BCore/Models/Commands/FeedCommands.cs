@@ -33,7 +33,31 @@ namespace BCore.Models.Commands
                 , null
                 , 50
                 , f => f.PostHashes, f => f.Comments);
+            
+            return await _createViewModel(posts, user);
+        }
 
+        public async Task<FeedViewModel> SearchPostsByTagAsync(string tag, ClaimsPrincipal user)
+        {
+            Hash hash = await _unit.HashRepository.GetAsync(f => f.Tag == tag);
+
+            ICollection<PostHash> postHashes = await _unit.PostHashRepository.GetAllAsync<DateTime>(
+                null
+                , true
+                , f => f.Hash.Tag == tag
+                , null
+                , f => f.Post);
+                
+            ICollection<Post> posts = postHashes
+                .Select(f => f.Post).Take(50)
+                .OrderByDescending(f => f.DateTime)
+                .ToList();
+
+            return await _createViewModel(posts, user);
+        }
+
+        private async Task<FeedViewModel> _createViewModel(ICollection<Post> posts, ClaimsPrincipal user)
+        {
             foreach (Post post in posts)
             {
                 ICollection<Part> imagePart = await _unit.PartRepository.GetAllAsync<DateTime>(
@@ -48,7 +72,7 @@ namespace BCore.Models.Commands
                 , f => f.PostId == post.Id && f.PartType == 0
                 , imagePart.Count != 0 ? 1 : 2);
 
-                post.Parts = txtPart.Concat(imagePart).ToList();                
+                post.Parts = txtPart.Concat(imagePart).ToList();
             }
 
             var model = _mapper.Map<FeedViewModel>(posts);

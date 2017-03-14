@@ -25,7 +25,7 @@
                         &nbsp;
                         @foreach (var postHash in Model.Hashes)
                         {
-                            <a href="#"><span class="label label-info">@postHash.Tag</span></a>
+                            <a asp-controller="Feed" asp-action="Search" asp-route-tag="@postHash.Tag"><span class="label label-info">@postHash.Tag</span></a>
                         }
                     </div>
                 </div>

@@ -43,8 +43,10 @@ namespace BCore.Models
         }
 
         private static string _link(Match m)
-        {           
-            return String.Format("<a href=\"#\">{0}</a>", m);
+        {
+            string link = String.Format("/Feed/Search?tag={0}", m.Value.Replace("#", ""));
+
+            return String.Format("<a href=\"{1}\">{0}</a>", m, link);
         }
     }
 }

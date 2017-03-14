@@ -24,5 +24,13 @@ namespace BCore.Controllers
 
             return View(m);
         }
+
+        [ActionName("Search")]
+        public async Task<IActionResult> SearchAsync(string tag)
+        {
+            FeedViewModel m = await _commands.SearchPostsByTagAsync(tag, HttpContext.User);
+
+            return View("Index", m);
+        }
     }
 }

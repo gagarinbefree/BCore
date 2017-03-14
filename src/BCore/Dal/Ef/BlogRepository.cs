@@ -87,8 +87,11 @@ namespace BCore.Dal.Ef
             , Expression<Func<T, bool>> where = null
             , int? take = null
             , params Expression<Func<T, object>>[] includes)
-        {            
-            IQueryable<T> q = isDesc ? _db.Set<T>().OrderByDescending(orderBy) : _db.Set<T>().OrderBy(orderBy);
+        {
+            IQueryable<T> q = _db.Set<T>();
+
+            if (orderBy != null)
+                q = isDesc ? _db.Set<T>().OrderByDescending(orderBy) : _db.Set<T>().OrderBy(orderBy);
 
             if (where != null)
                 q = q.Where(where);
