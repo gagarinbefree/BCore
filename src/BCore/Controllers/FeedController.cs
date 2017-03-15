@@ -20,17 +20,28 @@ namespace BCore.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
-            FeedViewModel m = await _commands.GetLastPostsAsync(HttpContext.User);
+            FeedViewModel model = await _commands.GetLastPostsAsync(HttpContext.User);
 
-            return View(m);
+            return View(model);
         }
 
         [ActionName("Search")]
         public async Task<IActionResult> SearchAsync(string tag)
         {
-            FeedViewModel m = await _commands.SearchPostsByTagAsync(tag, HttpContext.User);
+            FeedViewModel model = await _commands.SearchPostsByTagAsync(tag, HttpContext.User);
 
-            return View("Index", m);
+            if (model.RecentPosts.Count > 0)
+                return View("Index", model);
+            else
+                return RedirectToAction("Index");
+        }
+
+        [ActionName("Top")]
+        public async Task<IActionResult> TopAsync()
+        {
+            FeedViewModel model = await _commands.GetTopPostsAsync(HttpContext.User);
+
+            return View("Index", model);
         }
     }
 }

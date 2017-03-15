@@ -56,6 +56,18 @@ namespace BCore.Models.Commands
             return await _createViewModel(posts, user);
         }
 
+        public async Task<FeedViewModel> GetTopPostsAsync(ClaimsPrincipal user)
+        {
+            ICollection<Post> posts = await _unit.PostRepository.GetAllAsync<int>(
+                f => f.Comments.Count()
+                , true
+                , null
+                , 50
+                , f => f.PostHashes, f => f.Comments);
+
+            return await _createViewModel(posts, user);
+        }
+
         private async Task<FeedViewModel> _createViewModel(ICollection<Post> posts, ClaimsPrincipal user)
         {
             foreach (Post post in posts)
@@ -92,6 +104,6 @@ namespace BCore.Models.Commands
             });
 
             return model;
-        }
+        }       
     }
 }

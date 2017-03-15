@@ -11,5 +11,6 @@ namespace BCore.Models.Commands
     {
         Task<FeedViewModel> GetLastPostsAsync(ClaimsPrincipal user);
         Task<FeedViewModel> SearchPostsByTagAsync(string tag, ClaimsPrincipal user);
+        Task<FeedViewModel> GetTopPostsAsync(ClaimsPrincipal user);
     }
 }
