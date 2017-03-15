@@ -246,3 +246,4 @@ ModelManifest.xml
 
 # Uploads
 wwwroot/Uploads
+gulp-tsc-*
