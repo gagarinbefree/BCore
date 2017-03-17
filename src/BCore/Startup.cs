@@ -31,6 +31,7 @@ namespace BCore
                 _getFeatureName(controller.ControllerType));
         }
 
+
         private string _getFeatureName(TypeInfo controllerType)
         {
             string[] tokens = controllerType.FullName.Split('.');
