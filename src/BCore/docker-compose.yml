@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  bcore:
+    image: user/bcore${TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80"
