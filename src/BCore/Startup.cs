@@ -27,7 +27,8 @@ namespace BCore
     {
         public void Apply(ControllerModel controller)
         {
-            controller.Properties.Add("feature", _getFeatureName(controller.ControllerType));
+            controller.Properties.Add("feature",
+                _getFeatureName(controller.ControllerType));
         }
 
         private string _getFeatureName(TypeInfo controllerType)
