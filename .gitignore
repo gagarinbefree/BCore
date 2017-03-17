@@ -245,5 +245,5 @@ ModelManifest.xml
 .fake/
 
 # Uploads
-wwwroot/Uploads
-gulp-tsc-?
+src\BCore\wwwroot\Uploads
+src\BCore\gulp-tsc-?
