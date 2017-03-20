@@ -25,6 +25,7 @@ namespace BCore
 {
     public class FeatureConvention : IControllerModelConvention
     {
+
         public void Apply(ControllerModel controller)
         {
             controller.Properties.Add("feature",
