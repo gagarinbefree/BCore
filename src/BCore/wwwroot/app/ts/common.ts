@@ -1,4 +1,5 @@
-﻿/// <reference path="../typings/bootbox/index.d.ts" />
+﻿/// <reference path="../typings/jquery/jquery.d.ts" />
+/// <reference path="../typings/bootbox/index.d.ts" />
 
 module Common {
     export class App {
@@ -14,10 +15,10 @@ module Common {
         private elTarget: JQuery;
 
         constructor() {
-            this.elConfirm.on('click', (e: JQueryEventObject) => this.confirm(e));
+            this.elConfirm.on('click', (e: JQueryEventObject) => this.showDialog(e));
         }
 
-        private confirm(e: JQueryEventObject): void {
+        private showDialog(e: JQueryEventObject): void {
             e.preventDefault();
 
             this.elTarget = $(e.target);
@@ -39,9 +40,8 @@ module Common {
             });
         }
 
-        private handlerDialogResult(result: boolean) {
-            if (result)
-            {
+        private handlerDialogResult(result: boolean) : void {
+            if (result) {
                 var href: string = this.elTarget.attr('href');
                 if (typeof (href) !== "undefined" && href && href.length > 0)
                     window.location.href = href;

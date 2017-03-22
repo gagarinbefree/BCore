@@ -29,7 +29,6 @@
                             </button>
                             <ul class="dropdown-menu">                                
                                 <li>
-                                    @*<a asp-controller="Post" asp-action="DeleteComment" asp-route-commentid="@Model.Id" asp-route-postid="@Model.PostId">delete</a>*@
                                     <a asp-controller="Post" asp-action="DeleteComment" asp-route-commentid="@Model.Id" asp-route-postid="@Model.PostId" data-confirm="Are you sure you want to delete?" data-confirm-title="Delete comment">delete</a>                                    
                                 </li>
                             </ul>
