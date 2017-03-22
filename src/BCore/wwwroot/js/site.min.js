@@ -15,9 +15,13 @@ var Common;
             this.elConfirm.on('click', function (e) { return _this.confirm(e); });
         }
         Confirm.prototype.confirm = function (e) {
+            var _this = this;
             e.preventDefault();
+            this.elTarget = $(e.target);
             bootbox.confirm({
-                message: $(e.target).attr('data-confirm'),
+                title: this.elTarget.attr('data-confirm-title'),
+                message: this.elTarget.attr('data-confirm'),
+                size: 'small',
                 buttons: {
                     confirm: {
                         label: 'Yes',
@@ -28,11 +32,15 @@ var Common;
                         className: 'btn-success'
                     }
                 },
-                callback: function (result) {
-                    if (result) {
-                    }
-                }
+                callback: function (result) { return _this.dialogResult(result); }
             });
+        };
+        Confirm.prototype.dialogResult = function (result) {
+            if (result) {
+                var href = this.elTarget.attr('href');
+                if (typeof (href) !== "undefined" && href && href.length > 0)
+                    window.location.href = href;
+            }
         };
         return Confirm;
     }());
