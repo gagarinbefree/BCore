@@ -16,7 +16,7 @@ namespace BCore.Models.ViewModels.Blog
         public WhatsThinkViewModel Comment { set; get; }
         public List<CommentViewModel> Comments { set; get; }
         public List<HashViewModel> Hashes { set; get; }       
-        public int TopNumber { set; get; }
+        public int? TopNumber { set; get; }
                        
         public PostViewModel()
         {            

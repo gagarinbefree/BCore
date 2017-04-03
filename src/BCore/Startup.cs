@@ -107,6 +107,7 @@ namespace BCore
             services.AddScoped<IUpdateCommands, UpdateCommands>();
             services.AddScoped<IPostCommands, PostCommands>();
             services.AddScoped<IFeedCommands, FeedCommands>();
+            services.AddScoped<ITopCommands, TopCommands>();
             services.AddScoped<IUoW, Unit>();
         }
 
@@ -165,7 +166,7 @@ namespace BCore
                     .ForMember(g => g.RecentPosts, o => o.MapFrom(c => c));
 
                 config.CreateMap<ICollection<Post>, TopViewModel>()
-                    .ForMember(g => g.TopPosts, o => o.MapFrom(c => c));
+                    .ForMember(g => g.RecentPosts, o => o.MapFrom(c => c));
 
                 config.CreateMap<Post, PostViewModel>()
                     .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts))

@@ -7,6 +7,6 @@ namespace BCore.Models.ViewModels.Blog
 {
     public class TopViewModel
     {
-        public List<PostViewModel> TopPosts { set; get; }
+        public List<PostViewModel> RecentPosts { set; get; }
     }
 }

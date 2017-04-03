@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BCore.Models.Commands
 {
-    interface ITopCommands
+    public interface ITopCommands
     {
         Task<TopViewModel> GetTopPostsAsync(ClaimsPrincipal user);
     }

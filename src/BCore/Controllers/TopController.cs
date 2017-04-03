@@ -12,9 +12,9 @@ namespace BCore.Controllers
 {
     public class TopController : Controller
     {
-        private readonly IFeedCommands _commands;
+        private readonly ITopCommands _commands;
 
-        public TopController(IFeedCommands commands)
+        public TopController(ITopCommands commands)
         {
             _commands = commands;
         }
@@ -22,9 +22,9 @@ namespace BCore.Controllers
         [ActionName("Index")]
         public async Task<IActionResult> IndexAsync()
         {
-            FeedViewModel model = await _commands.GetTopPostsAsync(HttpContext.User);
+            TopViewModel model = await _commands.GetTopPostsAsync(HttpContext.User);
 
-            return View("Index", model);
+            return View(model);
         }
     }
 }

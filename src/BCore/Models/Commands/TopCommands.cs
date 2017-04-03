@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using BCore.Dal;
 using BCore.Dal.BlogModels;
+using BCore.Dal.Ef;
 using BCore.Models.ViewModels.Blog;
 using Microsoft.AspNetCore.Identity;
 using System;
@@ -58,7 +59,7 @@ namespace BCore.Models.Commands
 
             var model = _mapper.Map<TopViewModel>(posts);
 
-            model.TopPosts.SelectMany(f => f.Hashes).ToList().ForEach(async (f) =>
+            model.RecentPosts.SelectMany(f => f.Hashes).ToList().ForEach(async (f) =>
             {
                 Hash hash = await _unit.HashRepository.GetAsync(f.Id);
                 f.Tag = hash.Tag;               
@@ -66,7 +67,7 @@ namespace BCore.Models.Commands
 
             int ii = 1;
             var userId = _userManager.GetUserId(user);
-            model.TopPosts.ForEach(f =>
+            model.RecentPosts.ForEach(f =>
             {
                 f.StatusLine = new PostStatusLineViewModel();
                 f.StatusLine.IsEditable = userId == f.UserId.ToString();
