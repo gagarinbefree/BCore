@@ -1,0 +1,23 @@
+﻿@model BCore.Models.ViewModels.Blog.TopViewModel
+
+@using Microsoft.AspNetCore.Identity
+@using BCore.Dal.Ef
+@using BCore.Models.Extensions
+
+@{
+    ViewBag.Title = "Top";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<div class="row">
+    <div class="hidden-xs col-sm-2 col-md-3"></div>
+
+    <div class="col-xs-12 col-sm-8 col-md-6">
+        @await Html.PartialAsync("_TopPosts", Model.TopPosts, nameof(Model.TopPosts))
+    </div>
+
+    <div class="hidden-xs col-sm-2 col-md-3"></div>
+</div>

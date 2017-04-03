@@ -34,14 +34,6 @@ namespace BCore.Controllers
                 return View("Index", model);
             else
                 return RedirectToAction("Index");
-        }
-
-        [ActionName("Top")]
-        public async Task<IActionResult> TopAsync()
-        {
-            FeedViewModel model = await _commands.GetTopPostsAsync(HttpContext.User);
-
-            return View("Index", model);
-        }
+        }       
     }
 }

@@ -164,6 +164,9 @@ namespace BCore
                 config.CreateMap<ICollection<Post>, FeedViewModel>()
                     .ForMember(g => g.RecentPosts, o => o.MapFrom(c => c));
 
+                config.CreateMap<ICollection<Post>, TopViewModel>()
+                    .ForMember(g => g.TopPosts, o => o.MapFrom(c => c));
+
                 config.CreateMap<Post, PostViewModel>()
                     .ForMember(g => g.Parts, o => o.MapFrom(c => c.Parts))
                     .ForMember(g => g.Comments, o => o.MapFrom(c => c.Comments))
