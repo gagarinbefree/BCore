@@ -107,6 +107,39 @@ namespace BCore.Dal.Ef
             return await q.ToListAsync();            
         }
 
+        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> where = null, int? take = null)
+        {
+            IQueryable<T> q = _db.Set<T>();
+
+            if (where != null)
+                q = q.Where(where);
+
+            if (take != null)
+                q = q.Take((int)take);
+
+            return await q.ToListAsync();
+        }
+
+        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> where = null, int? take = default(int?), params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> q = _db.Set<T>();
+
+            if (where != null)
+                q = q.Where(where);
+
+            if (take != null)
+                q = q.Take((int)take);
+
+            foreach (var include in includes)
+            {
+                q = q.Include(include);
+            }
+
+            _db.get
+
+            return await q.ToListAsync();
+        }
+
         public async Task<ICollection<T>> GetAllAsync()
         {
             IQueryable<T> q = _db.Set<T>();
@@ -136,6 +169,6 @@ namespace BCore.Dal.Ef
             }
 
             return q.ToPagedList(page, size);
-        }        
+        }
     }
 }

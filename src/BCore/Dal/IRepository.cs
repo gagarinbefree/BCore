@@ -17,6 +17,10 @@ namespace BCore.Dal
             , Expression<Func<T, bool>> where = null
             , int? take = null
             , params Expression<Func<T, object>>[] includes);
+
+        Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> where = null, int? take = null);
+        Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> where = null, int? take = null, params Expression<Func<T, object>>[] includes);
+
         Task<ICollection<T>> GetAllAsync();
         Task<T> GetAsync(Guid id, params Expression<Func<T, object>>[] includes);
         Task<T> GetAsync(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] includes);

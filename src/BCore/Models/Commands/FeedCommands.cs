@@ -40,18 +40,8 @@ namespace BCore.Models.Commands
         public async Task<FeedViewModel> SearchPostsByTagAsync(string tag, ClaimsPrincipal user)
         {
             Hash hash = await _unit.HashRepository.GetAsync(f => f.Tag == tag);
-
-            ICollection<PostHash> postHashes = await _unit.PostHashRepository.GetAllAsync<DateTime>(
-                null
-                , true
-                , f => f.Hash.Tag == tag
-                , null
-                , f => f.Post);
-                
-            ICollection<Post> posts = postHashes
-                .Select(f => f.Post).Take(50)
-                .OrderByDescending(f => f.DateTime)
-                .ToList();
+            ICollection<PostHash> tagPostHashes = await _unit.PostHashRepository.GetAllAsync(f => f.HashId == hash.Id, 50, f => f.Post, f => f.Hash);
+            ICollection<Post> posts = tagPostHashes.Select(f => f.Post).OrderByDescending(f => f.DateTime).ToList();
 
             return await _createViewModel(posts, user);
         }
@@ -87,8 +77,7 @@ namespace BCore.Models.Commands
                 post.Parts = txtPart.Concat(imagePart).ToList();
             }
 
-            var model = _mapper.Map<FeedViewModel>(posts);
-
+            var model = _mapper.Map<FeedViewModel>(posts);            
             model.RecentPosts.SelectMany(f => f.Hashes).ToList().ForEach(async (f) =>
             {
                 Hash hash = await _unit.HashRepository.GetAsync(f.Id);
