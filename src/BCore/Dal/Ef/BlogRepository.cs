@@ -133,9 +133,7 @@ namespace BCore.Dal.Ef
             foreach (var include in includes)
             {
                 q = q.Include(include);
-            }
-
-            _db.get
+            }            
 
             return await q.ToListAsync();
         }

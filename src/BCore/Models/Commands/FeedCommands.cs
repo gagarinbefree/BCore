@@ -41,6 +41,11 @@ namespace BCore.Models.Commands
         {
             Hash hash = await _unit.HashRepository.GetAsync(f => f.Tag == tag);
             ICollection<PostHash> tagPostHashes = await _unit.PostHashRepository.GetAllAsync(f => f.HashId == hash.Id, 50, f => f.Post, f => f.Hash);
+            // hack. in tagPostHashes Posts collection contains one PostHases item. Why?
+            tagPostHashes.ToList().ForEach(async (f) =>
+            {
+                f.Post = await _unit.PostRepository.GetAsync(f.PostId, i => i.PostHashes, i => i.Comments);
+            });
             ICollection<Post> posts = tagPostHashes.Select(f => f.Post).OrderByDescending(f => f.DateTime).ToList();
 
             return await _createViewModel(posts, user);

@@ -29,13 +29,11 @@ namespace BCore.Models.Commands
         public async Task<TopViewModel> GetTopPostsAsync(ClaimsPrincipal user)
         {
             ICollection<Post> posts = await _unit.PostRepository.GetAllAsync(
-                f => f.Comments.Count()
-                , true
-                , null
+                null
                 , 50
                 , f => f.PostHashes, f => f.Comments);
-
-            return await _createViewModel(posts, user);
+                      
+            return await _createViewModel(posts.OrderByDescending(f => f.Comments.Count()).ThenByDescending(f => f.DateTime).ToList(), user);
         }
 
         private async Task<TopViewModel> _createViewModel(ICollection<Post> posts, ClaimsPrincipal user)

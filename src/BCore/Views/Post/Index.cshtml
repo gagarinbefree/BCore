@@ -45,8 +45,7 @@
         @if (SignInManager.IsSignedIn(User) && Model.Comment != null)
         {
             <div class="margin-top">
-                @await Html.PartialAsync("_WhatsThink", Model.Comment, nameof(Model.Comment))                
-                <input asp-for="@Model.Id" form="commentForm" type="hidden" />
+                @await Html.PartialAsync("_WhatsThink", Model)
             </div>
         }
     </div>
