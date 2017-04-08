@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using BCore.Models.ViewModels.Blog;
 using BCore.Dal.BlogModels;
 using System.Security.Claims;
+using PagedList.Core;
 
 namespace BCore.Models.Commands
 {
@@ -25,22 +26,24 @@ namespace BCore.Models.Commands
             _unit = unit;
         }
 
-        public async Task<FeedViewModel> GetLastPostsAsync(ClaimsPrincipal user)
+        public async Task<FeedViewModel> GetLastPostsAsync(ClaimsPrincipal user, int? page = default(int?))
         {
             ICollection<Post> posts = await _unit.PostRepository.GetAllAsync<DateTime>(
                 f => f.DateTime
                 , true
-                , null
-                , 50
+                , page == null ? 0 : page * 10
+                , 10
                 , f => f.PostHashes, f => f.Comments);
             
-            return await _createViewModel(posts, user);
+            return await _createViewModel(posts, user, page);
         }
 
-        public async Task<FeedViewModel> SearchPostsByTagAsync(string tag, ClaimsPrincipal user)
+        public async Task<FeedViewModel> SearchPostsByTagAsync(string tag, ClaimsPrincipal user, int? page = default(int?))
         {
             Hash hash = await _unit.HashRepository.GetAsync(f => f.Tag == tag);
-            ICollection<PostHash> tagPostHashes = await _unit.PostHashRepository.GetAllAsync(f => f.HashId == hash.Id, 50, f => f.Post, f => f.Hash);
+            ICollection<PostHash> tagPostHashes = await _unit.PostHashRepository.GetAllAsync(f => f.HashId == hash.Id
+            , 50
+            , f => f.Post, f => f.Hash);
             // hack. in tagPostHashes Posts collection contains one PostHases item. Why?
             tagPostHashes.ToList().ForEach(async (f) =>
             {
@@ -48,22 +51,10 @@ namespace BCore.Models.Commands
             });
             ICollection<Post> posts = tagPostHashes.Select(f => f.Post).OrderByDescending(f => f.DateTime).ToList();
 
-            return await _createViewModel(posts, user);
+            return await _createViewModel(posts, user, page);
         }
-
-        public async Task<FeedViewModel> GetTopPostsAsync(ClaimsPrincipal user)
-        {
-            ICollection<Post> posts = await _unit.PostRepository.GetAllAsync<int>(
-                f => f.Comments.Count()
-                , true
-                , null
-                , 50
-                , f => f.PostHashes, f => f.Comments);
-
-            return await _createViewModel(posts, user);
-        }
-
-        private async Task<FeedViewModel> _createViewModel(ICollection<Post> posts, ClaimsPrincipal user)
+                
+        private async Task<FeedViewModel> _createViewModel(ICollection<Post> posts, ClaimsPrincipal user, int? page)
         {
             foreach (Post post in posts)
             {
@@ -96,6 +87,8 @@ namespace BCore.Models.Commands
                 f.StatusLine.IsEditable = userId == f.UserId.ToString();
                 f.IsPreview = true;
             });
+
+            model.Page = page;
 
             return model;
         }       

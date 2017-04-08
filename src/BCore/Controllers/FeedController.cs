@@ -34,6 +34,13 @@ namespace BCore.Controllers
                 return View("Index", model);
             else
                 return RedirectToAction("Index");
-        }       
+        }     
+
+        public async Task<IActionResult> Page(int page)
+        {
+            FeedViewModel model = await _commands.GetLastPostsAsync(HttpContext.User, page);
+
+            return View(model);
+        }
     }
 }

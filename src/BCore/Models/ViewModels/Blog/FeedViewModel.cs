@@ -7,6 +7,7 @@ namespace BCore.Models.ViewModels.Blog
 {
     public class FeedViewModel
     {
+        public int? Page { set; get; }
         public List<PostViewModel> RecentPosts { set; get; }
     }
 }

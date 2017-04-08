@@ -27,12 +27,23 @@ namespace BCore.Models.Commands
 
         public async Task<UpdateViewModel> GetPostsByUserAsync(ClaimsPrincipal user)
         {
-            ICollection<Post> posts = await _unit.PostRepository.GetAllAsync<DateTime>(
-                f => f.DateTime
-                , true
-                , f => f.UserId == _userManager.GetUserId(user) && f.Parts.Count > 0
-                , 50
-                , f => f.PostHashes, f => f.Comments);
+            //ICollection<Post> posts = await _unit.PostRepository.GetAllAsync<DateTime>(
+            //    f => f.DateTime
+            //    , true
+            //    , f => f.UserId == _userManager.GetUserId(user) && f.Parts.Count > 0
+            //    , 50
+            //    , f => f.PostHashes, f => f.Comments);
+
+            ICollection<Post> posts = (
+                await _unit.PostRepository.GetAllAsync(
+                    where: f => f.UserId == _userManager.GetUserId(user) && f.Parts.Count > 0,
+                    take
+                    
+
+
+
+                .OrderByDescending(f => f.DateTime)
+                .ToList();
 
             foreach (Post post in posts)
             {

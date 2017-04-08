@@ -8,6 +8,7 @@ using PagedList.Core;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
+using System.Data.SqlClient;
 
 namespace BCore.Dal.Ef
 {
@@ -81,69 +82,112 @@ namespace BCore.Dal.Ef
 
             return await q.Where(f => f.Id == id).Select(selector).SingleOrDefaultAsync();
         }
-
-        public async Task<ICollection<T>> GetAllAsync<TOrderKey>(Expression<Func<T, TOrderKey>> orderBy = null
-            , bool isDesc = false
-            , Expression<Func<T, bool>> where = null
-            , int? take = null
+        
+        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> where = null
+            , int? skip = default(int?)
+            , int? take = default(int?)
             , params Expression<Func<T, object>>[] includes)
         {
-            IQueryable<T> q = _db.Set<T>();
-
-            if (orderBy != null)
-                q = isDesc ? _db.Set<T>().OrderByDescending(orderBy) : _db.Set<T>().OrderBy(orderBy);
-
-            if (where != null)
-                q = q.Where(where);
-
-            foreach (var include in includes)
-            {
-                q = q.Include(include);
-            }
-
-            if (take != null)
-                q = q.Take((int)take);
-
-            return await q.ToListAsync();            
+            return await _getAll(where, skip, take, includes).ToListAsync();            
         }
 
-        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> where = null, int? take = null)
+        public async Task<ICollection<T>> GetAllAsync<TOrderKey>(Expression<Func<T, TOrderKey>> orderBy = null,
+            SortOrder sort = SortOrder.Unspecified,
+            Expression<Func<T, bool>> where = null,
+            int? skip = default(int?),
+            int? take = default(int?),
+            params Expression<Func<T, object>>[] includes)
         {
-            IQueryable<T> q = _db.Set<T>();
-
-            if (where != null)
-                q = q.Where(where);
-
-            if (take != null)
-                q = q.Take((int)take);
-
-            return await q.ToListAsync();
+            return await _getAll(where, skip, take, includes).ToListAsync();
         }
 
-        public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> where = null, int? take = default(int?), params Expression<Func<T, object>>[] includes)
+        public async Task<int> CountAsync(Expression<Func<T, bool>> where = null
+            , int? skip = default(int?)
+            , int? take = default(int?)
+            , params Expression<Func<T, object>>[] includes)
         {
-            IQueryable<T> q = _db.Set<T>();
+            ICollection<T> items = await _getAll(where, skip, take, includes).ToListAsync();
 
-            if (where != null)
-                q = q.Where(where);
-
-            if (take != null)
-                q = q.Take((int)take);
-
-            foreach (var include in includes)
-            {
-                q = q.Include(include);
-            }            
-
-            return await q.ToListAsync();
+            return items.Count();
         }
 
-        public async Task<ICollection<T>> GetAllAsync()
+        public async Task<int> CountAsync<TOrderKey>(Expression<Func<T, TOrderKey>> orderBy = null,
+            SortOrder sort = SortOrder.Unspecified,
+            Expression<Func<T, bool>> where = null,
+            int? skip = default(int?),
+            int? take = default(int?),
+            params Expression<Func<T, object>>[] includes)
         {
-            IQueryable<T> q = _db.Set<T>();
-       
-            return await q.ToListAsync();
+            ICollection<T> items = await _getAll(where, skip, take, includes).ToListAsync();
+
+            return items.Count();
         }
+
+        //public async Task<ICollection<T>> GetAllAsync<TOrderKey>(Expression<Func<T, TOrderKey>> orderBy = null
+        //    , bool isDesc = false
+        //    , Expression<Func<T, bool>> where = null
+        //    , int? take = null
+        //    , params Expression<Func<T, object>>[] includes)
+        //{
+        //    IQueryable<T> q = _getAll(where, null, take, includes);
+
+        //    if (orderBy != null)
+        //        q = isDesc ? _db.Set<T>().OrderByDescending(orderBy) : _db.Set<T>().OrderBy(orderBy);           
+
+        //    return await q.ToListAsync();            
+        //}
+
+        //public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> where = null, int? take = null)
+        //{
+        //    IQueryable<T> q = _getAll(where, null, take, null);            
+
+        //    return await q.ToListAsync();
+        //}
+
+        //public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> where = null, int? take = default(int?), params Expression<Func<T, object>>[] includes)
+        //{
+        //    IQueryable<T> q = _getAll(where, null, take, includes);
+
+        //    return await q.ToListAsync();
+        //}
+
+        //public async Task<ICollection<T>> GetAllAsync<TOrderKey>(Expression<Func<T, TOrderKey>> orderBy, bool isDesc, int? skip, int? take, params Expression<Func<T, object>>[] includes)
+        //{
+        //    IQueryable<T> q = _getAll(null, skip, take, includes);
+
+        //    if (orderBy != null)
+        //        q = isDesc ? _db.Set<T>().OrderByDescending(orderBy) : _db.Set<T>().OrderBy(orderBy);
+
+        //    return await q.ToListAsync();
+        //}
+
+        //public async Task<ICollection<T>> GetAllAsync(Expression<Func<T, bool>> where = null, int? skip = default(int?), int? take = default(int?), params Expression<Func<T, object>>[] includes)
+        //{
+        //    IQueryable<T> q = _db.Set<T>();
+
+        //    if (where != null)
+        //        q = q.Where(where);
+
+        //    if (skip != null)
+        //        q = q.Skip((int)skip);
+
+        //    if (take != null)
+        //        q = q.Take((int)take);
+
+        //    foreach (var include in includes)
+        //    {
+        //        q = q.Include(include);
+        //    }
+
+        //    return await q.ToListAsync();
+        //}
+
+        //public async Task<ICollection<T>> GetAllAsync()
+        //{
+        //    IQueryable<T> q = _db.Set<T>();
+
+        //    return await q.ToListAsync();
+        //}
 
         public async Task<int> UpdateAsync(T item)
         {
@@ -167,6 +211,46 @@ namespace BCore.Dal.Ef
             }
 
             return q.ToPagedList(page, size);
+        }
+
+        private IQueryable<T> _getAll(IQueryable<T> items = null,
+            Expression<Func<T, bool>> where = null,
+            int? skip = null,
+            int? take = null,
+            params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> res = items ?? _db.Set<T>();
+
+            if (where != null)
+                res = res.Where(where);
+
+            if (skip != null)
+                res = res.Skip((int)skip);
+
+            if (take != null)
+                res = res.Take((int)take);
+
+            foreach (var include in includes)
+            {
+                res = res.Include(include);
+            }
+
+            return res;
+        }
+
+        private IQueryable<T> _getAll<TOrderKey>(Expression<Func<T, TOrderKey>> orderBy = null,
+            SortOrder sort = SortOrder.Unspecified,
+            Expression<Func<T, bool>> where = null,
+            int? skip = null,
+            int? take = null,
+            params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> items = _db.Set<T>();
+
+            if (orderBy != null)
+                items = sort == SortOrder.Descending ? items.OrderByDescending(orderBy) : items.OrderBy(orderBy);
+
+            return _getAll(items, where, skip, take, includes);
         }
     }
 }

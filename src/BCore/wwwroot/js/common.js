@@ -9,6 +9,23 @@ var Common;
         return App;
     }());
     Common.App = App;
+    var Pager = (function () {
+        function Pager(url, page, elContainer, elButtonDone) {
+            var _this = this;
+            this.url = url;
+            this.page = page;
+            this.elContainer = elContainer;
+            this.elButtonDone = elButtonDone;
+            if (this.elButtonDone)
+                this.elButtonDone.on('click', function (e) { return _this.loadPage(e); });
+        }
+        Pager.prototype.loadPage = function (e) {
+            if (this.elContainer)
+                this.elContainer.load("/Update/Post", { page: this.page });
+        };
+        return Pager;
+    }());
+    Common.Pager = Pager;
     var ConfirmDialog = (function () {
         function ConfirmDialog() {
             var _this = this;

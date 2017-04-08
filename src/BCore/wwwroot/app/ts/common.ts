@@ -6,7 +6,29 @@ module Common {
         private confirm: ConfirmDialog;        
 
         constructor() {
-            this.confirm = new ConfirmDialog();
+            this.confirm = new ConfirmDialog();            
+        }
+    }
+
+    export class Pager {
+        private url: string;
+        private page: number;
+        private elContainer: JQuery;
+        private elButtonDone: JQuery;
+
+        constructor(url, page, elContainer, elButtonDone) {
+            this.url = url;
+            this.page = page;
+            this.elContainer = elContainer;
+            this.elButtonDone = elButtonDone;
+
+            if (this.elButtonDone)
+                this.elButtonDone.on('click', (e: JQueryEventObject) => this.loadPage(e));                 
+        }
+
+        private loadPage(e: JQueryEventObject): void {
+            if (this.elContainer)
+                this.elContainer.load("/Update/Post", { page: this.page });                
         }
     }
 

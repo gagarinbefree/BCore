@@ -9,7 +9,7 @@ namespace BCore.Models.Commands
 {
     public interface IFeedCommands
     {
-        Task<FeedViewModel> GetLastPostsAsync(ClaimsPrincipal user);
-        Task<FeedViewModel> SearchPostsByTagAsync(string tag, ClaimsPrincipal user);        
+        Task<FeedViewModel> GetLastPostsAsync(ClaimsPrincipal user, int? page = null);
+        Task<FeedViewModel> SearchPostsByTagAsync(string tag, ClaimsPrincipal user, int? page = null);
     }
 }
