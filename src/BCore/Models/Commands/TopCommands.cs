@@ -6,6 +6,7 @@ using BCore.Models.ViewModels.Blog;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -29,9 +30,10 @@ namespace BCore.Models.Commands
         public async Task<TopViewModel> GetTopPostsAsync(ClaimsPrincipal user)
         {
             ICollection<Post> posts = await _unit.PostRepository.GetAllAsync(
-                null
-                , 50
-                , f => f.PostHashes, f => f.Comments);
+                null,
+                null,
+                50,
+                f => f.PostHashes, f => f.Comments);
                       
             return await _createViewModel(posts.OrderByDescending(f => f.Comments.Count()).ThenByDescending(f => f.DateTime).ToList(), user);
         }
@@ -41,16 +43,18 @@ namespace BCore.Models.Commands
             foreach (Post post in posts)
             {
                 ICollection<Part> imagePart = await _unit.PartRepository.GetAllAsync<DateTime>(
-                f => f.DateTime
-                , false
-                , f => f.PostId == post.Id && f.PartType == 1
-                , 1);
+                f => f.DateTime,
+                SortOrder.Ascending,
+                f => f.PostId == post.Id && f.PartType == 1,
+                null,
+                1);
 
                 ICollection<Part> txtPart = await _unit.PartRepository.GetAllAsync<DateTime>(
-                f => f.DateTime
-                , false
-                , f => f.PostId == post.Id && f.PartType == 0
-                , imagePart.Count != 0 ? 1 : 2);
+                f => f.DateTime,
+                SortOrder.Ascending,
+                f => f.PostId == post.Id && f.PartType == 0,
+                null,
+                imagePart.Count != 0 ? 1 : 2);
 
                 post.Parts = txtPart.Concat(imagePart).ToList();
             }

@@ -10,6 +10,7 @@ using BCore.Models.ViewModels.Blog;
 using BCore.Dal.BlogModels;
 using System.Security.Claims;
 using PagedList.Core;
+using System.Data.SqlClient;
 
 namespace BCore.Models.Commands
 {
@@ -29,11 +30,12 @@ namespace BCore.Models.Commands
         public async Task<FeedViewModel> GetLastPostsAsync(ClaimsPrincipal user, int? page = default(int?))
         {
             ICollection<Post> posts = await _unit.PostRepository.GetAllAsync<DateTime>(
-                f => f.DateTime
-                , true
-                , page == null ? 0 : page * 10
-                , 10
-                , f => f.PostHashes, f => f.Comments);
+                f => f.DateTime,
+                SortOrder.Descending,
+                null,
+                page == null ? 0 : page * 10,
+                10,
+                f => f.PostHashes, f => f.Comments);
             
             return await _createViewModel(posts, user, page);
         }
@@ -41,9 +43,12 @@ namespace BCore.Models.Commands
         public async Task<FeedViewModel> SearchPostsByTagAsync(string tag, ClaimsPrincipal user, int? page = default(int?))
         {
             Hash hash = await _unit.HashRepository.GetAsync(f => f.Tag == tag);
-            ICollection<PostHash> tagPostHashes = await _unit.PostHashRepository.GetAllAsync(f => f.HashId == hash.Id
-            , 50
-            , f => f.Post, f => f.Hash);
+            ICollection<PostHash> tagPostHashes = await _unit.PostHashRepository.GetAllAsync(
+                f => f.HashId == hash.Id,
+                null,
+                50,
+                f => f.Post, f => f.Hash);
+            
             // hack. in tagPostHashes Posts collection contains one PostHases item. Why?
             tagPostHashes.ToList().ForEach(async (f) =>
             {
@@ -59,16 +64,18 @@ namespace BCore.Models.Commands
             foreach (Post post in posts)
             {
                 ICollection<Part> imagePart = await _unit.PartRepository.GetAllAsync<DateTime>(
-                f => f.DateTime
-                , false
-                , f => f.PostId == post.Id && f.PartType == 1
-                , 1);
+                f => f.DateTime,
+                SortOrder.Ascending,
+                f => f.PostId == post.Id && f.PartType == 1,
+                null,
+                1);
 
                 ICollection<Part> txtPart = await _unit.PartRepository.GetAllAsync<DateTime>(
-                f => f.DateTime
-                , false
-                , f => f.PostId == post.Id && f.PartType == 0
-                , imagePart.Count != 0 ? 1 : 2);
+                f => f.DateTime,
+                SortOrder.Ascending,
+                f => f.PostId == post.Id && f.PartType == 0,
+                null,
+                imagePart.Count != 0 ? 1 : 2);
 
                 post.Parts = txtPart.Concat(imagePart).ToList();
             }

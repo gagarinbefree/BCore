@@ -9,6 +9,8 @@ using BCore.Dal.BlogModels;
 using Microsoft.AspNetCore.Identity;
 using BCore.Dal.Ef;
 using BCore.Dal;
+using System.Data.SqlClient;
+using System.Linq.Expressions;
 
 namespace BCore.Models.Commands
 {
@@ -27,37 +29,29 @@ namespace BCore.Models.Commands
 
         public async Task<UpdateViewModel> GetPostsByUserAsync(ClaimsPrincipal user)
         {
-            //ICollection<Post> posts = await _unit.PostRepository.GetAllAsync<DateTime>(
-            //    f => f.DateTime
-            //    , true
-            //    , f => f.UserId == _userManager.GetUserId(user) && f.Parts.Count > 0
-            //    , 50
-            //    , f => f.PostHashes, f => f.Comments);
-
-            ICollection<Post> posts = (
-                await _unit.PostRepository.GetAllAsync(
-                    where: f => f.UserId == _userManager.GetUserId(user) && f.Parts.Count > 0,
-                    take
-                    
-
-
-
-                .OrderByDescending(f => f.DateTime)
-                .ToList();
+            ICollection<Post> posts = await _unit.PostRepository.GetAllAsync<DateTime>(
+                f => f.DateTime,
+                SortOrder.Descending,
+                f => f.UserId == _userManager.GetUserId(user) && f.Parts.Count > 0,
+                null,
+                50,
+                f => f.PostHashes, f => f.Comments);
 
             foreach (Post post in posts)
             {
                 ICollection<Part> imagePart = await _unit.PartRepository.GetAllAsync<DateTime>(
-                f => f.DateTime
-                , false
-                , f => f.PostId == post.Id && f.PartType == 1
-                , 1);
+                f => f.DateTime,
+                SortOrder.Ascending,
+                f => f.PostId == post.Id && f.PartType == 1,
+                null,
+                1);
 
                 ICollection<Part> txtPart = await _unit.PartRepository.GetAllAsync<DateTime>(
-                f => f.DateTime
-                , false
-                , f => f.PostId == post.Id && f.PartType == 0
-                , imagePart.Count != 0 ? 1 : 2);
+                f => f.DateTime,
+                SortOrder.Ascending,
+                f => f.PostId == post.Id && f.PartType == 0,
+                null,
+                imagePart.Count != 0 ? 1 : 2);
 
                 post.Parts = txtPart.Concat(imagePart).ToList();
             }
