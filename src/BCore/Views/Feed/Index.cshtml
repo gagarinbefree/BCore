@@ -18,23 +18,26 @@
     <div class="hidden-xs col-sm-2 col-md-3"></div>
 </div>
 
-<div class="row">
-    <div class="hidden-xs col-sm-2 col-md-3"></div>
+if (!@Model.Pager.IsLastPage())
+{
+    <div class="row">
+        <div class="hidden-xs col-sm-2 col-md-3"></div>
 
-    <div class="col-xs-12 col-sm-8 col-md-6">
-        <div class="pageContainer">
+        <div class="col-xs-12 col-sm-8 col-md-6">
+            <div class="pageContainer">
+            </div>
+            <button class="btn btn-default center-block pageButtonDone">Done</button>       
         </div>
-        <button class="btn btn-default center-block pageButtonDone">Done</button>       
-    </div>
 
-    <div class="hidden-xs col-sm-2 col-md-3"></div>
-</div>
+        <div class="hidden-xs col-sm-2 col-md-3"></div>
+    </div>
+}
 
 @section Scripts {
     <script type="text/javascript">
             $(document).ready(function() {
                 new Common.Pager('/Feed/Page'
-                    , '@Model.Page'
+                    , '@Model.Pager.Page'
                     , $('.pageContainer')
                     , $('.pageButtonDone'));
             });

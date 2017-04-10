@@ -7,7 +7,12 @@ namespace BCore.Models.ViewModels.Blog
 {
     public class FeedViewModel
     {
-        public int? Page { set; get; }
+        public PagerViewModel Pager { set; get; }
         public List<PostViewModel> RecentPosts { set; get; }
+
+        public FeedViewModel()
+        {
+            Pager = new PagerViewModel();
+        }
     }
 }

@@ -46,15 +46,15 @@ namespace BCore.Dal
 
         Task<int> CountAsync(Expression<Func<T, bool>> where = null
             , int? skip = default(int?)
-            , int? take = default(int?)
-            , params Expression<Func<T, object>>[] includes);
+            , int? take = default(int?));
+
 
         Task<int> CountAsync<TOrderKey>(Expression<Func<T, TOrderKey>> orderBy = null,
             SortOrder sort = SortOrder.Unspecified,
             Expression<Func<T, bool>> where = null,
             int? skip = default(int?),
-            int? take = default(int?),
-            params Expression<Func<T, object>>[] includes);
+            int? take = default(int?));
+           
 
         Task<T> GetAsync(Guid id, params Expression<Func<T, object>>[] includes);
         Task<T> GetAsync(Expression<Func<T, bool>> where, params Expression<Func<T, object>>[] includes);

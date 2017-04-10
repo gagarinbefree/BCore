@@ -33,9 +33,13 @@ namespace BCore.Models.Commands
                 f => f.DateTime,
                 SortOrder.Descending,
                 null,
-                page == null ? 0 : page * 10,
-                10,
+                page == null ? 1 : page * PagerViewModel.ItemsOnPage,
+                PagerViewModel.ItemsOnPage,
                 f => f.PostHashes, f => f.Comments);
+
+            FeedViewModel model = await _createViewModel(posts, user, page);
+            
+            model.Pager = new PagerViewModel(await _unit.PostRepository.CountAsync(), page == null ? 1 : (int)page);            
             
             return await _createViewModel(posts, user, page);
         }
@@ -93,9 +97,7 @@ namespace BCore.Models.Commands
                 f.StatusLine = new PostStatusLineViewModel();
                 f.StatusLine.IsEditable = userId == f.UserId.ToString();
                 f.IsPreview = true;
-            });
-
-            model.Page = page;
+            });            
 
             return model;
         }       

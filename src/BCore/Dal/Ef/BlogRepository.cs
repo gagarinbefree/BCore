@@ -103,10 +103,9 @@ namespace BCore.Dal.Ef
 
         public async Task<int> CountAsync(Expression<Func<T, bool>> where = null
             , int? skip = default(int?)
-            , int? take = default(int?)
-            , params Expression<Func<T, object>>[] includes)
+            , int? take = default(int?))            
         {
-            ICollection<T> items = await _getAllQuery(where: where, skip: skip, take: take, includes: includes).ToListAsync();
+            ICollection<T> items = await _getAllQuery(where: where, skip: skip, take: take).ToListAsync();
 
             return items.Count();
         }
@@ -115,10 +114,10 @@ namespace BCore.Dal.Ef
             SortOrder sort = SortOrder.Unspecified,
             Expression<Func<T, bool>> where = null,
             int? skip = default(int?),
-            int? take = default(int?),
-            params Expression<Func<T, object>>[] includes)
+            int? take = default(int?))
+            
         {
-            ICollection<T> items = await _getAllQuery<TOrderKey>(orderBy, sort, where, skip, take, includes).ToListAsync();
+            ICollection<T> items = await _getAllQuery<TOrderKey>(orderBy, sort, where, skip, take).ToListAsync();
 
             return items.Count();
         }
