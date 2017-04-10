@@ -33,15 +33,15 @@ namespace BCore.Models.Commands
                 f => f.DateTime,
                 SortOrder.Descending,
                 null,
-                page == null ? 1 : page * PagerViewModel.ItemsOnPage,
+                page == null ? 0 : page * PagerViewModel.ItemsOnPage,
                 PagerViewModel.ItemsOnPage,
                 f => f.PostHashes, f => f.Comments);
 
             FeedViewModel model = await _createViewModel(posts, user, page);
             
-            model.Pager = new PagerViewModel(await _unit.PostRepository.CountAsync(), page == null ? 1 : (int)page);            
-            
-            return await _createViewModel(posts, user, page);
+            model.Pager = new PagerViewModel(await _unit.PostRepository.CountAsync(), page == null ? 1 : (int)page);
+
+            return model;
         }
 
         public async Task<FeedViewModel> SearchPostsByTagAsync(string tag, ClaimsPrincipal user, int? page = default(int?))
