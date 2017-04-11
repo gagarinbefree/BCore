@@ -33,7 +33,7 @@ namespace BCore.Models.Commands
                 f => f.DateTime,
                 SortOrder.Descending,
                 null,
-                page == null ? 0 : page * PagerViewModel.ItemsOnPage,
+                page == null ? 0 : (page - 1) * PagerViewModel.ItemsOnPage,
                 PagerViewModel.ItemsOnPage,
                 f => f.PostHashes, f => f.Comments);
 

@@ -13,15 +13,20 @@ var Common;
         function Pager(url, page, elContainer, elButtonDone) {
             var _this = this;
             this.url = url;
-            this.page = page;
+            this.page = Number(page);
             this.elContainer = elContainer;
             this.elButtonDone = elButtonDone;
             if (this.elButtonDone)
                 this.elButtonDone.on('click', function (e) { return _this.loadPage(e); });
         }
         Pager.prototype.loadPage = function (e) {
+            var _this = this;
+            debugger;
             if (this.elContainer)
-                this.elContainer.load("/Update/Post", { page: this.page });
+                this.elContainer.load(this.url, { page: this.page + 1 }, function (responseText, textStatus, XMLHttpRequest) { return _this.init(responseText, textStatus, XMLHttpRequest); });
+        };
+        Pager.prototype.init = function (responseText, textStatus, XMLHttpRequest) {
+            debugger;
         };
         return Pager;
     }());

@@ -7,7 +7,7 @@ namespace BCore.Models.ViewModels.Blog
 {
     public class PagerViewModel
     {
-        public static int ItemsOnPage { get { return 10; } }
+        public static int ItemsOnPage { get { return 3; } }
         public int ItemsCount { set; get; }        
         public int Page { set; get; }        
 

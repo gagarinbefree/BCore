@@ -40,7 +40,7 @@ namespace BCore.Controllers
         {
             FeedViewModel model = await _commands.GetLastPostsAsync(HttpContext.User, page);
 
-            return View(model);
+            return View("_Page", model);
         }
     }
 }

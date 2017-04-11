@@ -18,17 +18,23 @@ module Common {
 
         constructor(url, page, elContainer, elButtonDone) {
             this.url = url;
-            this.page = page;
+            this.page = Number(page);
             this.elContainer = elContainer;
             this.elButtonDone = elButtonDone;
-
             if (this.elButtonDone)
                 this.elButtonDone.on('click', (e: JQueryEventObject) => this.loadPage(e));                 
         }
 
         private loadPage(e: JQueryEventObject): void {
+
+            debugger;
+
             if (this.elContainer)
-                this.elContainer.load("/Update/Post", { page: this.page });                
+                this.elContainer.load(this.url, { page: this.page + 1 }, (responseText: string, textStatus: string, XMLHttpRequest: XMLHttpRequest) => this.init(responseText, textStatus, XMLHttpRequest));                
+        }
+
+        private init(responseText: string, textStatus: string, XMLHttpRequest: XMLHttpRequest) {
+            debugger;
         }
     }
 
