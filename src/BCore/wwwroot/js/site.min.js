@@ -21,12 +21,12 @@ var Common;
         }
         Pager.prototype.loadPage = function (e) {
             var _this = this;
-            debugger;
-            if (this.elContainer)
-                this.elContainer.load(this.url, { page: this.page + 1 }, function (responseText, textStatus, XMLHttpRequest) { return _this.init(responseText, textStatus, XMLHttpRequest); });
+            if (this.elContainer) {
+                this.elContainer.append($('<div>').load(this.url, { page: this.page + 1 }, function (responseText, textStatus, XMLHttpRequest) { return _this.init(responseText, textStatus, XMLHttpRequest); }));
+            }
         };
         Pager.prototype.init = function (responseText, textStatus, XMLHttpRequest) {
-            debugger;
+            this.page++;
         };
         return Pager;
     }());

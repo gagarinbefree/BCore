@@ -7,7 +7,7 @@ namespace BCore.Models.ViewModels.Blog
 {
     public class PagerViewModel
     {
-        public static int ItemsOnPage { get { return 3; } }
+        public static int ItemsOnPage { get { return 2; } }
         public int ItemsCount { set; get; }        
         public int Page { set; get; }        
 
@@ -29,6 +29,12 @@ namespace BCore.Models.ViewModels.Blog
         public int PageCount()
         {
             return (int)Math.Ceiling((decimal)ItemsCount / (decimal)Page);
+        }
+
+        public void NextPage()
+        {
+            if (!IsLastPage())
+                Page++;
         }
     }
 }
