@@ -32,8 +32,15 @@ module Common {
             }
         }
 
-        private init(responseText: string, textStatus: string, XMLHttpRequest: XMLHttpRequest) {                        
-            this.page++;
+        private init(responseText: string, textStatus: string, XMLHttpRequest: XMLHttpRequest): void {                                    
+            if (textStatus != 'success' || XMLHttpRequest.status != 200 || this.stringIsEmpty(responseText))
+                this.elButtonDone.hide();
+            else
+                this.page++;
+        }
+
+        private stringIsEmpty(str: string): boolean {
+            return str.replace(new RegExp('\r\n', 'g'), '').replace(/\s/g, '').trim().length == 0;
         }
     }
 

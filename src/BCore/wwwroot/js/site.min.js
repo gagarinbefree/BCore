@@ -26,7 +26,13 @@ var Common;
             }
         };
         Pager.prototype.init = function (responseText, textStatus, XMLHttpRequest) {
-            this.page++;
+            if (textStatus != 'success' || XMLHttpRequest.status != 200 || this.stringIsEmpty(responseText))
+                this.elButtonDone.hide();
+            else
+                this.page++;
+        };
+        Pager.prototype.stringIsEmpty = function (str) {
+            return str.replace(new RegExp('\r\n', 'g'), '').replace(/\s/g, '').trim().length == 0;
         };
         return Pager;
     }());
