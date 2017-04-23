@@ -32,15 +32,24 @@ module Common {
             }
         }
 
-        private init(responseText: string, textStatus: string, XMLHttpRequest: XMLHttpRequest): void {                                    
-            if (textStatus != 'success' || XMLHttpRequest.status != 200 || this.stringIsEmpty(responseText))
+        private init(responseText: string, textStatus: string, XMLHttpRequest: XMLHttpRequest): void {
+            if (textStatus != 'success'
+                || XMLHttpRequest.status != 200
+                || this.isEmpty(responseText)
+                || !this.isHtml(responseText)) {
+
                 this.elButtonDone.hide();
+            }
             else
                 this.page++;
         }
 
-        private stringIsEmpty(str: string): boolean {
+        private isEmpty(str: string): boolean {
             return str.replace(new RegExp('\r\n', 'g'), '').replace(/\s/g, '').trim().length == 0;
+        }
+
+        private isHtml(str: string): boolean {
+            return /<[a-z\][\s\S]*>/i.test(str);
         }
     }
 
