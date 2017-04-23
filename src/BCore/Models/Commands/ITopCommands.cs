@@ -9,6 +9,6 @@ namespace BCore.Models.Commands
 {
     public interface ITopCommands
     {
-        Task<TopViewModel> GetTopPostsAsync(ClaimsPrincipal user);
+        Task<TopViewModel> GetTopPostsAsync(ClaimsPrincipal user, int? pager = null);
     }
 }

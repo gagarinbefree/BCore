@@ -38,8 +38,7 @@ namespace BCore.Controllers
 
         public async Task<IActionResult> Page(int page)
         {
-            FeedViewModel model = await _commands.GetLastPostsAsync(HttpContext.User, page);
-            //model.Pager.NextPage();
+            FeedViewModel model = await _commands.GetLastPostsAsync(HttpContext.User, page);            
 
             return PartialView("_Page", model);
         }

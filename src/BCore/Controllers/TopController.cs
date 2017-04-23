@@ -26,5 +26,12 @@ namespace BCore.Controllers
 
             return View(model);
         }
+
+        public async Task<IActionResult> Page(int page)
+        {
+            TopViewModel model = await _commands.GetTopPostsAsync(HttpContext.User, page);
+
+            return PartialView("_Page", model);
+        }
     }
 }

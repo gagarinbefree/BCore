@@ -27,18 +27,22 @@ namespace BCore.Models.Commands
         }
 
         
-        public async Task<TopViewModel> GetTopPostsAsync(ClaimsPrincipal user)
+        public async Task<TopViewModel> GetTopPostsAsync(ClaimsPrincipal user, int? page = null)
         {
             ICollection<Post> posts = await _unit.PostRepository.GetAllAsync(
                 null,
-                null,
-                50,
+                page == null ? 0 : (page - 1) * PagerViewModel.ItemsOnPage,
+                PagerViewModel.ItemsOnPage,
                 f => f.PostHashes, f => f.Comments);
-                      
-            return await _createViewModel(posts.OrderByDescending(f => f.Comments.Count()).ThenByDescending(f => f.DateTime).ToList(), user);
+
+            TopViewModel model = await _createViewModel(posts.OrderByDescending(f => f.Comments.Count()).ThenByDescending(f => f.DateTime).ToList(), user, page);
+
+            model.Pager = new PagerViewModel(await _unit.PostRepository.CountAsync(), page == null ? 1 : (int)page);
+
+            return model;
         }
 
-        private async Task<TopViewModel> _createViewModel(ICollection<Post> posts, ClaimsPrincipal user)
+        private async Task<TopViewModel> _createViewModel(ICollection<Post> posts, ClaimsPrincipal user, int? page)
         {            
             foreach (Post post in posts)
             {
@@ -66,9 +70,9 @@ namespace BCore.Models.Commands
                 Hash hash = await _unit.HashRepository.GetAsync(f.Id);
                 f.Tag = hash.Tag;               
             });
-
-            int ii = 1;
+            
             var userId = _userManager.GetUserId(user);
+            int ii = page != null ? (int)page * PagerViewModel.ItemsOnPage - 1 : 1;
             model.RecentPosts.ForEach(f =>
             {
                 f.StatusLine = new PostStatusLineViewModel();
