@@ -59,5 +59,12 @@ namespace BCore.Controllers
 
             return RedirectToAction("Index");
         }
+
+        public async Task<IActionResult> Page(int page)
+        {
+            UpdateViewModel model = await _commands.GetPostsByUserAsync(HttpContext.User, page);
+
+            return PartialView("_Page", model);
+        }
     }
 }

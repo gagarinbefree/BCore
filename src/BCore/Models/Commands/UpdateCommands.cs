@@ -27,14 +27,14 @@ namespace BCore.Models.Commands
             _userManager = userManager;
         }
 
-        public async Task<UpdateViewModel> GetPostsByUserAsync(ClaimsPrincipal user)
+        public async Task<UpdateViewModel> GetPostsByUserAsync(ClaimsPrincipal user, int? page)
         {
             ICollection<Post> posts = await _unit.PostRepository.GetAllAsync<DateTime>(
                 f => f.DateTime,
                 SortOrder.Descending,
                 f => f.UserId == _userManager.GetUserId(user) && f.Parts.Count > 0,
-                null,
-                50,
+                page == null ? 0 : (page - 1) * PagerViewModel.ItemsOnPage,
+                PagerViewModel.ItemsOnPage,
                 f => f.PostHashes, f => f.Comments);
 
             foreach (Post post in posts)
@@ -64,13 +64,15 @@ namespace BCore.Models.Commands
                 f.Tag = hash.Tag;
             });
 
-            var userId = _userManager.GetUserId(user);
+            string userId = _userManager.GetUserId(user);
             model.RecentPosts.ForEach(f =>
             {
                 f.StatusLine = new PostStatusLineViewModel();
                 f.StatusLine.IsEditable = userId == f.UserId.ToString();
                 f.IsPreview = true;
             });
+            
+            model.Pager = new PagerViewModel(await _unit.PostRepository.CountAsync(), page == null ? 1 : (int)page);
 
             return model;
         }
