@@ -13,11 +13,14 @@ namespace BCore.Dal.BlogModels
     {
         public string UserId { set; get; }
         public DateTime DateTime { set; get; }
-        public string PostId { set; get; } // repost
+        
+        //public string PostId { set; get; } // repost
+
         public virtual ICollection<Part> Parts { set; get; }
         public virtual ICollection<Comment> Comments { set; get; }                
         public virtual ICollection<PostHash> PostHashes { set; get; }
-        public virtual ICollection<Stars> Stars { set; get; }
+        
+        //public virtual ICollection<Stars> Stars { set; get; }
 
         public Post()
         {

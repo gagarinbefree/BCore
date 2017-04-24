@@ -7,7 +7,6 @@ module Blog {
         public elSubmitForm: JQuery = $("#whatsNewForm");
 
         private elInput: JQuery = $("#whatsNewText");
-
         public elImageUrl = $("#whatsNewImageUrl");
         public elVideoUrl = $("#whatsNewVideoUrl");
         public elGeo = $("#whatsNewGeo");

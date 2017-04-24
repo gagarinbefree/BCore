@@ -50,6 +50,8 @@
 
 @await Html.PartialAsync("_Image")
 
+@await Html.PartialAsync("_Code")
+
 @if (SignInManager.IsSignedIn(User))
 {
     @section Scripts {
