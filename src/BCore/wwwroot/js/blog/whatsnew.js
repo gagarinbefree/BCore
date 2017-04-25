@@ -18,7 +18,8 @@ var Blog;
             this.init();
         }
         WhatsNew.prototype.init = function () {
-            var image = new Blog.Image(this);
+            this.modalImage = new Blog.Image(this);
+            this.modalCode = new Blog.Code(this);
             autosize(this.elInput);
             this.elInput.val("");
             autosize.update(this.elInput);

@@ -15,6 +15,9 @@ module Blog {
         private elPost: JQuery = $("#whatsNewPost");
 
         private elDropdown = $(".dropdown-toggle"); 
+
+        private modalImage: Image;
+        private modalCode: Code;
      
         constructor(userId: string) {
             this.userId = userId;            
@@ -25,7 +28,8 @@ module Blog {
         }
 
         private init(): void {
-            var image = new Image(this);
+            this.modalImage = new Image(this);
+            this.modalCode = new Code(this);
 
             autosize(this.elInput);
             this.elInput.val("");
