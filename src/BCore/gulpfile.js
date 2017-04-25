@@ -67,13 +67,13 @@ gulp.task("min:js", function (cb) {
 });
 
 gulp.task("min:css", function (cb) {
-    return gulp.src([
-            paths.css,
+    return gulp.src([            
             "!" + paths.minCss,
             paths.webroot + "lib/Font-Awesome/css/font-awesome.css",
             paths.webroot + "lib/nprogress/nprogress.css",
             paths.webroot + "lib/bootstrap/dist/css/bootstrap-theme.css",
-            paths.webroot + "lib/highlightjs/styles/vs.css"])
+            paths.webroot + "lib/highlightjs/styles/vs.css",
+            paths.css])
         .pipe(concat(paths.concatCssDest))
         //.pipe(cssmin())
         .pipe(gulp.dest("."));
