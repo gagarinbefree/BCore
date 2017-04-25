@@ -46,7 +46,7 @@ gulp.task("build:ts", function (cb) {
 
 gulp.task("min:js", function (cb) {
     return gulp.src([
-            paths.js,
+            paths.js,            
             paths.webroot + "lib/jquery/dist/jquery.js",
             paths.webroot + "lib/jquery-ui/jquery-ui.js",
             paths.webroot + "lib/bootstrap/dist/js/bootstrap.js",
@@ -58,7 +58,7 @@ gulp.task("min:js", function (cb) {
             paths.webroot + "lib/imagefill.js/js/jquery-imagefill.js",
             paths.webroot + "lib/jquery.appear/jquery.appear.js",
             paths.webroot + "lib/bootbox/bootbox.js",
-            paths.webroot + "lib/highlightjs/highlight.pack.js",
+            paths.webroot + "lib/highlightjs/highlight.pack.js",            
             "!" + paths.minJs            
         ], { base: "." })
         .pipe(concat(paths.concatJsDest))

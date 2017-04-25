@@ -247,3 +247,7 @@ ModelManifest.xml
 # Uploads
 src/BCore/wwwroot/Uploads
 src/BCore/gulp-tsc-?
+
+# min
+src/BCore/wwwroot/css/site.min.css
+src/BCore/wwwroot/js

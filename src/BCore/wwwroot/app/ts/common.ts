@@ -1,12 +1,14 @@
 ﻿/// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../typings/bootbox/index.d.ts" />
+/// <reference path="../typings/highlightjs/highlightjs.d.ts" />
 
 module Common {
     export class App {
         private confirm: ConfirmDialog;        
 
         constructor() {
-            this.confirm = new ConfirmDialog();            
+            this.confirm = new ConfirmDialog();
+            hljs.initHighlightingOnLoad();
         }
     }
 

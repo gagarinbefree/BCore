@@ -9683,6 +9683,7 @@ div.center-cropped img {
     visibility: hidden;
 }
 
+/*bug fix with drop down menu and btn-group class*/
 [data-toggle="modal"] {
     cursor: pointer;  
 }
@@ -9690,3 +9691,4 @@ div.center-cropped img {
 .btn-group .dropdown-menu {
     border-top-width: 1px;
 }
+/**/
