@@ -7,7 +7,7 @@ module Blog {
     export class Code {
         private owner: WhatsNew;
         private form: JQuery = $('#codeModalForm');
-        private code: JQuery = $('#codeText');
+        private editor: AceAjax.Editor;
 
         constructor(owner: WhatsNew) {
             this.owner = owner;
@@ -16,17 +16,18 @@ module Blog {
         }
 
         private init(): void {
-            this.form.on('shown.bs.modal', (e: JQueryEventObject) => this.formShow(e));
-            //this.text.on('input change keyup cut', (e: JQueryEventObject) => this.highlight(e));
+            this.form.on('shown.bs.modal', (e: JQueryEventObject) => this.formShow(e));            
         }
 
-        private formShow(e: JQueryEventObject): void {            
-            var editor = ace.edit('codeText');
-            this.code.focus();
+        private formShow(e: JQueryEventObject): void {
+            this.initAceEditor();
         }
 
-        //private highlight(e: JQueryEventObject) {
-        //    hljs.highlightBlock(e.target);
-        //}
+        private initAceEditor(): void {
+            this.editor = ace.edit('codeText');
+            this.editor.setTheme("ace/theme/twilight");
+            this.editor.renderer.setShowGutter(false);
+            this.editor.focus();
+        }
     }
 }

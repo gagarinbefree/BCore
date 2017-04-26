@@ -59,7 +59,7 @@ gulp.task("min:js", function (cb) {
             paths.webroot + "lib/jquery.appear/jquery.appear.js",
             paths.webroot + "lib/bootbox/bootbox.js",
             paths.webroot + "lib/highlightjs/highlight.pack.js",
-            paths.webroot + "lib/ace/build/src/ace.js",
+            paths.webroot + "lib/ace-builds/src/ace.js",
             "!" + paths.minJs            
         ], { base: "." })
         .pipe(concat(paths.concatJsDest))

@@ -11,6 +11,10 @@ namespace BCore.Dal.BlogModels
     {
         public string Value { set; get; }        
         public DateTime DateTime { set; get; }
+
+        // 0 - text
+        // 1 - image
+        // 2 - code
         public int PartType { set; get; }
 
         [ForeignKey("Post")]
