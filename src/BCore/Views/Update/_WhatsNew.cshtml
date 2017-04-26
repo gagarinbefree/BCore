@@ -1,13 +1,13 @@
 ﻿@model BCore.Models.ViewModels.Blog.WhatsNewViewModel
 
 <form id="whatsNewForm" asp-action="Submit" asp-controller="Update" method="post">
-
     <div class="form-group">                   
         <textarea id="whatsNewText" asp-for="Text" class="form-control" rows="1">@Model.Text</textarea>
     </div>    
     <input id="whatsNewImageUrl" asp-for="ImageUrl" type="hidden" value="@Model.ImageUrl"/>
     <input id="whatsNewVideoUrl" asp-for="VideoUrl" type="hidden" value="@Model.VideoUrl" />
     <input id="whatsNewGeo" asp-for="Geo" type="hidden" value="@Model.Geo" />
+    <input id="whatsCode" asp-for="Code" type="hidden" value="@Model.Code" />
 
     <button id="whatsNewSubmitButton" class="btn btn-success">
         <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> submit

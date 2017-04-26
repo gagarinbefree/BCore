@@ -10,6 +10,7 @@ var Blog;
             this.elImageUrl = $("#whatsNewImageUrl");
             this.elVideoUrl = $("#whatsNewVideoUrl");
             this.elGeo = $("#whatsNewGeo");
+            this.elCode = $("#whatsCode");
             this.elPostButton = $("#whatsNewPostButton");
             this.elPost = $("#whatsNewPost");
             this.elDropdown = $(".dropdown-toggle");

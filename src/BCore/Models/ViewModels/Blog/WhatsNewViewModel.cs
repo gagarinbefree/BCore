@@ -37,6 +37,7 @@ namespace BCore.Models.ViewModels.Blog
 
         public string VideoUrl { set; get; }
         public string Geo { set; get;   }
+        public string Code { set; get; }
 
         public void Clear()
         {
@@ -44,6 +45,7 @@ namespace BCore.Models.ViewModels.Blog
             ImageUrl = "";
             VideoUrl = "";
             Geo = "";
+            Code = "";
         }
 
         public string GetPartValue()
@@ -53,6 +55,9 @@ namespace BCore.Models.ViewModels.Blog
 
             if (!String.IsNullOrWhiteSpace(ImageUrl))
                 return ImageUrl;
+
+            if (!String.IsNullOrWhiteSpace(Code))
+                return Code;
 
             return "";
         }
@@ -64,6 +69,9 @@ namespace BCore.Models.ViewModels.Blog
 
             if (!String.IsNullOrWhiteSpace(ImageUrl))
                 return 1;
+
+            if (!String.IsNullOrWhiteSpace(Code))
+                return 2;
 
             return -1;
         }

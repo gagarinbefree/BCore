@@ -10,6 +10,7 @@ module Blog {
         public elImageUrl = $("#whatsNewImageUrl");
         public elVideoUrl = $("#whatsNewVideoUrl");
         public elGeo = $("#whatsNewGeo");
+        public elCode = $("#whatsCode")
         
         private elPostButton: JQuery = $("#whatsNewPostButton");
         private elPost: JQuery = $("#whatsNewPost");
