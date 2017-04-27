@@ -147,8 +147,7 @@ div.center-cropped img {
     border: 1px solid rgb(204, 204, 204);
 }
 
-.hljs {
-    /*font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;*/
+.hljs {    
     font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
     font-size: small;
     display: block;
