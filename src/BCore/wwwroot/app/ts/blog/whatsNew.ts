@@ -1,5 +1,6 @@
 ﻿/// <reference path="../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../typings/autosize/autosize.d.ts" />
+/// <reference path="../../typings/highlightjs/highlightjs.d.ts" />
 
 module Blog {
     export class WhatsNew {
@@ -37,7 +38,14 @@ module Blog {
             autosize.update(this.elInput);
             this.elInput.focus();
             this.elImageUrl.val("");
-            this.elDropdown.dropdown();                  
+            this.elDropdown.dropdown();
+            this.highlight();              
+        }
+
+        private highlight(): void {
+            $("pre").each(function (i, e) {
+                hljs.highlightBlock(e);
+            });  
         }
 
         public post(e: Event): void {
