@@ -10026,3 +10026,16 @@ div.center-cropped img {
     height: 400px;
     border: 1px solid rgb(204, 204, 204);
 }
+
+.hljs {    
+    font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+    font-size: small;
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
+    word-wrap: normal;
+}
+
+pre code {
+    white-space: inherit;
+}

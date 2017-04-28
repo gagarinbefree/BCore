@@ -99,12 +99,16 @@ namespace BCore.Models.Commands
             var post = Mapper.Map<Post>(model);
             post.UserId = _userManager.GetUserId(user);
             Guid postId = await _unit.PostRepository.CreateAsync(post);
-
-            string text = model
+            
+            IEnumerable<PartViewModel> textParts = model
                 .PreviewPost
                 .Parts
-                .Where(f => f.PartType == 0)
-                .Select(f => String.Format("{0} ", f.Value)).Aggregate((a, b) => a + b);
+                .Where(f => f.PartType == 0);
+
+            if (textParts.Count() == 0)
+                return postId;
+
+            string text = textParts.Select(f => String.Format("{0} ", f.Value)).Aggregate((a, b) => a + b);
             if (String.IsNullOrWhiteSpace(text))
                 return postId;
 
