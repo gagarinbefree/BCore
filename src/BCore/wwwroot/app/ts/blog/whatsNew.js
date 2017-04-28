@@ -1,5 +1,6 @@
 /// <reference path="../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../typings/autosize/autosize.d.ts" />
+/// <reference path="../../typings/simplemde/simplemde.d.ts" />
 var Blog;
 (function (Blog) {
     var WhatsNew = (function () {
@@ -21,12 +22,13 @@ var Blog;
         WhatsNew.prototype.init = function () {
             this.modalImage = new Blog.Image(this);
             this.modalCode = new Blog.Code(this);
-            autosize(this.elInput);
-            this.elInput.val("");
-            autosize.update(this.elInput);
-            this.elInput.focus();
+            //autosize(this.elInput);
+            //this.elInput.val("");
+            //autosize.update(this.elInput);
+            //this.elInput.focus();
             this.elImageUrl.val("");
             this.elDropdown.dropdown();
+            this.simple = new SimpleMDE({ element: this.elInput[0], autofocus: true });
         };
         WhatsNew.prototype.post = function (e) {
             var _this = this;

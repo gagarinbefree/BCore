@@ -1,5 +1,7 @@
 ﻿/// <reference path="../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../typings/autosize/autosize.d.ts" />
+/// <reference path="../../typings/simplemde/simplemde.d.ts" />
+
 
 module Blog {
     export class WhatsNew {
@@ -11,7 +13,9 @@ module Blog {
         public elVideoUrl = $("#whatsNewVideoUrl");
         public elGeo = $("#whatsNewGeo");
         public elCode = $("#whatsCode")
-        
+
+        private simple: SimpleMDE;
+
         private elPostButton: JQuery = $("#whatsNewPostButton");
         private elPost: JQuery = $("#whatsNewPost");
 
@@ -32,12 +36,14 @@ module Blog {
             this.modalImage = new Image(this);
             this.modalCode = new Code(this);
 
-            autosize(this.elInput);
-            this.elInput.val("");
-            autosize.update(this.elInput);
-            this.elInput.focus();
+            //autosize(this.elInput);
+            //this.elInput.val("");
+            //autosize.update(this.elInput);
+            //this.elInput.focus();
             this.elImageUrl.val("");
-            this.elDropdown.dropdown();                  
+            this.elDropdown.dropdown();       
+
+            this.simple = new SimpleMDE({ element: this.elInput[0], autofocus: true });           
         }
 
         public post(e: Event): void {
