@@ -48,7 +48,7 @@ gulp.task("min:js", function (cb) {
     return gulp.src([
             paths.js,            
             paths.webroot + "lib/jquery/dist/jquery.js",
-            paths.webroot + "lib/jquery-ui/jquery-ui.js",
+            paths.webroot + "lib/jquery-ui/jquery-ui.js",            
             paths.webroot + "lib/bootstrap/dist/js/bootstrap.js",
             paths.webroot + "lib/autosize/dist/autosize.js",
             paths.webroot + "lib/blueimp-file-upload/js/jquery.fileupload.js",
@@ -60,7 +60,7 @@ gulp.task("min:js", function (cb) {
             paths.webroot + "lib/bootbox/bootbox.js",
             paths.webroot + "lib/highlightjs/highlight.pack.js",
             paths.webroot + "lib/ace-builds/src/ace.js",
-            paths.webroot + "lib/simplemde/src/js/simplemde.js",
+            //paths.webroot + "lib/simplemde/dist/simplemde.min.js",
             "!" + paths.minJs            
         ], { base: "." })
         .pipe(concat(paths.concatJsDest))

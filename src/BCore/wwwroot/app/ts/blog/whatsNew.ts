@@ -1,13 +1,15 @@
 ﻿/// <reference path="../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../typings/autosize/autosize.d.ts" />
 /// <reference path="../../typings/highlightjs/highlightjs.d.ts" />
+/// <reference path="../../typings/simplemde/simplemde.d.ts" />
 
 module Blog {
     export class WhatsNew {
         public userId: string;
         public elSubmitForm: JQuery = $("#whatsNewForm");
 
-        private elInput: JQuery = $("#whatsNewText");
+        private elInput: JQuery = $("#whatsNewText");        
+
         public elImageUrl = $("#whatsNewImageUrl");
         public elVideoUrl = $("#whatsNewVideoUrl");
         public elGeo = $("#whatsNewGeo");
@@ -19,7 +21,7 @@ module Blog {
         private elDropdown = $(".dropdown-toggle"); 
 
         private modalImage: Image;
-        private modalCode: Code;
+        private modalCode: Code;        
      
         constructor(userId: string) {
             this.userId = userId;            
@@ -38,8 +40,9 @@ module Blog {
             autosize.update(this.elInput);
             this.elInput.focus();
             this.elImageUrl.val("");
+
             this.elDropdown.dropdown();
-            this.highlight();              
+            this.highlight();  
         }
 
         private highlight(): void {

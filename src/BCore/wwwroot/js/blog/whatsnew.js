@@ -1,6 +1,7 @@
 /// <reference path="../../typings/jquery/jquery.d.ts" />
 /// <reference path="../../typings/autosize/autosize.d.ts" />
 /// <reference path="../../typings/highlightjs/highlightjs.d.ts" />
+/// <reference path="../../typings/simplemde/simplemde.d.ts" />
 var Blog;
 (function (Blog) {
     var WhatsNew = (function () {

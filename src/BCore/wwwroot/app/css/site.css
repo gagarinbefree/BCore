@@ -156,6 +156,9 @@ div.center-cropped img {
     word-wrap: normal;
 }
 
-pre code {
-    white-space: inherit;
+pre {    
+    font: 12px/normal 'Monaco', 'Menlo', 'Ubuntu Mono', 'Consolas', 'source-code-pro', monospace;
+    font-size: small;
+    word-wrap: normal;
+    overflow-x: auto;
 }
