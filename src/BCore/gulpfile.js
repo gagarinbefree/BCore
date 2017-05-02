@@ -74,8 +74,7 @@ gulp.task("min:css", function (cb) {
             paths.webroot + "lib/Font-Awesome/css/font-awesome.css",
             paths.webroot + "lib/nprogress/nprogress.css",
             paths.webroot + "lib/bootstrap/dist/css/bootstrap-theme.css",
-            paths.webroot + "lib/highlightjs/styles/vs.css",
-            paths.webroot + "lib/simplemde/src/css/simplemde.css",
+            paths.webroot + "lib/highlightjs/styles/vs.css",            
             paths.css])
         .pipe(concat(paths.concatCssDest))
         //.pipe(cssmin())

@@ -2,6 +2,7 @@
 /// <reference path="../../typings/autosize/autosize.d.ts" />
 /// <reference path="../../typings/highlightjs/highlightjs.d.ts" />
 /// <reference path="../../typings/simplemde/simplemde.d.ts" />
+// <reference path="../../ts/common.ts" />
 
 module Blog {
     export class WhatsNew {
@@ -42,13 +43,8 @@ module Blog {
             this.elImageUrl.val("");
 
             this.elDropdown.dropdown();
-            this.highlight();  
-        }
 
-        private highlight(): void {
-            $("pre").each(function (i, e) {
-                hljs.highlightBlock(e);
-            });  
+            Common.App.highlight();
         }
 
         public post(e: Event): void {

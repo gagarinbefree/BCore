@@ -6,8 +6,14 @@ var Common;
     var App = (function () {
         function App() {
             this.confirm = new ConfirmDialog();
-            hljs.initHighlightingOnLoad();
+            App.highlight();
         }
+        App.highlight = function () {
+            debugger;
+            $("pre").each(function (i, e) {
+                hljs.highlightBlock(e);
+            });
+        };
         return App;
     }());
     Common.App = App;

@@ -8,7 +8,15 @@ module Common {
 
         constructor() {
             this.confirm = new ConfirmDialog();
-            hljs.initHighlightingOnLoad();
+            App.highlight();
+        }
+
+        public static highlight(): void {
+
+            debugger;
+            $("pre").each(function (i, e) {
+                hljs.highlightBlock(e);
+            });  
         }
     }
 

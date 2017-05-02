@@ -19,7 +19,6 @@
         "bootbox": "4.4.0",
         "highlightjs": "9.10.0",
         "ace-builds": "1.2.6",
-        "simplemde": "1.11.2"
-        
+        "simplemde": "1.11.2"                
     }
 }
