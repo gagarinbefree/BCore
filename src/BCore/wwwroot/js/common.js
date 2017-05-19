@@ -6,13 +6,16 @@ var Common;
     var App = (function () {
         function App() {
             this.confirm = new ConfirmDialog();
-            App.highlight();
+            App.ace();
         }
-        App.highlight = function () {
-            debugger;
-            $("pre").each(function (i, e) {
-                hljs.highlightBlock(e);
-            });
+        App.ace = function () {
+            $("pre").each(function (i, e) { return App.initAce(i, e); });
+        };
+        App.initAce = function (i, e) {
+            var editor = ace.edit(e);
+            editor.setTheme('ace/theme/twilight');
+            editor.renderer.setShowGutter(false);
+            editor.setReadOnly(true);
         };
         return App;
     }());

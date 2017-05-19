@@ -8,16 +8,20 @@ module Common {
 
         constructor() {
             this.confirm = new ConfirmDialog();
-            App.highlight();
+            App.ace();
         }
 
-        public static highlight(): void {
-
-            debugger;
-            $("pre").each(function (i, e) {
-                hljs.highlightBlock(e);
-            });  
+        public static ace(): void {
+            $("pre").each((i: any, e: Element) => App.initAce(i, e));
         }
+
+        public static initAce(i: any, e: Element): void {
+            let editor = ace.edit(<HTMLElement>e);
+            editor.setTheme('ace/theme/twilight');
+            editor.renderer.setShowGutter(false);
+            editor.setReadOnly(true);
+        }
+
     }
 
     export class Pager {
