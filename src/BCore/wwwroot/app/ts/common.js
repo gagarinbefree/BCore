@@ -1,12 +1,11 @@
 /// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../typings/bootbox/index.d.ts" />
-/// <reference path="../typings/highlightjs/highlightjs.d.ts" />
 var Common;
 (function (Common) {
     var App = (function () {
         function App() {
             this.confirm = new ConfirmDialog();
-            hljs.initHighlightingOnLoad();
+            //App.ace();
         }
         return App;
     }());

@@ -30,7 +30,7 @@ var Blog;
             this.elInput.focus();
             this.elImageUrl.val("");
             this.elDropdown.dropdown();
-            Common.App.highlight();
+            //Common.App.ace();
         };
         WhatsNew.prototype.post = function (e) {
             var _this = this;

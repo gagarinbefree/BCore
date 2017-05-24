@@ -1,22 +1,12 @@
 /// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../typings/bootbox/index.d.ts" />
-/// <reference path="../typings/highlightjs/highlightjs.d.ts" />
 var Common;
 (function (Common) {
     var App = (function () {
         function App() {
             this.confirm = new ConfirmDialog();
-            App.ace();
+            //App.ace();
         }
-        App.ace = function () {
-            $("pre").each(function (i, e) { return App.initAce(i, e); });
-        };
-        App.initAce = function (i, e) {
-            var editor = ace.edit(e);
-            editor.setTheme('ace/theme/twilight');
-            editor.renderer.setShowGutter(false);
-            editor.setReadOnly(true);
-        };
         return App;
     }());
     Common.App = App;

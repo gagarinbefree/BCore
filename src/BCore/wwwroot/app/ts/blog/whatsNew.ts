@@ -44,7 +44,7 @@ module Blog {
 
             this.elDropdown.dropdown();
 
-            Common.App.highlight();
+            //Common.App.ace();
         }
 
         public post(e: Event): void {

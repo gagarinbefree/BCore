@@ -1,27 +1,37 @@
 ﻿/// <reference path="../typings/jquery/jquery.d.ts" />
 /// <reference path="../typings/bootbox/index.d.ts" />
-/// <reference path="../typings/highlightjs/highlightjs.d.ts" />
 
 module Common {
     export class App {
-        private confirm: ConfirmDialog;        
+        private confirm: ConfirmDialog;
+        private static editor: AceAjax.Editor;     
 
         constructor() {
             this.confirm = new ConfirmDialog();
-            App.ace();
+            //App.ace();
         }
 
-        public static ace(): void {
-            $("pre").each((i: any, e: Element) => App.initAce(i, e));
-        }
+        //public static ace(): void {
+        //    $("pre").each((i: any, e: Element) => App.initAce(i, e));
+        //}
 
-        public static initAce(i: any, e: Element): void {
-            let editor = ace.edit(<HTMLElement>e);
-            editor.setTheme('ace/theme/twilight');
-            editor.renderer.setShowGutter(false);
-            editor.setReadOnly(true);
-        }
+        //private static initAce(i: any, e: Element): void {
+        //    this.editor = ace.edit(<HTMLElement>e);
+        //    this.editor.setTheme('ace/theme/twilight');
+        //    this.editor.renderer.setShowGutter(false);
+        //    this.editor.setReadOnly(true);
+        //}
 
+        //private static heightUpdateAce(): void {
+        //    // http://stackoverflow.com/questions/11584061/
+        //    var newHeight: Number =
+        //        this.editor.getSession().getScreenLength() * this.editor.renderer.lineHeight + this.editor.renderer.scrollBar.getWidth();
+        //    $('#editor').height(newHeight.toString() + "px");
+        //    $('#editor-section').height(newHeight.toString() + "px");
+        //    // This call is required for the editor to fix all of
+        //    // its inner structure for adapting to a change in size
+        //    editor.resize();
+        //};
     }
 
     export class Pager {

@@ -60,6 +60,7 @@ gulp.task("min:js", function (cb) {
             paths.webroot + "lib/bootbox/bootbox.js",
             paths.webroot + "lib/highlightjs/highlight.pack.js",
             paths.webroot + "lib/ace-builds/src/ace.js",
+            paths.webroot + "lib/code-prettify/src/run_prettify.js",
             //paths.webroot + "lib/simplemde/dist/simplemde.min.js",
             "!" + paths.minJs            
         ], { base: "." })
@@ -73,8 +74,7 @@ gulp.task("min:css", function (cb) {
             "!" + paths.minCss,
             paths.webroot + "lib/Font-Awesome/css/font-awesome.css",
             paths.webroot + "lib/nprogress/nprogress.css",
-            paths.webroot + "lib/bootstrap/dist/css/bootstrap-theme.css",
-            paths.webroot + "lib/highlightjs/styles/vs.css",            
+            paths.webroot + "lib/bootstrap/dist/css/bootstrap-theme.css",            
             paths.css])
         .pipe(concat(paths.concatCssDest))
         //.pipe(cssmin())

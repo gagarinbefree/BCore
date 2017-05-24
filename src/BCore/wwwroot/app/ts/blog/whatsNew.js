@@ -2,6 +2,7 @@
 /// <reference path="../../typings/autosize/autosize.d.ts" />
 /// <reference path="../../typings/highlightjs/highlightjs.d.ts" />
 /// <reference path="../../typings/simplemde/simplemde.d.ts" />
+// <reference path="../../ts/common.ts" />
 var Blog;
 (function (Blog) {
     var WhatsNew = (function () {
@@ -29,12 +30,7 @@ var Blog;
             this.elInput.focus();
             this.elImageUrl.val("");
             this.elDropdown.dropdown();
-            this.highlight();
-        };
-        WhatsNew.prototype.highlight = function () {
-            $("pre").each(function (i, e) {
-                hljs.highlightBlock(e);
-            });
+            //Common.App.ace();
         };
         WhatsNew.prototype.post = function (e) {
             var _this = this;
